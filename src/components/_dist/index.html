@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <script src='./main.js'></script>
+  </head>
+  <body>
+   <green-counter label="Green webComponent" initCounter="7" />
+   <red-counter label="Red webComponent" initCounter="5" />
+   <drop-down options='["Red", "Blue"]' value="Blue" />
+   <script>
+     document.querySelector('green-counter').addEventListener('onChange', e => alert(e.detail))
+     document.querySelector('red-counter').addEventListener('onChange', e => alert(e.detail))
+     document.querySelector('drop-down').addEventListener('onChange', e => alert(e.detail))
+   </script>
+ </body>
+</html>

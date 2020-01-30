@@ -13,13 +13,15 @@ phases:
   pre_build:
     commands:
       - echo Installing dependencies...
-      - yarn
+      - yarn -cwd ./client
+      - yarn -cwd ./server
   build:
     commands:
       - echo Testing...
-      # - yarn test
+      - yarn --cwd ./client test
+      - yarn --cwd ./server test
       - echo Building...
-      - yarn build
+      - yarn --cwd ./client build
 artifacts:
   files:
     - "**/*"

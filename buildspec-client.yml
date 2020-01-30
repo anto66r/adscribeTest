@@ -21,9 +21,9 @@ phases:
       - CI=true yarn test
       - echo Building...
       - yarn build
-      - cp ./client/appspec.yml ./client/build
   post_build:
     commands:
+      - cp appspec.yml build
       - echo Build completed on `date`
 artifacts:
   files:

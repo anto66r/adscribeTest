@@ -14,10 +14,17 @@ const deleteCookie = (name: any): void => {
   setCookie(name, '', -1);
 }
 
+const getUrlParamByName = (name:string): string => {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  const regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(window.location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 export {
   getCookie,
   setCookie,
-  deleteCookie
+  deleteCookie,
+  getUrlParamByName
 }
-
 

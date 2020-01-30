@@ -1,11 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {CognitoExample} from './containers/CognitoExample';
+
+import {
+  Link
+} from "react-router-dom";
+
+
 
 const App: React.FC = () => {
   return (
-   <CognitoExample />
+    <>
+      <h3>
+        Main page!
+      </h3>
+      <Link to="/login">Login</Link>
+    </>
+
   );
 }
 

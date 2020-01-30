@@ -18,7 +18,7 @@ export const CognitoExample = () => {
     const headers = {}
     const params = {
       method: 'GET',
-      accesstoken: getCookie('ClientAccessToken'),
+      accesstoken: getCookie('AuthToken'),
       headers,
     };
 

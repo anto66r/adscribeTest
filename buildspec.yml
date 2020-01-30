@@ -3,6 +3,7 @@ version: 0.2
 phases:
   install:
     commands:
+      # all this is already installed in CodeBuild
       # - echo Installing Node 12...
       # - curl -sL https://deb.nodesource.com/setup_12.x | bash -
       # - apt install -y nodejs
@@ -14,16 +15,16 @@ phases:
     commands:
       - echo Installing dependencies...
       - cd client && yarn
-      - cd ../server && yarn
+      # - cd ../server && yarn
   build:
     commands:
       - echo Testing...
-      - cd ../client && yarn test
-      - cd ../server && yarn test
+      - yarn test
+      # - cd ../server && yarn test
       - echo Building...
-      - cd ../client && yarn build
+      - yarn build
 artifacts:
   files:
     - "**/*"
   discard-paths: no
-  base-directory: dist
+  base-directory: ./client/build

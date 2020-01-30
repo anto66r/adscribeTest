@@ -27,6 +27,16 @@ phases:
     commands:
       - echo Build completed on `date`
 artifacts:
-  files:
-    - "./client/build/*"
-    - "appspec.yml"
+  secondary-artifacts:
+    appspec-artifacts:
+      files:
+        - appspec.yml
+    react-artifacts:
+      base-directory: client/build
+      files:
+        - "**/*"
+    # nodejs_artifacts:
+    #   base-directory: nodejs-app
+    #   files:
+    #     - index.js
+    #     - package.json

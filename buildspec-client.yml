@@ -15,28 +15,14 @@ phases:
     commands:
       - echo Installing dependencies...
       - cd client && yarn
-      # - cd ../server && yarn
   build:
     commands:
       - echo Testing...
       - CI=true yarn test
-      # - cd ../server && yarn test
       - echo Building...
       - yarn build
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
-  secondary-artifacts:
-    appspec-artifacts:
-      files:
-        - appspec.yml
-    react-artifacts:
-      base-directory: client/build
-      files:
-        - "**/*"
-    # nodejs_artifacts:
-    #   base-directory: nodejs-app
-    #   files:
-    #     - index.js
-    #     - package.json
+  - "**/*"

@@ -23,8 +23,9 @@ phases:
       # - cd ../server && yarn test
       - echo Building...
       - yarn build
+  post_build:
+    commands:
+      - echo Build completed on `date`
 artifacts:
   files:
-    - "**/*"
-  discard-paths: no
-  base-directory: ./client/build
+    - ./client/build/*

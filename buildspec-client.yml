@@ -3,29 +3,23 @@ version: 0.2
 phases:
   install:
     commands:
-      # all this is already installed in CodeBuild
-      # - echo Installing Node 12...
-      # - curl -sL https://deb.nodesource.com/setup_12.x | bash -
-      # - apt install -y nodejs
-      # - echo Installing Yarn...
-      # - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-      # - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-      # - apt install --no-install-recommends yarn
   pre_build:
     commands:
       - echo Installing dependencies...
-      - cd client && yarn
+      - cd client
+      - yarn
   build:
     commands:
       - echo Testing...
+      # run tests. CI=true ensures that jest will bail after running
       - CI=true yarn test
       - echo Building...
       - yarn build
   post_build:
     commands:
+      # copy appspect.yml to artifact base directory so it's included for deploy
       - cp appspec.yml build
-      - echo Build completed on `date`
 artifacts:
   files:
-    - "build/**/*"
-  base-directory: "client"
+    - "**/*"
+  base-directory: "client/build"

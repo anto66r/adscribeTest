@@ -40,7 +40,8 @@ jobs:
           name: clientbuild
           path: client/build
       
-  job_2: Deploy client
+  job_2:
+    name: Deploy client
     runs-on: ubuntu-latest
     steps:
       - name: list of files

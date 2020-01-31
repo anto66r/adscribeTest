@@ -65,7 +65,6 @@ jobs:
         with:
           name: serverDockerFile
       - name: list of server files
-        uses: actions/upload-artifact@v1
         working-directory: serverDockerFile
         run: ls -la
       - name: Deploy to S3

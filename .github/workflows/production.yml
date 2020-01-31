@@ -57,7 +57,7 @@ jobs:
         working-directory: server
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: platf0rm-2
+          ECR_REPOSITORY: 526496133012.dkr.ecr.eu-west-1.amazonaws.com/platf0rm-2
           IMAGE_TAG: ${{ github.sha }}
         run: |
           # Build a docker container and

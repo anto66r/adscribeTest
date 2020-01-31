@@ -22,6 +22,12 @@ jobs:
         working-directory: client
         run: |
           yarn install
+      - name: List files
+        # working-directory: server
+        run: ls -la
+      - name: List files in client
+        working-directory: client
+        run: ls -la
       - name: Client Unit Tests
         working-directory: client
         run: |

@@ -1,4 +1,4 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
+# See https://help.github.com/ignore-files/ for more abouhttps://twitter.com/i/status/1222998967195226112t ignoring files.
 
 # dependencies
 node_modules
@@ -7,7 +7,7 @@ node_modules
 /coverage
 
 # production
-/build
+build
 
 # misc
 .DS_Store
@@ -15,6 +15,8 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
+.idea/
+.vscode/
 
 npm-debug.log*
 yarn-debug.log*

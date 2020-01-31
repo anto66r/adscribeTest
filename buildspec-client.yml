@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+  pre_build:
+    commands:
+      - echo Installing dependencies...
+      - cd client
+      - yarn
+  build:
+    commands:
+      - echo Testing...
+      # run tests. CI=true ensures that jest will bail after running
+      - CI=true yarn test
+      - echo Building...
+      - yarn build
+  post_build:
+    commands:
+      # copy appspect.yml to artifact base directory so it's included for deploy
+      - cp appspec.yml build
+artifacts:
+  files:
+    - "**/*"
+  base-directory: "client/build"

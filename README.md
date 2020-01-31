@@ -18,4 +18,4 @@
 
 ### Server
 
-`cd server && yarn devstart`
+`cd server && yarn startdev`

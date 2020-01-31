@@ -46,6 +46,9 @@ jobs:
       - name: Create server Docker image
         working-directory: server
         run: docker build . --file Dockerfile --tag ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/platf0rm-2
+      - name: Docker images
+        working-directory: server
+        run: docker images
       - name: Pushing Docker image
         working-directory: server
         run: docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/platf0rm-2

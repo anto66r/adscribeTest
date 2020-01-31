@@ -61,11 +61,12 @@ jobs:
     needs: [job_1, job_2]
     runs-on: ubuntu-latest
     steps:
-      - name: list of client files
-        uses: actions/upload-artifact@v1
+      - name: Download result for job 1
+        uses: actions/download-artifact@v1
         with:
-          name: my-artifact
-          path: path/to/artifact
+          name: clientbuild
+      - name: list of client files
+        working-directory: client/build
         run: ls -la
       # - name: list of server files
       #   uses: actions/upload-artifact@v1

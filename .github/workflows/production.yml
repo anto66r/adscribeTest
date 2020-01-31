@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,26 +15,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 12.x
         uses: actions/setup-node@v1
         working-directory: ./client
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Build site assets
-        working-directory: ${{ github.workspace }}
-        run: ls -la
+      # - name: Build site assets
+      #   working-directory: ${{ github.workspace }}
+      #   run: ls -la
       - name: Yarn Install
         working-directory: client
         run: |
           yarn install
       - name: Production Build
-        working-directory: ./client
+        working-directory: client
         run: |
           yarn build
       - name: Unit Tests
-        working-directory: ./client
+        working-directory: client
         run: |
-          yarn test
+          CI=true yarn test
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:

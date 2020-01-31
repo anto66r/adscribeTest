@@ -27,8 +27,7 @@ jobs:
       #   run: |
       #     CI=true yarn test
       - name: Make build directory
-        working-directory: build
-        run: mkdir public
+        run: mkdir ./client/build
       - name: Client build
         working-directory: client
         run: |

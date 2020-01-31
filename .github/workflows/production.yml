@@ -22,19 +22,26 @@ jobs:
       # - name: Build site assets
       #   working-directory: ${{ github.workspace }}
       #   run: ls -la
-      - name: Yarn Install
+      - name: Client Yarn Install
         working-directory: client
         run: |
           yarn install
-      - name: Production Build
-        working-directory: client
-        run: |
-          yarn build
-      - name: Unit Tests
+      - name: Client Unit Tests
         working-directory: client
         run: |
           CI=true yarn test
-      - name: Deploy to S3
+      - name: Server Yarn Install
+        working-directory: server
+        run: |
+          yarn install
+      - name: Server Unit Tests
+        working-directory: server
+        run: |
+          CI=true yarn test
+      - name: Deploy Server to whatever
+        working-directory: server
+        run: ls -la
+      - name: Deploy Client to S3
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --delete

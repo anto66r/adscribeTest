@@ -46,6 +46,8 @@ jobs:
       - name: Create server Docker image
         working-directory: server
         run: docker build . --file Dockerfile --tag platf0rm-2:$(date +%s)
+      - name: list of server files
+        run: ls -la
       - name: Upload build artifact
         uses: actions/upload-artifact@v1
         with:

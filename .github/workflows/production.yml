@@ -18,18 +18,18 @@ jobs:
       # - name: Build site assets
       #   working-directory: ${{ github.workspace }}
       #   run: ls -la
-      # - name: Client Yarn Install
-      #   working-directory: client
-      #   run: |
-      #     yarn install
+      - name: Client Yarn Install
+        working-directory: client
+        run: |
+          yarn install
       # - name: Client Unit Tests
       #   working-directory: client
       #   run: |
       #     CI=true yarn test
-      # - name: Client build
-      #   working-directory: client
-      #   run: |
-      #     yarn build
+      - name: Client build
+        working-directory: client
+        run: |
+          yarn build
       - name: pwd
         working-directory: ${{ github.workspace }}
         run: pwd
@@ -47,35 +47,35 @@ jobs:
         with:
           name: clientbuild
           path: ${{ github.workspace }}/client
-#   job_2:
-#     name: Install and test server
-#     runs-on: ubuntu-latest
-#     steps:
-      # - uses: actions/checkout@v1
-      # - name: Use Node.js 12.x
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
-      # - name: Build site assets
-      #   working-directory: ${{ github.workspace }}
-      #   run: ls -la
-      # - name: Server Yarn Install
-      #   working-directory: server
-      #   run: |
-      #     yarn install
-      # - name: Server Unit Tests
-      #   working-directory: server
-      #   run: |
-      #     CI=true yarn test
-      # - name: Upload build
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: serverbuild
-      #     path: ${{ github.workspace }}/server
+  #   job_2:
+  #     name: Install and test server
+  #     runs-on: ubuntu-latest
+  #     steps:
+  # - uses: actions/checkout@v1
+  # - name: Use Node.js 12.x
+  #   uses: actions/setup-node@v1
+  #   with:
+  #     node-version: ${{ matrix.node-version }}
+  # - name: Build site assets
+  #   working-directory: ${{ github.workspace }}
+  #   run: ls -la
+  # - name: Server Yarn Install
+  #   working-directory: server
+  #   run: |
+  #     yarn install
+  # - name: Server Unit Tests
+  #   working-directory: server
+  #   run: |
+  #     CI=true yarn test
+  # - name: Upload build
+  #   uses: actions/upload-artifact@v1
+  #   with:
+  #     name: serverbuild
+  #     path: ${{ github.workspace }}/server
   job_3:
     name: Deploy client
     needs: job_1
-#     needs: [job_1, job_2]
+    #     needs: [job_1, job_2]
     runs-on: ubuntu-latest
     steps:
       - name: Download result for job 1

@@ -45,7 +45,10 @@ jobs:
           CI=true yarn test
       - name: Create server Docker image
         working-directory: server
-        run: docker build . --file Dockerfile --tag platf0rm-2:$(date +%s)
+        run: docker build . --file Dockerfile --tag ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/platf0rm-2
+      - name: Pushing Docker image
+        working-directory: server
+        run: docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/platf0rm-2
       - name: list of server files
         working-directory: server
         run: ls -la

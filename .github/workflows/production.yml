@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: clientbuild
-          path: build/client
+          path: client/build
   #   job_2:
   #     name: Install and test server
   #     runs-on: ubuntu-latest

@@ -1,4 +1,4 @@
-name: Production Build
+name: Client Production Build
 on:
   pull_request:
   push:
@@ -6,13 +6,9 @@ on:
       - master
 
 jobs:
-  build:
+  job_1:
+    name: Install, test and build client
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
       - uses: actions/checkout@v1
       - name: Use Node.js 12.x
@@ -34,13 +30,25 @@ jobs:
         working-directory: client
         run: |
           CI=true yarn test
-      - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
+      - name: Upload build
+        uses: actions/upload-artifact@v1
         with:
-          args: --acl public-read --delete
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          SOURCE_DIR: "client/build"
+          name: clientbuild
+          path: client/build
+      
+  job_2: Deploy client
+    runs-on: ubuntu-latest
+    steps:
+      - name: list of files
+        working-directory: clientbuild
+        run: ls -la
+      # - name: Deploy to S3
+      #   uses: jakejarvis/s3-sync-action@master
+      #   with:
+      #     args: --acl public-read --delete
+      #   env:
+      #     AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     AWS_REGION: ${{ secrets.AWS_REGION }}
+      #     SOURCE_DIR: "client/build"

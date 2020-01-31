@@ -30,27 +30,27 @@ jobs:
         with:
           name: clientbuild
           path: client/build
-    job_2:
-      name: Install and test server
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v1
-        - name: Server Yarn Install
-          working-directory: server
-          run: |
-            yarn install
-        - name: Server Unit Tests
-          working-directory: server
-          run: |
-            CI=true yarn test
-        - name: Create server Docker image
-          working-directory: server
-          run: docker build . --file Dockerfile --tag platf0rm-2:$(date +%s)
-        - name: Upload build artifact
-          uses: actions/upload-artifact@v1
-          with:
-            name: serverDockerFile
-            path: Dockerfile
+  job_2:
+    name: Install and test server
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Server Yarn Install
+        working-directory: server
+        run: |
+          yarn install
+      - name: Server Unit Tests
+        working-directory: server
+        run: |
+          CI=true yarn test
+      - name: Create server Docker image
+        working-directory: server
+        run: docker build . --file Dockerfile --tag platf0rm-2:$(date +%s)
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: serverDockerFile
+          path: Dockerfile
   job_3:
     name: Deploy client
     needs: [job_1, job_2]

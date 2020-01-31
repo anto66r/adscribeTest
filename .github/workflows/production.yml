@@ -82,7 +82,7 @@ jobs:
         with:
           name: clientbuild
       - name: list of client files
-        working-directory: client/build
+        working-directory: clientbuild
         run: ls -la
       # - name: list of server files
       #   uses: actions/upload-artifact@v1

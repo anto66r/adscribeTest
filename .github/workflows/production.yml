@@ -47,10 +47,10 @@ jobs:
         with:
           name: clientbuild
           path: ${{ github.workspace }}/client
-  job_2:
-    name: Install and test server
-    runs-on: ubuntu-latest
-    steps:
+#   job_2:
+#     name: Install and test server
+#     runs-on: ubuntu-latest
+#     steps:
       # - uses: actions/checkout@v1
       # - name: Use Node.js 12.x
       #   uses: actions/setup-node@v1
@@ -74,7 +74,8 @@ jobs:
       #     path: ${{ github.workspace }}/server
   job_3:
     name: Deploy client
-    needs: [job_1, job_2]
+    needs: job_1
+#     needs: [job_1, job_2]
     runs-on: ubuntu-latest
     steps:
       - name: Download result for job 1

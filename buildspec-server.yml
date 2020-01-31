@@ -21,4 +21,4 @@ artifacts:
     - package.json
     - src/**/*
     - node_modules/**/*
-  base-directory: 'server
+  base-directory: "server"

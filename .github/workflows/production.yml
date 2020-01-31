@@ -37,55 +37,49 @@ jobs:
         with:
           name: clientbuild
           path: client/build
-  #   job_2:
-  #     name: Install and test server
-  #     runs-on: ubuntu-latest
-  #     steps:
-  # - uses: actions/checkout@v1
-  # - name: Use Node.js 12.x
-  #   uses: actions/setup-node@v1
-  #   with:
-  #     node-version: ${{ matrix.node-version }}
-  # - name: Build site assets
-  #   working-directory: ${{ github.workspace }}
-  #   run: ls -la
-  # - name: Server Yarn Install
-  #   working-directory: server
-  #   run: |
-  #     yarn install
-  # - name: Server Unit Tests
-  #   working-directory: server
-  #   run: |
-  #     CI=true yarn test
-  # - name: Upload build
-  #   uses: actions/upload-artifact@v1
-  #   with:
-  #     name: serverbuild
-  #     path: ${{ github.workspace }}/server
+    # job_2:
+    #   name: Install and test server
+    #   runs-on: ubuntu-latest
+    #   steps:
+    #   - uses: actions/checkout@v1
+    #   - name: Use Node.js 12.x
+    #     uses: actions/setup-node@v1
+    #     with:
+    #       node-version: ${{ matrix.node-version }}
+    #   - name: Server Yarn Install
+    #     working-directory: server
+    #     run: |
+    #       yarn install
+    #   - name: Server Unit Tests
+    #     working-directory: server
+    #     run: |
+    #       CI=true yarn test
+    #   - name: Upload build
+    #     uses: actions/upload-artifact@v1
+    #     with:
+    #       name: serverbuild
+    #       path: server/app.js
   job_3:
     name: Deploy client
     needs: job_1
-    #     needs: [job_1, job_2]
+    # needs: [job_1, job_2]
     runs-on: ubuntu-latest
     steps:
       - name: Download result for job 1
         uses: actions/download-artifact@v1
         with:
           name: clientbuild
-      - name: list of client files
-        working-directory: clientbuild
-        run: ls -la
       # - name: list of server files
       #   uses: actions/upload-artifact@v1
       #   working-directory: serverbuild
       #   run: ls -la
-      # - name: Deploy to S3
-      #   uses: jakejarvis/s3-sync-action@master
-      #   with:
-      #     args: --acl public-read --delete
-      #   env:
-      #     AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     AWS_REGION: ${{ secrets.AWS_REGION }}
-      #     SOURCE_DIR: "client/build"
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: "client/build"

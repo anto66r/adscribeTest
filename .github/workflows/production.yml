@@ -22,16 +22,21 @@ jobs:
         working-directory: client
         run: |
           yarn install
-      - name: List files
-        # working-directory: server
-        run: ls -la
-      - name: List files in client
-        working-directory: client
-        run: ls -la
       - name: Client Unit Tests
         working-directory: client
         run: |
           CI=true yarn test
+      - name: Client build
+        working-directory: client
+        run: |
+          yarn build
+      - name: List files
+        run: ls -la
+      - name: pwd
+        run: pwd
+      - name: List files in client
+        working-directory: client
+        run: ls -la
       - name: Upload build
         uses: actions/upload-artifact@v1
         with:

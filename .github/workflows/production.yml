@@ -1,4 +1,4 @@
-name: Client Production Build
+name: Production Build and Deploy
 on:
   pull_request:
   push:
@@ -26,19 +26,11 @@ jobs:
         working-directory: client
         run: |
           CI=true yarn test
-      - name: Server Yarn Install
-        working-directory: server
-        run: |
-          yarn install
-      - name: Server Unit Tests
-        working-directory: server
-        run: |
-          CI=true yarn test
       - name: Upload build
         uses: actions/upload-artifact@v1
         with:
           name: clientbuild
-          path: client/build
+          path: client/build/**/*
   job_2:
     name: Install and test server
     runs-on: ubuntu-latest
@@ -63,18 +55,22 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: serverbuild
-          path: server
+          path: server/**/*
   job_3:
     name: Deploy client
     needs: [job_1, job_2]
     runs-on: ubuntu-latest
     steps:
       - name: list of client files
-        working-directory: clientbuild
+        uses: actions/upload-artifact@v1
+        with:
+          name: my-artifact
+          path: path/to/artifact
         run: ls -la
-      - name: list of server files
-        working-directory: serverbuild
-        run: ls -la
+      # - name: list of server files
+      #   uses: actions/upload-artifact@v1
+      #   working-directory: serverbuild
+      #   run: ls -la
       # - name: Deploy to S3
       #   uses: jakejarvis/s3-sync-action@master
       #   with:

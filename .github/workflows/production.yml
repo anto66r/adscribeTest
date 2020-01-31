@@ -26,21 +26,18 @@ jobs:
       #   working-directory: client
       #   run: |
       #     CI=true yarn test
+      - name: Make build directory
+        working-directory: build
+        run: mkdir public
       - name: Client build
         working-directory: client
         run: |
           yarn build
-      - name: pwd
-        working-directory: ${{ github.workspace }}/build
-        run: pwd
-      - name: List files
-        working-directory: build
-        run: ls -la
-      - name: Upload build
+      - name: Upload build artifact
         uses: actions/upload-artifact@v1
         with:
           name: clientbuild
-          path: ${{ github.workspace }}/client
+          path: build/client
   #   job_2:
   #     name: Install and test server
   #     runs-on: ubuntu-latest

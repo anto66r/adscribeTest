@@ -43,9 +43,6 @@ jobs:
         working-directory: server
         run: |
           CI=true yarn test
-      - name: Create server Docker image
-        working-directory: server
-        run: docker build . --file Dockerfile --tag ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/platf0rm-2
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

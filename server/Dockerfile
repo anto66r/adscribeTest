@@ -16,4 +16,4 @@ RUN npm i --only=production
 COPY . .
 
 EXPOSE 80
-CMD [ "node", "server.js" ]
+CMD [ "node", "main.js" ]

@@ -15,5 +15,5 @@ RUN npm i --only=production
 # Bundle app source
 COPY . .
 
-EXPOSE 80
-CMD [ "node", "main.js" ]
+EXPOSE 5000
+CMD [ "node", "./src/bin/www" ]

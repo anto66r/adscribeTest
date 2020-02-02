@@ -8,7 +8,7 @@ const app = express();
 app.use(logger("dev"));
 app.use(bodyParser.json());
 
-require("./routes")(app);
+require("./src/routes")(app);
 
 const uri = process.env.MONGO_URI || "mongodb://localhost/";
 mongoose.connect(uri, {

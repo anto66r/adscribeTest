@@ -58,7 +58,7 @@ module.exports = app => {
   });
 
   app.get("/", function(req, res) {
-    res.send("Hello World (test)!");
+    res.send("Hello World!");
   });
 
   return publicRouter;

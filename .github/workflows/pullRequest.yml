@@ -1,7 +1,7 @@
 name: Pull Request Build and Test
 on:
   pull_request:
-    types: [opened, edited]
+    types: [opened, synchronize]
 
 jobs:
   job_1:

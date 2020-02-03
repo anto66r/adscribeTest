@@ -1,19 +1,17 @@
-const User = require('./user.model');
+const User = require("./user.model");
 
 module.exports = authenticatedRoute => {
-
-  authenticatedRoute.get('/', (req, res, next) => {
-    User.find()
+  authenticatedRoute.get("/", (req, res, next) => {
+    User.find({})
       .then(users => res.json(users))
-      .catch(err => res.status(400).json('Error: ' + err));
-
+      .catch(err => res.status(400).json("Error: " + err));
   });
 
-  authenticatedRoute.get('/hello', (req, res, next) => {
+  authenticatedRoute.get("/hello", (req, res, next) => {
     debugger;
     res.send({
       result: true,
-      message: `Hi, your API call is authenticated!`,
+      message: `Hi, your API call is authenticated!`
     });
   });
 
@@ -22,19 +20,18 @@ module.exports = authenticatedRoute => {
   //   res.send(`User detail for id=${userId}`);
   // });
 
-  authenticatedRoute.post('/add', (req, res, next) => {
+  authenticatedRoute.post("/add", (req, res, next) => {
     debugger;
 
-    const {name, userId: user_id} = req.body;
+    const { name, userId: user_id } = req.body;
     const newUser = new User({
       name,
-      user_id,
+      user_id
     });
     newUser
       .save()
-      .then(() => res.json('done!'))
-      .catch(err => res.status(400).json('Error: ' + err));
+      .then(() => res.json("done!"))
+      .catch(err => res.status(400).json("Error: " + err));
   });
   return authenticatedRoute;
-
 };

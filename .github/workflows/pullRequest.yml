@@ -1,6 +1,7 @@
 name: Pull Request Build and Deploy
 on:
-  pull_request: [opened, edited]
+  pull_request:
+    types: [opened, edited]
 
 jobs:
   job_1:

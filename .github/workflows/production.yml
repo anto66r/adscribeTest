@@ -1,6 +1,5 @@
 name: Production Build and Deploy
 on:
-  pull_request:
   push:
     branches:
       - master

@@ -7,7 +7,8 @@ phases:
   pre_build:
     commands:
       - echo Installing dependencies...
-      - cd server && yarn
+      - cd server
+      - yarn
   build:
     commands:
       - echo Testing...
@@ -16,5 +17,8 @@ phases:
     commands:
       - echo Build completed on `date`
 artifacts:
-  - "**/*"
-  base-directory: 'server/???'
+  files:
+    - package.json
+    - src/**/*
+    - node_modules/**/*
+  base-directory: "server"

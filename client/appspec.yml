@@ -4,6 +4,7 @@ files:
   - source: /
     destination: /var/www/html
 hooks:
+  # we'll have to remove appspec.yml
   # BeforeInstall:
   #   - location: scripts/before_install.sh
   #     timeout: 300

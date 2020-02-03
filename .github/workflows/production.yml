@@ -1,0 +1,84 @@
+name: Production Build and Deploy
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  job_1:
+    name: Install, test and build client
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Client Yarn Install
+        working-directory: client
+        run: |
+          yarn install
+      - name: Client Unit Tests
+        working-directory: client
+        run: |
+          CI=true yarn test
+      - name: Make build directory
+        run: mkdir ./client/build
+      - name: Client build
+        working-directory: client
+        run: |
+          yarn build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: clientbuild
+          path: client/build
+  job_2:
+    name: Install, test and deploy server
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Server Yarn Install
+        working-directory: server
+        run: |
+          yarn install
+      - name: Server Unit Tests
+        working-directory: server
+        run: |
+          CI=true yarn test
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        working-directory: server
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: platf0rm-2-server
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+  job_3:
+    name: Deploy client
+    needs: [job_1, job_2]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download result for job 1
+        uses: actions/download-artifact@v1
+        with:
+          name: clientbuild
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: "clientbuild"

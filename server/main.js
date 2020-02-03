@@ -9,7 +9,7 @@ const app = express();
 //   app.use(logger("dev"));
 // }
 app.use(bodyParser.json());
-console.log(process.env.ENVIRONMENT);
+
 require("./src/routes")(app);
 
 // const uri = process.env.MONGO_URI || "mongodb://localhost/";

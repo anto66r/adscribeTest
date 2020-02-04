@@ -1,7 +1,8 @@
 name: Pull Request Comment
 on:
   pull_request_review_comment:
-  issue_comment:
+    types:
+      [created]
 jobs:
   one:
     runs-on: ubuntu-latest

@@ -1,12 +1,18 @@
-name: Pull Request Build and Test
+name: Pull Request Comment
 on:
-  pull_request:
-    types: [edited]
-
+  issue_comment:
+    types: [created]
 jobs:
   one:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
+      - uses: khan/pull-request-comment-trigger@master
+        id: check
+        with:
+          trigger: "re-test"
+          reaction: rocket
+        env:
+          GITHUB_TOKEN: "${{ secrets.ACTIONS_TOKEN }}"
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}

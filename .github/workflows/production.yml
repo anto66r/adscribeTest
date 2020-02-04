@@ -5,30 +5,30 @@ on:
       - master
 
 jobs:
-  job_1:
-    name: Install, test and build client
-    runs-on: ubuntu-latest
-    steps:
-      # - uses: actions/checkout@v1
-      # - name: Client Yarn Install
-      #   working-directory: client
-      #   run: |
-      #     yarn install
-      # - name: Client Unit Tests
-      #   working-directory: client
-      #   run: |
-      #     CI=true yarn test
-      # - name: Make build directory
-      #   run: mkdir ./client/build
-      # - name: Client build
-      #   working-directory: client
-      #   run: |
-      #     yarn build
-      # - name: Upload build artifact
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: clientbuild
-      #     path: client/build
+  # job_1:
+  #   name: Install, test and build client
+  #   runs-on: ubuntu-latest
+  #   steps:
+  # - uses: actions/checkout@v1
+  # - name: Client Yarn Install
+  #   working-directory: client
+  #   run: |
+  #     yarn install
+  # - name: Client Unit Tests
+  #   working-directory: client
+  #   run: |
+  #     CI=true yarn test
+  # - name: Make build directory
+  #   run: mkdir ./client/build
+  # - name: Client build
+  #   working-directory: client
+  #   run: |
+  #     yarn build
+  # - name: Upload build artifact
+  #   uses: actions/upload-artifact@v1
+  #   with:
+  #     name: clientbuild
+  #     path: client/build
   job_2:
     name: Install, test and deploy server
     runs-on: ubuntu-latest

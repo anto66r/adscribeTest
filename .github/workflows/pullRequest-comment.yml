@@ -6,13 +6,13 @@ jobs:
   one:
     runs-on: ubuntu-latest
     steps:
-      - uses: khan/pull-request-comment-trigger@master
-        id: check
-        with:
-          trigger: "re-test"
-          reaction: rocket
-        env:
-          GITHUB_TOKEN: "${{ secrets.ACTIONS_TOKEN }}"
+#       - uses: khan/pull-request-comment-trigger@master
+#         id: check
+#         with:
+#           trigger: "re-test"
+#           reaction: rocket
+#         env:
+#           GITHUB_TOKEN: "${{ secrets.ACTIONS_TOKEN }}"
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}

@@ -1,6 +1,5 @@
 {
   "ipcMode": null,
-  // "executionRoleArn": "arn:aws:iam::526496133012:role/ecsTaskExecutionRole",
   "containerDefinitions": [{
     "dnsSearchDomains": null,
     "logConfiguration": {
@@ -51,8 +50,7 @@
     "readonlyRootFilesystem": null,
     "dockerLabels": null,
     "systemControls": null,
-    "privileged": null,
-    // "name": "platf0rm-2-container"
+    "privileged": null
   }],
   "placementConstraints": [],
   "memory": "512",
@@ -61,7 +59,6 @@
     "EC2",
     "FARGATE"
   ],
-  // "taskDefinitionArn": "arn:aws:ecs:eu-west-1:526496133012:task-definition/platf0rm-2-TD:13",
   "family": "platf0rm-2-TD",
   "requiresAttributes": [{
       "targetId": null,

@@ -14,7 +14,7 @@ jobs:
           trigger: "re-test"
       - name: Cancelling workflow if trigger is not found
         uses: andymckay/cancel-action@0.2
-        if: steps.check.outputs.triggered == 'true'
+        if: steps.check.outputs.triggered == 'false'
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}

@@ -1,8 +1,5 @@
 name: Pull Request Comment
 on:
-  pull_request_review_comment:
-    types:
-      [created]
   issue_comment:
     types:
       [created]
@@ -10,13 +7,12 @@ jobs:
   one:
     runs-on: ubuntu-latest
     steps:
-      #       - uses: khan/pull-request-comment-trigger@master
-      #         id: check
-      #         with:
-      #           trigger: "re-test"
-      #           reaction: rocket
-      #         env:
-      #           GITHUB_TOKEN: "${{ secrets.ACTIONS_TOKEN }}"
+      - uses: khan/pull-request-comment-trigger@master
+        id: check
+        with:
+          trigger: "re-test"
+      - run: 'echo Found it!'
+        if: steps.check.outputs.triggered == 'true'
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}

@@ -1,41 +1,50 @@
-import React from "react";
-import { getUrlParamByName, setCookie } from "../../utils/general";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { parseCognitoWebResponse, getCognitoSession } from '../../helpers/cognito';
+import { setCookie, getCookie } from '../../helpers/cookies';
 
-
-// http://localhost:3000/login/callback?code=6d30de35-2b90-4a1d-8af5-22e9eb0efb0b
-const CognitoExampleCallback = () => {
-
-
-
-
-  const code = getUrlParamByName('code')
-
-  const params = {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        code
-    })
+type CredentialsModel = {
+  credentials: {
+    accessToken: string,
+    idToken: string,
+    refreshToken: string,
+  },
+  user: {
+    userName: string,
+    email: string,
   }
-  fetch('http://localhost:4000/auth',params)
-    .then(res => res.json())
-    .then(res => {
-      debugger;
-      // here should come the auth token for all calls and should be stored
-      const token = res.token;
-      setCookie('ClientAccessToken', token, 30);
-
-    })
-
-  // setCookie('ClientAccessToken', token, 30); // todo: change to global variable
-
-  return (
-  <div>
-    Hallo! Logged!
-  </div>
-  )
 }
 
-export { CognitoExampleCallback }
+const LoginCallback = () => {
+  const history = useHistory();
+
+  parseCognitoWebResponse(window.location.href) // parse the callback URL
+    .then(() => getCognitoSession()) // get a new session
+    .then((session) => {
+      const credentialsModel = (session as CredentialsModel);
+      const { credentials } = credentialsModel;
+      const cognitoCookieLifetime: number = parseInt(`${process.env.REACT_APP_COGNITO_COOKIE_LIFE_TIME}`, 30);
+
+      setCookie('CognitoAccessToken', credentials.accessToken, cognitoCookieLifetime);
+      setCookie('CognitoIdToken', credentials.idToken, cognitoCookieLifetime);
+      setCookie('CognitoRefreshToken', credentials.refreshToken, cognitoCookieLifetime);
+      const redirectUrl: string = getCookie('CognitoRedirectCall');
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      }
+    })
+    .catch((errorMessage) => {
+      history.push({
+        pathname: '/error',
+        state: { errorMessage },
+      });
+    });
+
+  return (
+    <div>
+      Hallo! Logged!
+    </div>
+  );
+};
+
+export { LoginCallback };

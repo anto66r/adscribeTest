@@ -1,12 +1,11 @@
-const express = require("express");
-const path = require("path");
+const express = require('express');
+const path = require('path');
 require("dotenv").config();
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const createError = require("http-errors");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const CognitoExpress = require("cognito-express");
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const createError = require('http-errors');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const app = express();
 if (process.env.ENVIRONMENT !== "production") {

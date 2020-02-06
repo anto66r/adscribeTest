@@ -8,7 +8,6 @@ module.exports = authenticatedRoute => {
   });
 
   authenticatedRoute.get("/hello", (req, res, next) => {
-    debugger;
     res.send({
       result: true,
       message: `Hi, your API call is authenticated!`
@@ -21,8 +20,6 @@ module.exports = authenticatedRoute => {
   // });
 
   authenticatedRoute.post("/add", (req, res, next) => {
-    debugger;
-
     const { name, userId: user_id } = req.body;
     const newUser = new User({
       name,

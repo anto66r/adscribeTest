@@ -1,15 +1,15 @@
-const CognitoExpress = require("cognito-express");
-const publicRouter = require("express").Router();
-const authenticatedRouter = require("express").Router();
+const CognitoExpress = require('cognito-express');
+const publicRouter = require('express').Router();
+const authenticatedRouter = require('express').Router();
 
-const BYPASS_SECURITY = true;
+const BYPASS_SECURITY = false;
 
 //Initializing CognitoExpress constructor // todo: change to config file
 const cognitoExpress = new CognitoExpress({
-  region: "eu-west-1",
-  cognitoUserPoolId: "eu-west-1_FbvelNMmP",
-  tokenUse: "access", //Possible Values: access | id
-  tokenExpiration: 3600000 //Up to default expiration of 1 hour (3600000 ms)
+  region: process.env.COGNITO_REGION,
+  cognitoUserPoolId: process.env.COGNITO_USER_POOL,
+  tokenUse: 'access', //Possible Values: access | id
+  tokenExpiration: 3600000, //Up to default expiration of 1 hour (3600000 ms)
 });
 
 module.exports = app => {
@@ -49,7 +49,7 @@ module.exports = app => {
   // ... add more here! like > app.use('/api/users', userRouter);
 
   // Unprotected endpoints
-  app.use("/auth", require("./auth/routes")(publicRouter));
+  // app.use('/auth', require('./auth/routes')(publicRouter));
 
   publicRouter.get("/api", (req, res) => {
     res.send({

@@ -1,4 +1,4 @@
-import { configure, addDecorator } from '@storybook/react';
+import { addDecorator, configure } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 
 addDecorator(withInfo);

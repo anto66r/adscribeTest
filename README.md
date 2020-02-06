@@ -21,3 +21,13 @@
 ### Server
 
 `cd server && yarn startdev`
+
+### Code cleaning and tests:
+Important! Change the git hooks default folder for this project
+```
+git config core.hooksPath hooks
+```
+
+### Cognito testing login:
+user: javier
+password: javier

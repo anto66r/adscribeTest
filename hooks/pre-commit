@@ -1,0 +1,89 @@
+#!/bin/bash
+
+
+echo -ne '🔵 Executing Clientside ESLint \r'
+cd client
+for file in $(git diff --name-only src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
+do
+  node_modules/.bin/eslint "$file" # we only want to lint the staged changes, not any un-staged changes
+  if [ $? -ne 0 ]; then
+    echo "🙀 ESLint failed on staged file $file - Please check your code and try again"
+    exit 1 # exit with failure status
+  fi
+done
+echo -ne '✅  Executed Clientside ESLint \r'
+echo -ne '\n'
+
+
+
+cd ../server
+echo -ne '🔵 Executing Serverside ESLint \r'
+
+for file in $(git diff --name-only src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
+do
+  node_modules/.bin/eslint "$file" # we only want to lint the staged changes, not any un-staged changes
+  if [ $? -ne 0 ]; then
+    echo "🙀 ESLint failed on staged file $file - Please check your code and try again"
+    exit 1 # exit with failure status
+  fi
+done
+echo -ne '✅  Executed Serverside ESLint \r'
+echo -ne '\n'
+
+
+echo  '🔵 Executing Clientside JEST tests'
+cd ../client
+STAGED_FILES=$(git diff --name-only src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
+BIN_PATH="$(git rev-parse --show-toplevel)/client/node_modules/.bin"
+
+jest() {
+  JEST="$BIN_PATH/jest"
+
+  # Check for jest
+  if [[ ! -x "$JEST" ]]; then
+    printf "\t\033[41mPlease install Jest\033[0m\n"
+    exit 1
+  fi
+
+  $JEST --reporters=jest-silent-reporter --silent --bail $STAGED_FILES
+
+  if [[ $? == 0 ]]; then
+    printf "\n\033[1;32mTest Passed\033[0m\n"
+  else
+    printf "\n\033[41mTest Failed:\033[0m Fix test errors and try again!\n"
+    exit 1
+  fi
+}
+jest
+echo -ne '✅  Executed Clientside JEST \r'
+echo -ne '\n'
+
+
+echo  '🔵 Executing Serverside JEST tests'
+cd ../server
+STAGED_FILES=$(git diff --name-only src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
+BIN_PATH="$(git rev-parse --show-toplevel)/server/node_modules/.bin"
+
+jest2() {
+  JEST="$BIN_PATH/jest"
+
+  # Check for jest
+  if [[ ! -x "$JEST" ]]; then
+    printf "\t\033[41mPlease install Jest\033[0m\n"
+    exit 1
+  fi
+
+  $JEST --reporters=jest-silent-reporter --silent --bail $STAGED_FILES
+
+  if [[ $? == 0 ]]; then
+    printf "\n\033[1;32mTest Passed\033[0m\n"
+  else
+    printf "\n\033[41mTest Failed:\033[0m Fix test errors and try again!\n"
+    exit 1
+  fi
+}
+jest2
+echo -ne '✅  Executed Serverside JEST \r'
+echo -ne '\n'
+
+echo "🎉 All tests working, Good job! commiting now!"

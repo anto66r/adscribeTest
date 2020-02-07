@@ -2,12 +2,12 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 // import "./App.scss";
-import Header from "./containers/Header";
-import Footer from "./containers/Footer";
-import Sidebar from "./containers/Sidebar";
-import Content from "./containers/Content";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Sidebar from "./components/Sidebar";
+import Content from "./components/Content";
+import { LoginCallback } from "./components/LoginCallback";
 import Users from "./features/users";
-import { LoginCallback } from "./containers/LoginCallback";
 
 const App = () => (
   <>

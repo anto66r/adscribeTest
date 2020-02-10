@@ -7,6 +7,9 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
   globals: {
     Atomics: 'readonly',
@@ -31,6 +34,9 @@ module.exports = {
     "import/prefer-default-export": "off",
     "import/no-unresolved": "off",
     "react/button-has-type": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/ban-ts-ignore": "off",
+    "arrow-parens": ["error" , "as-needed"]
   },
   settings: {
     "import/resolver": {

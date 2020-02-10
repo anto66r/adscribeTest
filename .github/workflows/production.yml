@@ -45,7 +45,7 @@ jobs:
       - name: Server Unit Tests
         working-directory: ${{ env.working-directory }}
         run: |
-          CI=true yarn test
+          ./node_modules/ts-node/dist/bin.js -r tsconfig-paths/register ./test
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

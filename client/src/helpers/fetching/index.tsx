@@ -21,11 +21,12 @@ const secureFetch = (apiEndpoint: string) => new Promise((resolve, reject) => {
     })
     .catch((err: any) => {
       // we redirect to login and save current location
-
       if (err.status === 500) {
         // internal error
         console.log(err);
         reject(err);
+      } else if (err.message === 'Failed to fetch') {
+        reject(err.message);
       } else {
         setCookie('CognitoRedirectCall', window.location.href, 1);
         window.location.href = getCognitoSignInUri();

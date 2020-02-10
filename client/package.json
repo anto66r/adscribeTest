@@ -31,6 +31,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:once": "./node_modules/react-scripts/bin/react-scripts.js test --watchAll=false --bail --reporters=jest-silent-reporter --silent --colors",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

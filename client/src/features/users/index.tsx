@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { secureFetch } from "../../helpers/fetching";
+import React, { useState, ChangeEvent } from 'react';
+import { secureFetch } from '../../helpers/fetching';
 
 const Users = () => {
-  const defaultUrl = "http://localhost:5000/api/users";
+  const defaultUrl = 'http://localhost:5000/api/users';
   const [apiUrl, setApiUrl] = useState(defaultUrl);
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState('');
 
   const doFetch = async () => {
-    const newResult = await secureFetch("/users");
+    const newResult = await secureFetch('/users');
     setResult(JSON.stringify(newResult, null, 2));
   };
 

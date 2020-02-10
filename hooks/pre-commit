@@ -1,89 +1,72 @@
 #!/bin/bash
 
+PROJECT_PATH=$(git rev-parse --show-toplevel)
+echo " ---- Hooked pre-commit: Fasten your seat belt ---- "
+echo -ne '🔵 Executing Clientside ESLint          - 1/4\r'
+cd $PROJECT_PATH/client
 
-echo -ne '🔵 Executing Clientside ESLint \r'
-cd client
-for file in $(git diff --name-only src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
+for file in $(git diff --name-only --cached src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
 do
-  node_modules/.bin/eslint "$file" # we only want to lint the staged changes, not any un-staged changes
-  if [ $? -ne 0 ]; then
-    echo "🙀 ESLint failed on staged file $file - Please check your code and try again"
-    exit 1 # exit with failure status
+
+  if test -f "$file"; then
+    node_modules/.bin/eslint "$file" --quiet # we only want to lint the staged changes, not any un-staged changes
+    if [ $? -ne 0 ]; then
+      echo "🙀 ESLint failed on staged file /client/$file - Please check your code and try again"
+      exit 1 # exit with failure status
+    fi
   fi
+
 done
-echo -ne '✅  Executed Clientside ESLint \r'
+echo -ne '✅  Executed Clientside ESLint          - 1/4 \r'
 echo -ne '\n'
 
 
+cd $PROJECT_PATH/server
+echo -ne '🔵 Executing Serverside ESLint          - 2/4 \r'
 
-cd ../server
-echo -ne '🔵 Executing Serverside ESLint \r'
-
-for file in $(git diff --name-only src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
+for file in $(git diff --name-only --cached src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
 do
-  node_modules/.bin/eslint "$file" # we only want to lint the staged changes, not any un-staged changes
-  if [ $? -ne 0 ]; then
-    echo "🙀 ESLint failed on staged file $file - Please check your code and try again"
-    exit 1 # exit with failure status
+
+  if test -f "$file"; then
+    node_modules/.bin/eslint "$file" --quiet  # we only want to lint the staged changes, not any un-staged changes
+    if [ $? -ne 0 ]; then
+      echo "🙀 ESLint failed on staged file /server/$file - Please check your code and try again"
+      exit 1 # exit with failure status
+    fi
   fi
+
 done
-echo -ne '✅  Executed Serverside ESLint \r'
+echo -ne '✅  Executed Serverside ESLint          - 2/4 \r'
 echo -ne '\n'
 
 
-echo  '🔵 Executing Clientside JEST tests'
-cd ../client
-STAGED_FILES=$(git diff --name-only src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
+echo -ne '🔵 Executing Clientside JEST tests     - 3/4 \r'
+
+
+cd $PROJECT_PATH/client
 BIN_PATH="$(git rev-parse --show-toplevel)/client/node_modules/.bin"
+JEST="$BIN_PATH/jest"
+JEST_RESULT="./node_modules/react-scripts/bin/react-scripts.js test --watchAll=false --bail --reporters=jest-silent-reporter --silent --colors"
+$JEST_RESULT
+if [ $? -ne 0 ]; then
+  printf "\n🙀 Clientside Jest failed. Fix test errors and try again!\n"
+  exit 1 # exit with failure status
+fi
 
-jest() {
-  JEST="$BIN_PATH/jest"
 
-  # Check for jest
-  if [[ ! -x "$JEST" ]]; then
-    printf "\t\033[41mPlease install Jest\033[0m\n"
-    exit 1
-  fi
-
-  $JEST --reporters=jest-silent-reporter --silent --bail $STAGED_FILES
-
-  if [[ $? == 0 ]]; then
-    printf "\n\033[1;32mTest Passed\033[0m\n"
-  else
-    printf "\n\033[41mTest Failed:\033[0m Fix test errors and try again!\n"
-    exit 1
-  fi
-}
-jest
-echo -ne '✅  Executed Clientside JEST \r'
+echo -ne '✅  Executed Clientside JEST tests      - 3/4 \r'
 echo -ne '\n'
 
+echo -ne '🔵 Executing Serverside Jasmine tests  - 4/4 \r'
+cd $PROJECT_PATH/server
 
-echo  '🔵 Executing Serverside JEST tests'
-cd ../server
-STAGED_FILES=$(git diff --name-only src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
-BIN_PATH="$(git rev-parse --show-toplevel)/server/node_modules/.bin"
 
-jest2() {
-  JEST="$BIN_PATH/jest"
-
-  # Check for jest
-  if [[ ! -x "$JEST" ]]; then
-    printf "\t\033[41mPlease install Jest\033[0m\n"
-    exit 1
-  fi
-
-  $JEST --reporters=jest-silent-reporter --silent --bail $STAGED_FILES
-
-  if [[ $? == 0 ]]; then
-    printf "\n\033[1;32mTest Passed\033[0m\n"
-  else
-    printf "\n\033[41mTest Failed:\033[0m Fix test errors and try again!\n"
-    exit 1
-  fi
-}
-jest2
-echo -ne '✅  Executed Serverside JEST \r'
-echo -ne '\n'
+VALID="$(node_modules/ts-node/dist/bin.js -r tsconfig-paths/register ./test)"
+if [[ $VALID == *error* ]]; then
+  printf "$VALID"
+  printf "\n🙀 Serverside Tests failed! Fix test errors and try again!\n"
+  exit 1
+fi
+echo '✅  Executed Serverside Jasmine tests   - 4/4'
 
 echo "🎉 All tests working, Good job! commiting now!"

@@ -5,14 +5,14 @@ import { setCookie, getCookie } from '../../helpers/cookies';
 
 type CredentialsModel = {
   credentials: {
-    accessToken: string,
-    idToken: string,
-    refreshToken: string,
-  },
+    accessToken: string;
+    idToken: string;
+    refreshToken: string;
+  };
   user: {
-    userName: string,
-    email: string,
-  }
+    userName: string;
+    email: string;
+  };
 }
 
 const LoginCallback = () => {

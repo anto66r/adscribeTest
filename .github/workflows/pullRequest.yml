@@ -24,4 +24,4 @@ jobs:
       - name: Server Unit Tests
         working-directory: server
         run: |
-          CI=true yarn test
+          ./node_modules/ts-node/dist/bin.js -r tsconfig-paths/register ./test

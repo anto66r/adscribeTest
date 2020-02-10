@@ -5,18 +5,18 @@ import { config as AWSConfig } from 'aws-sdk';
 
 type CognitoSessionModel = {
   accessToken: {
-    jwtToken: string,
-  },
+    jwtToken: string;
+  };
   idToken: {
-    jwtToken: string,
+    jwtToken: string;
     payload: {
-      email: string,
-      'cognito:username': string
-    }
-  },
+      email: string;
+      'cognito:username': string;
+    };
+  };
   refreshToken: {
-    token: string
-  }
+    token: string;
+  };
 }
 
 AWSConfig.region = process.env.REACT_APP_COGNITO_REGION;
@@ -79,7 +79,7 @@ const parseCognitoWebResponse = (href: string) => new Promise((resolve, reject) 
 
   // userHandler will trigger the promise
   auth.userhandler = {
-    onSuccess(result: Object) {
+    onSuccess(result: Record<string, any>) {
       resolve(result);
     },
     onFailure(err: string) {

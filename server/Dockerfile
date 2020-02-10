@@ -16,4 +16,4 @@ RUN npm i --only=production
 COPY . .
 
 EXPOSE 5000
-CMD [ "node", "-r module-alias/register ./dist" ]
+CMD node -r module-alias/register ./dist

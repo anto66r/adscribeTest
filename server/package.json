@@ -6,9 +6,10 @@
   "scripts": {
     "build": "node ./util/build.js",
     "lint": "tslint --project \"tsconfig.json\"",
-    "start": "node -r module-alias/register ./dist",
     "start:dev": "nodemon --config nodemon.json",
-    "test": "nodemon --config nodemon.test.json"
+    "start": "node -r module-alias/register ./dist",
+    "test:dev": "nodemon --config nodemon.test.json",
+    "test": "./node_modules/ts-node/dist/bin.js -r tsconfig-paths/register ./test"
   },
   "_moduleAliases": {
     "@daos": "dist/daos",

@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import { secureFetch } from "../helpers/fetching";
+import { secureFetch } from "helpers/fetching";
 
 interface ICollectionError {
   message?: string;
@@ -61,13 +61,17 @@ async function getJSON<T>(url: string) {
   return ((await secureFetch(url)) as unknown) as Response<T>;
 }
 
-function useFetch<T>(url: string, options?: any): State<T> {
+// TODO: cuidadín con este any
+function useFetch<T>(
+  url: string,
+  options?: any
+): { state: State<T>; doFetch: any } {
   const [state, dispatch] = useReducer<React.Reducer<State<T>, Action<T>>>(
     reducer,
     initState
   );
 
-  useEffect(() => {
+  function doFetch() {
     const FetchData = async () => {
       try {
         dispatch({ type: "request" });
@@ -78,10 +82,10 @@ function useFetch<T>(url: string, options?: any): State<T> {
       }
     };
     FetchData();
-  }, []);
+  }
   console.log(state);
 
-  return state;
+  return { state, doFetch };
 }
 
 export default useFetch;

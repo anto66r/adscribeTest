@@ -20,6 +20,7 @@ type ContextProps = {
   setUser: Dispatch<SetStateAction<UserType>>;
   setCognito: Dispatch<SetStateAction<CognitoAuthentication>>;
   setRemember: Dispatch<SetStateAction<boolean>>;
+  dispatch: any;
 };
 
 export const UserContext = createContext<ContextProps>({
@@ -36,5 +37,6 @@ export const UserContext = createContext<ContextProps>({
   remember: false,
   setUser: () => {},
   setCognito: () => {},
-  setRemember: () => {}
+  setRemember: () => {},
+  dispatch: () => null
 });

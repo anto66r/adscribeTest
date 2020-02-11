@@ -2,7 +2,7 @@ import { wrapCollection } from '@daos';
 import { User, IUserCollection } from '../../services';
 
 export interface IUserDao {
-  getAll: () => Promise<IUserCollection[]>;
+  getAll: () => Promise<IUserCollection>;
   add: (user: IUserCollection) => Promise<void>;
   update: (user: IUserCollection) => Promise<void>;
   delete: (_id: string) => Promise<void>;
@@ -13,9 +13,9 @@ export class UserDao implements IUserDao {
    *
    */
   // eslint-disable-next-line class-methods-use-this
-  public async getAll(): Promise<IUserCollection[]> {
-    // @ts-ignore
-    return User.find({}).then((users) => wrapCollection(users, {})) // todo, check! removing ts-ignore
+  public async getAll(): Promise<IUserCollection> {
+    return User.find({}).lean()
+      .then((users) => wrapCollection(users, {}))
       .catch((err) => wrapCollection([], { data: err }));
   }
 

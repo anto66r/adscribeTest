@@ -42,7 +42,7 @@ router.use((req, res, next): any | undefined => {
     });
   }
 
-  cognitoExpress.validate(accessTokenFromClient, (err: Error, response: Response): any | undefined => {
+  return cognitoExpress.validate(accessTokenFromClient, (err: Error, response: Response): any | undefined => {
     // If API is not authenticated, Return 401 with error message.
     if (err) {
       return res.status(401).send({
@@ -56,8 +56,6 @@ router.use((req, res, next): any | undefined => {
     next();
     return null;
   });
-
-  return undefined;
 });
 
 

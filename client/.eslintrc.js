@@ -36,7 +36,12 @@ module.exports = {
     "react/button-has-type": "off",
     "react/prop-types": "off",
     "@typescript-eslint/ban-ts-ignore": "off",
-    "arrow-parens": ["error" , "as-needed"]
+    "arrow-parens": ["error" , "as-needed"],
+    "jsx-a11y/label-has-associated-control": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "@typescript-eslint/interface-name-prefix": 'off'
+
   },
   settings: {
     "import/resolver": {

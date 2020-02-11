@@ -9,14 +9,15 @@ interface ICollectionError {
 }
 
 interface ICollection {
-  data: object;
+  data: any[];
   error: ICollectionError;
 }
 
-const wrapCollection = (data: [], error: ICollectionError = {}) => ({
+const wrapCollection = (data: any[], error: ICollectionError = {}) => ({
   data,
   error,
 });
+
 
 export {
   UserDao,

@@ -1,3 +1,15 @@
 .footer {
-  display: none;
+  display: block;
+  background: #f8f9fa;
+  height: 60px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: grey 1px solid;
+
+  .rightSide {
+    float: right;
+    width: 50%;
+  }
+
 }

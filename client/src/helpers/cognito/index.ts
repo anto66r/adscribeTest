@@ -2,6 +2,12 @@
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 import { config as AWSConfig } from 'aws-sdk';
+import Amplify, { Auth } from 'aws-amplify';
+
+import { setCookie, getCookie, deleteCookie } from '../cookies';
+import awsConfig from '../../awsconfig';
+
+Amplify.configure(awsConfig);
 
 type CognitoSessionModel = {
   accessToken: {
@@ -126,6 +132,60 @@ const signOutCognitoSession = () => {
   auth.signOut();
 };
 
+
+const login = (
+  user: string,
+  password: string,
+  setUser: Function,
+  setCognito: Function,
+  remember: boolean,
+) => Auth.signIn(user, password)
+  .then(data => {
+    // Set cookies with access token data
+    const { accessToken, idToken, refreshToken } = data.signInUserSession;
+    const cognitoCookieLifetime: number = parseInt(`${process.env.REACT_APP_COGNITO_COOKIE_LIFE_TIME}`, 30);
+
+    setCognito({
+      CognitoUsername: data.username,
+      CognitoAccessToken: accessToken.jwtToken,
+      CognitoIdToken: idToken.jwtToken,
+      CognitoRefreshToken: refreshToken.token,
+      loginDate: new Date(),
+    });
+
+    // if (remember) {
+    setCookie('CognitoUsername', data.username, cognitoCookieLifetime);
+    setCookie('CognitoAccessToken', accessToken.jwtToken, cognitoCookieLifetime);
+    setCookie('CognitoIdToken', idToken.jwtToken, cognitoCookieLifetime);
+    setCookie('CognitoRefreshToken', refreshToken.token, cognitoCookieLifetime);
+    // }
+
+
+    return setUser({
+      username: data.username,
+    });
+  });
+
+const logout = (setUser: Function, setCognito: Function) => Auth.signOut()
+  .then(() => {
+    deleteCookie('CognitoUsername');
+    deleteCookie('CognitoAccessToken');
+    deleteCookie('CognitoIdToken');
+    deleteCookie('CognitoRefreshToken');
+    deleteCookie('CognitoRedirectCall');
+    return setUser({
+      username: '',
+    });
+  }).then(() => setCognito({}));
+
+
+const getLoggedUser = (): AuthType => ({
+  username: getCookie('CognitoUsername'),
+});
+
+const isLogged = (): boolean => !!getCookie('CognitoAccessToken');
+
+
 export {
   createCognitoAuth,
   createCognitoUser,
@@ -134,4 +194,13 @@ export {
   getCognitoSignInUri,
   parseCognitoWebResponse,
   signOutCognitoSession,
+  login,
+  getLoggedUser,
+  isLogged,
+  logout,
 };
+
+
+type AuthType = {
+  username: string;
+}

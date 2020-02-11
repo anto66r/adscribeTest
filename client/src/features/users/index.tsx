@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
 import { secureFetch } from '../../helpers/fetching';
 
 const Users = () => {

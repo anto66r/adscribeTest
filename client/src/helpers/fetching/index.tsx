@@ -1,5 +1,4 @@
 import { getCookie, setCookie } from '../cookies';
-import { getCognitoSignInUri } from '../cognito';
 
 const secureFetch = (apiEndpoint: string) => new Promise((resolve, reject) => {
   const params = {
@@ -9,16 +8,19 @@ const secureFetch = (apiEndpoint: string) => new Promise((resolve, reject) => {
     },
   };
 
+
+  // @ts-ignore
   fetch(`${process.env.REACT_APP_API_URL}/${apiEndpoint.replace(/^\//, '')}`, params)
-    .then((res) => {
+    .then(res => {
       if (res.status !== 200) {
         throw res;
       }
       return res.json();
     })
-    .then((res) => {
+    .then(res => {
       resolve(res);
     })
+    // @ts-ignore
     .catch((err: any) => {
       // we redirect to login and save current location
       if (err.status === 500) {
@@ -29,7 +31,7 @@ const secureFetch = (apiEndpoint: string) => new Promise((resolve, reject) => {
         reject(err.message);
       } else {
         setCookie('CognitoRedirectCall', window.location.href, 1);
-        window.location.href = getCognitoSignInUri();
+        window.location.href = '/login';
       }
       reject(err);
     });

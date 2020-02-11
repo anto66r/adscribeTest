@@ -5,12 +5,13 @@ const { Schema } = mongoose;
 
 
 interface IUser {
+  _id?: string;
   cognitoId?: string;
   name: string;
 }
 
 interface IUserCollection {
-  data: IUser;
+  data: IUser[];
   error: ICollectionError;
 }
 

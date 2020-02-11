@@ -20,7 +20,7 @@ const LoginCallback = () => {
 
   parseCognitoWebResponse(window.location.href) // parse the callback URL
     .then(() => getCognitoSession()) // get a new session
-    .then((session) => {
+    .then(session => {
       const credentialsModel = (session as CredentialsModel);
       const { credentials } = credentialsModel;
       const cognitoCookieLifetime: number = parseInt(`${process.env.REACT_APP_COGNITO_COOKIE_LIFE_TIME}`, 30);
@@ -33,7 +33,7 @@ const LoginCallback = () => {
         window.location.href = redirectUrl;
       }
     })
-    .catch((errorMessage) => {
+    .catch(errorMessage => {
       history.push({
         pathname: '/error',
         state: { errorMessage },

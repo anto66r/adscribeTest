@@ -65,7 +65,7 @@ router.use((req, res, next): any | undefined => {
 // Add sub-routes
 router.use("/users", UsersRouter);
 router.use("/groups", GroupsRouter);
-router.use("/roles", GroupsRouter);
+router.use("/roles", RolesRouter);
 
 router.options("*", cors(options));
 

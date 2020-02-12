@@ -8,13 +8,14 @@ const RolesRouter = Router();
 const roleDao = new RoleDao();
 
 /** ****************************************************************************
- *                      Get All Groups - "GET /api/groups/all"
+ *                      Get All Roles - "GET /api/roles"
  ***************************************************************************** */
 
 RolesRouter.get("/", async (req: Request, res: Response) => {
+  console.log("roles");
   try {
-    const groups = await roleDao.getAll();
-    return res.status(OK).json({ groups });
+    const roles = await roleDao.getAll();
+    return res.status(OK).json(roles);
   } catch (err) {
     logger.error(err.message, err);
     return res.status(BAD_REQUEST).json({
@@ -24,7 +25,7 @@ RolesRouter.get("/", async (req: Request, res: Response) => {
 });
 
 /** ****************************************************************************
- *                       Add One - "POST /api/groups/add"
+ *                       Add One - "POST /api/roles/add"
  ***************************************************************************** */
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,16 +34,16 @@ RolesRouter.post("/add", (req: Request, res: Response) => {
 });
 
 /** ****************************************************************************
- *                       Update - "PUT /api/groups/update"
+ *                       Update - "PATCH /api/roles/update"
  ***************************************************************************** */
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-RolesRouter.put("/update", (req: Request, res: Response) => {
+RolesRouter.patch("/update", (req: Request, res: Response) => {
   console.log("update");
 });
 
 /** ****************************************************************************
- *                    Delete - "DELETE /api/groups/delete/:_id"
+ *                    Delete - "DELETE /api/roles/delete/:_id"
  ***************************************************************************** */
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

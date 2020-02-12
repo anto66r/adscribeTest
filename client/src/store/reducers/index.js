@@ -1,4 +1,5 @@
 import * as users from "./users";
+import * as roles from "./roles";
 import * as types from "../actions/types";
 
 const createReducer = handlers => (state, action) => {
@@ -10,5 +11,6 @@ const createReducer = handlers => (state, action) => {
 };
 
 export default createReducer({
-  [types.SET_USERS]: users.set
+  [types.SET_USERS]: users.set,
+  [types.SET_ROLES]: roles.set
 });

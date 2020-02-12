@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
-import { NavLink } from 'react-router-dom';
-import classnames from 'classnames';
+import React, { FunctionComponent } from "react";
+import { NavLink } from "react-router-dom";
+import classnames from "classnames";
 
-import './styles.scss';
+import "./styles.scss";
 
 const Sidebar: FunctionComponent = () => {
   const [expanded, setExpanded] = React.useState(false);
@@ -14,7 +14,7 @@ const Sidebar: FunctionComponent = () => {
   }
   return (
     <nav
-      className={classnames('sidebar', { expanded })}
+      className={classnames("sidebar", { expanded })}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -26,6 +26,9 @@ const Sidebar: FunctionComponent = () => {
       </li>
       <li>
         <NavLink to="/dashboards">Dashboards</NavLink>
+      </li>
+      <li>
+        <NavLink to="/roles">Roles</NavLink>
       </li>
     </nav>
   );

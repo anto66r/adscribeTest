@@ -83,7 +83,6 @@ function useFetch<T>(
     };
     FetchData();
   }
-  console.log(state);
 
   return { state, doFetch };
 }

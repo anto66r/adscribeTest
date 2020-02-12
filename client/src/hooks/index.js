@@ -1,3 +1,3 @@
-import useFetch from "./useFetch.ts";
+import useFetch from "./useFetch.js";
 
 export { useFetch };

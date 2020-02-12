@@ -8,6 +8,7 @@ import Header from "components/Header";
 import Footer from "components/Footer";
 import Sidebar from "components/Sidebar";
 import Content from "components/Content";
+import Roles from "features/roles";
 import Users from "features/users/new";
 import { getCookie } from "./helpers/cookies";
 // import useGlobalState from "./state/index";
@@ -23,8 +24,8 @@ const App = () => {
           <Header />
           <Sidebar />
           <Content>
-            <h3>Main page!</h3>
             <Route path="/users" component={Users} />
+            <Route path="/roles" component={Roles} />
             <Route path="/login" component={Login} />
             <Route path="/logout" component={Logout} />
           </Content>

@@ -3,7 +3,7 @@ import { UserContext } from '../../context/UserContext';
 import './styles.scss';
 
 const Header: FunctionComponent = () => {
-  const { user, isLogged } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -26,10 +26,8 @@ const Header: FunctionComponent = () => {
             <span className="sr-only">(current)</span>
           </li>
         </ul>
-
-
         {
-           isLogged ? (
+           user.username ? (
              <>
                <h6 className="mr-3">
                  {user.username}

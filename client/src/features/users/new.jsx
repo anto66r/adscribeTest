@@ -44,30 +44,30 @@ const useFetch = url => {
   return { ...state, doLoad };
 };
 
-const Users = () => {
+const NewUser = () => {
   const [state, dispatch] = useStore();
   const { data, loading, doLoad } = useFetch('/users');
+
+
   React.useEffect(() => {
     if (data) dispatch(setUsers(data));
   }, [data, dispatch, setUsers]);
+
   return (
-    <Router>
-      <Route path="/">
-        <button type="button" onClick={doLoad} disabled={loading}>
-          {`Refresh users${loading ? ' (loading)' : ''}`}
-        </button>
-        <ul>
-          {state
+    <>
+      <button type="button" onClick={doLoad} disabled={loading}>
+        {`Refresh users${loading ? ' (loading)' : ''}`}
+      </button>
+      <ul>
+        {state
             && state.users
             && state.users.map(user => (
               <li key={user.cognitoId}>
                 {user.name} <Link to={`/users/edit/${user._id}`}>edit</Link>
               </li>
             ))}
-        </ul>
-      </Route>
-      <Route path="/users/edit/:userId" component={EditUser} />
-    </Router>
+      </ul>
+    </>
   );
 };
-export default Users;
+export default NewUser;

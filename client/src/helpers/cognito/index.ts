@@ -3,6 +3,7 @@ import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
 import Amplify, { Auth } from 'aws-amplify';
 import { config as AWSConfig } from 'aws-sdk';
+import { UserContext } from 'aws-sdk/clients/sagemaker';
 
 import { secureFetch } from 'helpers/fetching';
 import awsConfig from '../../awsconfig';
@@ -135,24 +136,25 @@ const signOutCognitoSession = () => {
 
 
 const login = async (
-  user: string,
+  username: string,
   password: string,
   setUser: Function,
   setCognito: Function,
   setLogged: Function,
   remember: boolean,
 ) => {
-  const data = await Auth.signIn(user, password);
-
+  const data = await Auth.signIn(username, password);
 
   const { accessToken, idToken, refreshToken } = data.signInUserSession;
   const cognitoUserId = accessToken.jwtToken;
+
+  let user;
   try {
-    await secureFetch({
+    user = await secureFetch({
       endpoint: '/users/login',
       accessToken: cognitoUserId,
       payload: {
-        user,
+        username,
         cognitoId: cognitoUserId,
       },
     });
@@ -163,12 +165,12 @@ const login = async (
   // Set cookies with access token data
   const cognitoCookieLifetime: number = parseInt(`${process.env.REACT_APP_COGNITO_COOKIE_LIFE_TIME}`, 30);
 
-  if (remember) {
-    setCookie('CognitoUsername', data.username, cognitoCookieLifetime);
-    setCookie('CognitoAccessToken', cognitoUserId, cognitoCookieLifetime);
-    setCookie('CognitoIdToken', idToken.jwtToken, cognitoCookieLifetime);
-    setCookie('CognitoRefreshToken', refreshToken.token, cognitoCookieLifetime);
-  }
+  // if (remember) {
+  setCookie('CognitoUsername', data.username, cognitoCookieLifetime);
+  setCookie('CognitoAccessToken', cognitoUserId, cognitoCookieLifetime);
+  setCookie('CognitoIdToken', idToken.jwtToken, cognitoCookieLifetime);
+  setCookie('CognitoRefreshToken', refreshToken.token, cognitoCookieLifetime);
+  // }
 
   await setCognito({
     CognitoUsername: data.username,
@@ -181,6 +183,8 @@ const login = async (
     username: data.username,
   });
   await setLogged(true);
+
+  return user;
 };
 
 const cleanCookies = () => {

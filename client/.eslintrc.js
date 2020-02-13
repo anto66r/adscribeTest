@@ -42,8 +42,8 @@ module.exports = {
     "react/jsx-one-expression-per-line": "off",
     "@typescript-eslint/interface-name-prefix": "off",
     "no-underscore-dangle": "off",
-    "no-prototype-builtins": "off"
-
+    "no-prototype-builtins": "off",
+    "max-len": [2, 180, 4, {"ignoreUrls": true}],
   },
   settings: {
     "import/resolver": {

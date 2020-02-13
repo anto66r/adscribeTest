@@ -1,5 +1,5 @@
-import * as mongoose from 'mongoose';
 import { ICollectionError } from '@daos';
+import * as mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 

@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { bool } from 'aws-sdk/clients/signer';
+import { UserContext } from 'context/UserContext';
 
 import { Login } from 'features/login';
 import { Logout } from 'features/logout';
-import { UserContext } from 'context/UserContext';
-import Header from './components/Header';
+import TestApi from 'features/testapi';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import './App.scss';
 import Footer from './components/Footer';
+import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-import Content from './components/Content';
+import { ErrorPage } from './features/error/ErrorPage';
 import Users from './features/users';
 import { getCookie } from './helpers/cookies';
+
+const getLogged = (): boolean => !!getCookie('CognitoAccessToken');
 
 const App = () => {
   const [user, setUser] = useState({
@@ -17,29 +22,41 @@ const App = () => {
   });
   const [cognito, setCognito] = useState({});
   const [remember, setRemember] = useState(false);
+  const [isLogged, setLogged] = useState(getLogged());
 
+
+  console.log(getLogged());
   return (
     <>
-
       <Router>
-
         <UserContext.Provider value={{
-          user, setUser, cognito, setCognito, remember, setRemember,
+          user, setUser, cognito, setCognito, remember, setRemember, isLogged, setLogged,
         }}
         >
-          <Header />
-          <Sidebar />
-          <Content>
-            <h3>Main page!</h3>
-            <Route path="/users" component={Users} />
-            <Route path="/login" component={Login} />
-            <Route path="/logout" component={Logout} />
-          </Content>
-          <Footer label="footer" />
+          <Route path="/error" component={ErrorPage} />
+
+          {
+            !isLogged ? (
+              <Route exact path="/" component={Login} />
+            ) : (
+              <>
+                <Header />
+                <div className="middle-section-wrapper">
+                  <div className="content-wrapper">
+                    <Route path="/users" component={Users} />
+                    <Route path="/testapi" component={TestApi} />
+                    <Route path="/logout" component={Logout} />
+                  </div>
+                  <Sidebar />
+
+                </div>
+                <Footer label="footer" />
+              </>
+            )
+          }
+
         </UserContext.Provider>
       </Router>
-
-
     </>
   );
 };

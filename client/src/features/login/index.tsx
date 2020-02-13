@@ -1,23 +1,30 @@
+import { getCookie } from 'helpers/cookies';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getCookie } from 'helpers/cookies';
+import { ErrorContext } from '../../context/ErrorContext';
 import { UserContext } from '../../context/UserContext';
 import { login } from '../../helpers/cognito';
+import './style.scss';
 
 const Login = () => {
   const [userForm, setUserForm] = useState('');
   const [password, setPassword] = useState('');
   const [rememberForm, setRememberForm] = useState(false);
-  const history = useHistory();
-
-  const { setUser, setCognito, setRemember } = useContext(UserContext);
+  const [isLogging, setIsLogging] = useState(false);
+  const {
+    setUser, setCognito, setRemember, setLogged,
+  } = useContext(UserContext);
 
   useEffect(() => {
     setRemember(rememberForm);
   }, [rememberForm]);
 
+  const history = useHistory();
+  const { message: errorMessage } = useContext(ErrorContext);
+
   const doLogin = () => {
-    login(userForm, password, setUser, setCognito, rememberForm)
+    setIsLogging(true);
+    login(userForm, password, setUser, setCognito, setLogged, rememberForm)
       .then(() => {
         const redirectTo = getCookie('CognitoRedirectCall');
         // return here to CognitoRedirectCall
@@ -35,29 +42,50 @@ const Login = () => {
 
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-4">
 
-          <div className="form-group">
+    <div className="d-flex justify-content-center align-items-center vh-100">
+
+      <div className="row">
+        <div className="col">
+          {
+            errorMessage && (
+              <div className="alert alert-danger">
+                {errorMessage}
+              </div>
+            )
+          }
+          <div className="d-flex justify-content-center mb-4">
+            <img src="/logo/adscribe-full-black.png" width="200" alt="adscribe" />
+          </div>
+          <div className="form-inline">
             <label>User</label>
-            <input type="email" className="form-control" name="user" value={userForm} aria-describedby="emailHelp" onChange={e => setUserForm(e.target.value)} />
+            <input type="email" className="form-control d-lg-inline-block" name="user" value={userForm} aria-describedby="emailHelp" onChange={e => setUserForm(e.target.value)} />
           </div>
-          <div className="form-group">
+          <div className="form-inline">
             <label>Password</label>
-            <input type="password" className="form-control" name="password" value={password} onChange={e => setPassword(e.target.value)} />
+            <input type="password" className="form-control d-lg-inline-block" name="password" value={password} onChange={e => setPassword(e.target.value)} />
           </div>
-          <div className="form-group form-check">
+          <div className="mt-3" style={{ textAlign: 'center' }}>
             <input type="checkbox" className="form-check-input" id="remember" checked={rememberForm} onChange={e => setRememberForm(e.target.checked)} />
             <label className="form-check-label">Stay logged in</label>
           </div>
-          <button type="submit" onClick={doLogin} className="btn btn-primary">Login</button>
+
+          <div className="d-flex justify-content-center mt-3 mb-2">
+            <button type="submit" onClick={doLogin} className="btn btn-primary" disabled={isLogging}>{isLogging ? 'Please wait...' : 'Login'} {isLogging && (
+              <div className="spinner-border text-light ml-1" role="status" style={{ width: 20, height: 20 }}>
+                <span className="sr-only">Loading...</span>
+              </div>
+            )}
+            </button>
+          </div>
 
         </div>
       </div>
+
+
     </div>
+
   );
 };
-
 
 export { Login };

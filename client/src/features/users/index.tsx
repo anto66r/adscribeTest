@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../context/UserContext';
 import { secureFetch } from '../../helpers/fetching';
 
 const Users = () => {
-  const defaultUrl = 'http://localhost:5000/api/users';
-  const [apiUrl, setApiUrl] = useState(defaultUrl);
   const [result, setResult] = useState('');
+  const { cognito } = useContext(UserContext);
 
-  const doFetch = async () => {
-    const newResult = await secureFetch('/users');
+
+  const fetchUsers = async () => {
+    const newResult = await secureFetch({
+      endpoint: '/users',
+      cognito,
+    });
     setResult(JSON.stringify(newResult, null, 2));
   };
 
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+
   return (
     <div>
-      Call:
-      <input
-        style={{ width: 400 }}
-        onChange={e => setApiUrl(e.target.value)}
-        value={apiUrl}
-      />
-      <button className="btn btn-primary" onClick={doFetch}>
-        Fetch
-      </button>
-      <br />
       {result && (
         <>
           <h4>Result</h4>

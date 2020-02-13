@@ -1,8 +1,6 @@
 import { GroupDao } from '@daos';
 import { logger } from '@shared';
-import {
-  Request, Response, Router,
-} from 'express';
+import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, OK } from 'http-status-codes';
 
 // Init shared

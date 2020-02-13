@@ -1,11 +1,11 @@
+import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
 import { NavLink } from 'react-router-dom';
-import classnames from 'classnames';
-
 import './styles.scss';
 
 const Sidebar: FunctionComponent = () => {
   const [expanded, setExpanded] = React.useState(false);
+
   function handleMouseEnter(): void {
     setExpanded(true);
   }
@@ -13,21 +13,23 @@ const Sidebar: FunctionComponent = () => {
     setExpanded(false);
   }
   return (
+
     <nav
       className={classnames('sidebar', { expanded })}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <li>
-        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/users"><i className="fa fa-user" />{expanded && 'Users'}</NavLink>
       </li>
       <li>
-        <NavLink to="/users">Users</NavLink>
+        <NavLink to="/dashboards"><i className="fa fa-tachometer-alt" />{expanded && 'Dashboards'}</NavLink>
       </li>
       <li>
-        <NavLink to="/dashboards">Dashboards</NavLink>
+        <NavLink to="/testapi"><i className="fa fa-cog" />{expanded && 'Test API'}</NavLink>
       </li>
     </nav>
+
   );
 };
 

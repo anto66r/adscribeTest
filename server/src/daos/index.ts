@@ -1,5 +1,5 @@
-import { UserDao } from './User/UserDao';
 import { GroupDao } from './Group/GroupDao';
+import { UserDao } from './User/UserDao';
 
 interface ICollectionError {
   message?: string;

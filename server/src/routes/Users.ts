@@ -1,17 +1,13 @@
 import { UserDao } from '@daos';
 import { logger, paramMissingError } from '@shared';
-import {
-  Request, Response, Router,
-} from 'express';
+import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, CREATED, OK } from 'http-status-codes';
+import { IUserCollection } from '../services';
 
 // Init shared
 const UsersRouter = Router();
 const userDao = new UserDao();
 
-/** ****************************************************************************
- *                      Get All Users - "GET /api/users/all"
- ***************************************************************************** */
 
 UsersRouter.get('/', async (req: Request, res: Response) => {
   try {
@@ -25,9 +21,21 @@ UsersRouter.get('/', async (req: Request, res: Response) => {
   }
 });
 
-/** ****************************************************************************
- *                       Add One - "POST /api/users/add"
- ***************************************************************************** */
+UsersRouter.post('/login', async (req: Request, res: Response) => {
+  const { user, cognitoId } = req.body;
+  try {
+    const foundUser: IUserCollection = await userDao.findUser(user);
+    if (!foundUser.data.length) {
+      userDao.createUser(user, cognitoId);
+    }
+    return res.status(OK).json(foundUser);
+  } catch (err) {
+    logger.error(err.message, err);
+    return res.status(BAD_REQUEST).json({
+      error: err.message,
+    });
+  }
+});
 
 UsersRouter.post('/add', async (req: Request, res: Response) => {
   try {
@@ -47,9 +55,6 @@ UsersRouter.post('/add', async (req: Request, res: Response) => {
   }
 });
 
-/** ****************************************************************************
- *                       Update - "PUT /api/users/update"
- ***************************************************************************** */
 
 UsersRouter.put('/update', async (req: Request, res: Response) => {
   try {
@@ -69,10 +74,6 @@ UsersRouter.put('/update', async (req: Request, res: Response) => {
   }
 });
 
-/** ****************************************************************************
- *                    Delete - "DELETE /api/users/delete/:_id"
- ***************************************************************************** */
-
 UsersRouter.delete('/delete/:_id', async (req: Request, res: Response) => {
   try {
     const { _id } = req.params;
@@ -85,9 +86,5 @@ UsersRouter.delete('/delete/:_id', async (req: Request, res: Response) => {
     });
   }
 });
-
-/** ****************************************************************************
- *                                     Export
- ***************************************************************************** */
 
 export default UsersRouter;

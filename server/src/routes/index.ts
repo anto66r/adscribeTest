@@ -1,8 +1,8 @@
-import { Router } from 'express';
 // - no types exist for cognito-express
 // @ts-ignore
 import CognitoExpress from 'cognito-express';
 import cors from 'cors';
+import { Router } from 'express';
 import GroupsRouter from './Groups';
 import UsersRouter from './Users';
 // Init router and path
@@ -28,6 +28,7 @@ router.use(cors(options));
 router.use((req, res, next): any | undefined => {
   // I'm passing in the access token in header under key accessToken
   const accessTokenFromClient = req.headers.accesstoken;
+  console.log(`Access token obtained: ${accessTokenFromClient}`);
 
   // Fail if token not present in header.
   if (process.env.NODE_ENV === 'development' && BYPASS_SECURITY) {

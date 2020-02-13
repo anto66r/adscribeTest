@@ -1,5 +1,5 @@
 import { wrapCollection } from '@daos';
-import { User, IUserCollection } from '../../services';
+import { IUserCollection, User } from '../../services';
 
 export interface IUserDao {
   getAll: () => Promise<IUserCollection>;
@@ -19,6 +19,13 @@ export class UserDao implements IUserDao {
       .catch((err) => wrapCollection([], { data: err }));
   }
 
+  public async findUser(username: string): Promise<IUserCollection> {
+    return User.find({ username }).lean()
+      .then((user) => wrapCollection(user, {}))
+      .catch((err) => wrapCollection([], { data: err }));
+  }
+
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
   public add(user: IUserCollection): Promise<void> {
     return {} as any;
@@ -34,5 +41,21 @@ export class UserDao implements IUserDao {
   public delete(_id: string): Promise<void> {
     // TODO
     return {} as any;
+  }
+
+  public async createUser(username: string, cognitoId: string): Promise<IUserCollection> {
+    // Find if exists
+    const possibleUser = await User.find({ username });
+
+    if (possibleUser.length) {
+      throw Error('User exists');
+    }
+
+    const user = await User.create({
+      username,
+      cognitoId,
+    });
+
+    return wrapCollection([user]);
   }
 }

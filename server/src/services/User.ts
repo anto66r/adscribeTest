@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
 import { ICollectionError } from '@daos';
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
@@ -7,7 +7,7 @@ const { Schema } = mongoose;
 interface IUser {
   _id?: string;
   cognitoId?: string;
-  name: string;
+  username: string;
 }
 
 interface IUserCollection {
@@ -17,7 +17,7 @@ interface IUserCollection {
 
 const userSchema = new Schema(
   {
-    name: {
+    username: {
       type: String,
       trim: true,
     },
@@ -37,7 +37,7 @@ const User = mongoose.model('User', userSchema);
 
 interface IUser {
   cognitoId?: string;
-  name: string;
+  username: string;
 }
 
 export {

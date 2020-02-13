@@ -1,7 +1,7 @@
 /* eslint-disable  */
-import React, { FunctionComponent, useContext } from 'react';
+import React, {FunctionComponent, useContext} from 'react';
+import {UserContext} from '../../context/UserContext';
 import './styles.scss';
-import { UserContext } from '../../context/UserContext';
 
 type FooterProps = {
   label: string;

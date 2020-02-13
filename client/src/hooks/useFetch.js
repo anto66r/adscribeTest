@@ -1,41 +1,62 @@
-import { useReducer } from "react";
-import { secureFetch } from "helpers/fetching";
+import {
+  useReducer,
+} from 'react';
+import {
+  secureFetch,
+} from 'helpers/fetching';
 
-const reducer = (state, { type, payload }) => {
+const reducer = (state, {
+  type,
+  payload,
+}) => {
   switch (type) {
-    case "fetch":
+    case 'fetch':
       return {
-        loading: true
+        loading: true,
       };
-    case "success":
-      return {
-        loading: false,
-        data: payload
-      };
-    case "failure":
+    case 'success':
       return {
         loading: false,
-        error: payload
+        data: payload,
       };
+    case 'failure':
+      return {
+        loading: false,
+        error: payload,
+      };
+    default:
+      return state;
   }
-  return state;
 };
 
 const useFetch = url => {
-  const [state, dispatch] = useReducer(reducer, { loading: false });
+  const [state, dispatch] = useReducer(reducer, {
+    loading: false,
+  });
   const doLoad = async () => {
-    dispatch({ type: "fetch" });
+    dispatch({
+      type: 'fetch',
+    });
     try {
       const response = await secureFetch(url);
       setTimeout(
-        () => dispatch({ type: "success", payload: response.data }),
-        1000
+        () => dispatch({
+          type: 'success',
+          payload: response.data,
+        }),
+        1000,
       );
     } catch (e) {
-      dispatch({ type: "failure", payload: e });
+      dispatch({
+        type: 'failure',
+        payload: e,
+      });
     }
   };
-  return { ...state, doLoad };
+  return {
+    ...state,
+    doLoad,
+  };
 };
 
 export default useFetch;

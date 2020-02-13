@@ -1,6 +1,6 @@
-import { UserDao } from "./User/UserDao";
-import { GroupDao } from "./Group/GroupDao";
-import { RoleDao } from "./Role/RoleDao";
+import { UserDao } from './User/UserDao';
+import { GroupDao } from './Group/GroupDao';
+import { RoleDao } from './Role/RoleDao';
 
 interface ICollectionError {
   message?: string;
@@ -16,7 +16,7 @@ interface ICollection {
 
 const wrapCollection = (data: any[], error: ICollectionError = {}) => ({
   data,
-  error
+  error,
 });
 
 export {
@@ -25,5 +25,5 @@ export {
   RoleDao,
   ICollectionError,
   ICollection,
-  wrapCollection
+  wrapCollection,
 };

@@ -1,8 +1,8 @@
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import mongoose from 'mongoose';
 import logger from 'morgan';
 import path from 'path';
-import mongoose from 'mongoose';
 import BaseRouter from './routes';
 
 // Init express
@@ -12,8 +12,11 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+
 app.use(cookieParser());
 app.use('/api', BaseRouter);
+
 
 const staticDir = path.join(__dirname, 'public');
 app.use(express.static(staticDir));

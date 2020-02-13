@@ -1,9 +1,9 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { useStore } from "store";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { useStore } from 'store';
 
 const EditUser = () => {
-  const [state, dispatch] = useStore();
+  const [state] = useStore();
   const { users } = state;
   const { userId } = useParams();
   const user = users.find(item => item._id === userId);

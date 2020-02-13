@@ -20,6 +20,7 @@ module.exports = {
         'interface-name-prefix': 'off',
         '@typescript-eslint/interface-name-prefix': 'off',
         'import/prefer-default-export': 'off',
+        'class-methods-use-this': 'off'
     }
 };
 

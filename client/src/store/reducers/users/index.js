@@ -1,4 +1,4 @@
 export const set = (state, { payload }) => ({
   ...state,
-  users: payload.users
+  users: payload.users,
 });

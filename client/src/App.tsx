@@ -1,27 +1,25 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './App.scss';
+import { StoreProvider } from 'store';
+import reducers from 'store/reducers';
+import initialState from 'store/initialState';
+import Main from 'features/Main';
 
-import { StoreProvider } from "store";
-import reducers from "store/reducers";
-import initialState from "store/initialState";
-import Main from "features/main";
-import { Login } from "features/login";
-import { Logout } from "features/logout";
+import { PrivateRoute } from 'components/PrivateRoute';
+import { Login } from './features/login';
+import { ErrorPage } from './features/error/ErrorPage';
 
-const App = () => {
-  return (
-    <Router>
-      <StoreProvider initialState={initialState} reducer={reducers}>
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/logout" component={Logout} />
-          <Route>
-            <Main />
-          </Route>
-        </Switch>
-      </StoreProvider>
-    </Router>
-  );
-};
+const App = () => (
+  <Router>
+    <StoreProvider initialState={initialState} reducer={reducers}>
+      <Switch>
+        <Route path="/error" component={ErrorPage} />
+        <Route exact path="/login" component={Login} />
+        <PrivateRoute component={Main} />
+      </Switch>
+    </StoreProvider>
+  </Router>
+);
 
 export default App;

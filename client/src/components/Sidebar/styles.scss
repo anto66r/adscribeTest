@@ -1,12 +1,45 @@
 .sidebar {
-  border: 1pt black solid;
-  width: 30px;
-  overflow: hidden;
+  display: inline-block;
+  background: rgba(0, 135, 34, 1);
+  width: 60px;
+  height: 100vh;
+  color: white;
+  position: absolute;
+  box-sizing: border-box;
+
   &.expanded {
     width: 200px;
   }
+  li {
+    font-size: 14px;
+    list-style: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    cursor: pointer;
+    &:hover {
+      background-color: #7DFF7D;
+      color: black !important;
+    }
+    i {
+      width: 60px;
+      font-size: 30px;
+      display: inline-block;
+      text-align:center;
+      vertical-align: sub;
+    }
+  }
 }
 
-a.active {
-  font-weight: bold;
+a {
+  color: white;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+    color: white;
+  }
+  &:active{
+    color: white;
+    text-decoration: none;
+  }
 }

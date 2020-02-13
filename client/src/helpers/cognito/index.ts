@@ -1,11 +1,13 @@
 // @ts-ignore
 import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import { CognitoUserPool } from 'amazon-cognito-identity-js';
-import { config as AWSConfig } from 'aws-sdk';
 import Amplify, { Auth } from 'aws-amplify';
+import { config as AWSConfig } from 'aws-sdk';
+import { UserContext } from 'aws-sdk/clients/sagemaker';
 
-import { setCookie, getCookie, deleteCookie } from '../cookies';
+import { secureFetch } from 'helpers/fetching';
 import awsConfig from '../../awsconfig';
+import { deleteCookie, getCookie, setCookie } from '../cookies';
 
 Amplify.configure(awsConfig);
 
@@ -133,58 +135,79 @@ const signOutCognitoSession = () => {
 };
 
 
-const login = (
-  user: string,
+const login = async (
+  username: string,
   password: string,
   setUser: Function,
   setCognito: Function,
+  setLogged: Function,
   remember: boolean,
-) => Auth.signIn(user, password)
-  .then(data => {
-    // Set cookies with access token data
-    const { accessToken, idToken, refreshToken } = data.signInUserSession;
-    const cognitoCookieLifetime: number = parseInt(`${process.env.REACT_APP_COGNITO_COOKIE_LIFE_TIME}`, 30);
+) => {
+  const data = await Auth.signIn(username, password);
 
-    setCognito({
-      CognitoUsername: data.username,
-      CognitoAccessToken: accessToken.jwtToken,
-      CognitoIdToken: idToken.jwtToken,
-      CognitoRefreshToken: refreshToken.token,
-      loginDate: new Date(),
+  const { accessToken, idToken, refreshToken } = data.signInUserSession;
+  const cognitoUserId = accessToken.jwtToken;
+
+  let user;
+  try {
+    user = await secureFetch({
+      endpoint: '/users/login',
+      accessToken: cognitoUserId,
+      payload: {
+        username,
+        cognitoId: cognitoUserId,
+      },
     });
+  } catch (err) {
+    throw Error('Cannot sync login data in database');
+  }
 
-    // if (remember) {
-    setCookie('CognitoUsername', data.username, cognitoCookieLifetime);
-    setCookie('CognitoAccessToken', accessToken.jwtToken, cognitoCookieLifetime);
-    setCookie('CognitoIdToken', idToken.jwtToken, cognitoCookieLifetime);
-    setCookie('CognitoRefreshToken', refreshToken.token, cognitoCookieLifetime);
-    // }
+  // Set cookies with access token data
+  const cognitoCookieLifetime: number = parseInt(`${process.env.REACT_APP_COGNITO_COOKIE_LIFE_TIME}`, 30);
 
+  // if (remember) {
+  setCookie('CognitoUsername', data.username, cognitoCookieLifetime);
+  setCookie('CognitoAccessToken', cognitoUserId, cognitoCookieLifetime);
+  setCookie('CognitoIdToken', idToken.jwtToken, cognitoCookieLifetime);
+  setCookie('CognitoRefreshToken', refreshToken.token, cognitoCookieLifetime);
+  // }
 
-    return setUser({
-      username: data.username,
-    });
+  await setCognito({
+    CognitoUsername: data.username,
+    CognitoAccessToken: cognitoUserId,
+    CognitoIdToken: idToken.jwtToken,
+    CognitoRefreshToken: refreshToken.token,
+    loginDate: new Date(),
   });
+  await setUser({
+    username: data.username,
+  });
+  await setLogged(true);
 
-const logout = (setUser: Function, setCognito: Function) => Auth.signOut()
+  return user;
+};
+
+const cleanCookies = () => {
+  deleteCookie('CognitoUsername');
+  deleteCookie('CognitoAccessToken');
+  deleteCookie('CognitoIdToken');
+  deleteCookie('CognitoRefreshToken');
+  deleteCookie('CognitoRedirectCall');
+};
+const logout = (setUser: Function, setCognito: Function, setLogged: Function) => Auth.signOut()
   .then(() => {
-    deleteCookie('CognitoUsername');
-    deleteCookie('CognitoAccessToken');
-    deleteCookie('CognitoIdToken');
-    deleteCookie('CognitoRefreshToken');
-    deleteCookie('CognitoRedirectCall');
+    cleanCookies();
     return setUser({
       username: '',
     });
-  }).then(() => setCognito({}));
+  })
+  .then(() => setCognito({}))
+  .then(() => setLogged(false));
 
 
 const getLoggedUser = (): AuthType => ({
   username: getCookie('CognitoUsername'),
 });
-
-const isLogged = (): boolean => !!getCookie('CognitoAccessToken');
-
 
 export {
   createCognitoAuth,
@@ -196,8 +219,8 @@ export {
   signOutCognitoSession,
   login,
   getLoggedUser,
-  isLogged,
   logout,
+  cleanCookies,
 };
 
 

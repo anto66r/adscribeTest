@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useContext } from 'react';
-import './styles.scss';
 import { UserContext } from '../../context/UserContext';
-import { isLogged } from '../../helpers/cognito';
+import './styles.scss';
 
 const Header: FunctionComponent = () => {
   const { user } = useContext(UserContext);
@@ -27,19 +26,17 @@ const Header: FunctionComponent = () => {
             <span className="sr-only">(current)</span>
           </li>
         </ul>
-
-
         {
-          isLogged() ? (
-            <>
-              <h6 className="mr-3">
-                {user.username}
-              </h6>
-              <a href="/logout" className="btn btn-outline-success my-2 my-sm-0">Logout</a>
-            </>
-          ) : (
-            <a href="/login" className="btn btn-outline-success my-2 my-sm-0">Login</a>
-          )
+           user.username ? (
+             <>
+               <h6 className="mr-3">
+                 {user.username}
+               </h6>
+               <a href="/logout" className="btn btn-outline-success my-2 my-sm-0">Logout</a>
+             </>
+           ) : (
+             <a href="/login" className="btn btn-outline-success my-2 my-sm-0">Login</a>
+           )
         }
       </div>
     </nav>

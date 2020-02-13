@@ -9,7 +9,7 @@ const secureFetch = ({
   accessToken,
   payload,
   method = payload ? 'POST' : 'GET',
-}: SecureFetchType) => new Promise((resolve, reject) => {
+}: SecureFetchType): Promise<any> => new Promise((resolve, reject) => {
   const params: HeaderType = {
     method,
     headers: {
@@ -23,7 +23,6 @@ const secureFetch = ({
   if (payload && Object.keys(payload).length) {
     params.body = JSON.stringify(payload);
   }
-
   // @ts-ignore
   fetch(`${process.env.REACT_APP_API_URL}/${endpoint.replace(/^\//, '')}`, params)
     .then((res: Response) => {

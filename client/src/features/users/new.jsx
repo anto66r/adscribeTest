@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link, BrowserRouter as Router, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { useStore } from 'store';
 import { setUsers } from 'store/actions';
-import EditUser from 'components/EditUser';
 import useFetch from 'hooks/useFetch';
 
 const NewUser = () => {

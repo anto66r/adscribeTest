@@ -1,5 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+
+import Roles from 'features/roles';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
@@ -13,8 +15,9 @@ const Main = () => (
     <div className="middle-section-wrapper">
       <div className="content-wrapper">
         <Switch>
-          <Route path="./users" component={Users} />
+          <Route path="/users" component={Users} />
           <Route path="/testapi" component={TestApi} />
+          <Route path="/roles" component={Roles} />
           <Route path="/logout" component={Logout} />
         </Switch>
       </div>

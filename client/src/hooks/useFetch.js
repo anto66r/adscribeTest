@@ -38,7 +38,9 @@ const useFetch = url => {
       type: 'fetch',
     });
     try {
+      console.log('adsfasdloading');
       const response = await secureFetch(url);
+      console.log(response);
       setTimeout(
         () => dispatch({
           type: 'success',

@@ -2,14 +2,25 @@ import React from 'react';
 import { Route, useRouteMatch, Switch } from 'react-router-dom';
 
 import { useStore } from 'store';
+import { useFetch } from 'hooks';
+import { setUsers } from 'store/actions';
 import RolesList from './RolesList';
 import RoleDetail from './RoleDetail';
 import RoleEdit from './RoleEdit';
 import RoleCreate from './RoleCreate';
 
 const Roles = () => {
+  const [state, dispatch] = useStore();
+  const { data, loading, doLoad } = useFetch('/roles');
+  React.useEffect(() => {
+    doLoad();
+  }, []);
+  React.useEffect(() => {
+    if (data) dispatch(setUsers(data));
+  }, [data, dispatch]);
+
   const { path } = useRouteMatch();
-  const [state] = useStore();
+
   return (
     <>
       <h1>Roles</h1>

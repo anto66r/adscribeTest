@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import { StoreProvider } from 'store';
 import reducers from 'store/reducers';
 import initialState from 'store/initialState';
-import Main from 'features/Main';
+import Main from 'features/main';
 
 import { PrivateRoute } from 'components/PrivateRoute';
 import { Login } from './features/login';

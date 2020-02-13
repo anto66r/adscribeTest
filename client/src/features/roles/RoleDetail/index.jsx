@@ -1,16 +1,17 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React from 'react';
+import { useParams, Link } from 'react-router-dom';
 
-import { useStore } from "store";
-import globalPermissions from "config/permissions";
+import { useStore } from 'store';
+import globalPermissions from 'config/permissions';
 
-const getPermissions = (master, obj = []) =>
-  master.filter(item => obj.includes(item));
+const getPermissions = (master, obj = []) => master.filter(item => obj.includes(item));
 
 const RoleDetail = () => {
   const { id } = useParams();
+  // const { path, url } = useRouteMatch();
   const [{ roles }] = useStore();
   const { name, permissions } = roles.find(item => item._id === id) || {};
+
   return (
     <>
       <h2>{name}</h2>
@@ -23,6 +24,7 @@ const RoleDetail = () => {
           <li key={item}>{item}</li>
         ))}
       </ul>
+      <Link to={`edit/${id}`}>Edit role</Link>
     </>
   );
 };

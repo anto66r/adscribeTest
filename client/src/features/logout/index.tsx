@@ -8,19 +8,14 @@ const Logout = () => {
   const { setUser, setCognito } = useContext(UserContext);
 
   useEffect(() => {
-    logout(setUser, setCognito)
-      .then(() => {
-        history.push({
-          pathname: '/',
-        });
+    logout(setUser, setCognito).then(() => {
+      history.push({
+        pathname: '/',
       });
-  }, [history, setUser]);
+    });
+  }, [history, setUser, setCognito]);
 
-
-  return (
-    <div className="container">Loging off...</div>
-  );
+  return <div className="container">Loging off...</div>;
 };
-
 
 export { Logout };

@@ -1,29 +1,25 @@
-import React, { useReducer } from "react";
-import { useStore } from "store";
-import { setRoles } from "store/actions";
-import { useFetch } from "hooks";
-import { Link } from "react-router-dom";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import EditUser from "components/EditUser";
+import React from "react";
+import { Route, useRouteMatch, Switch } from "react-router-dom";
 
-const Users = () => {
+import RolesList from "./RolesList";
+import RoleDetail from "./RoleDetail";
+import RoleCreate from "./RoleCreate";
+import { useStore } from "store";
+
+const Roles = () => {
+  let { path } = useRouteMatch();
   const [state, dispatch] = useStore();
-  const { data, loading, doLoad } = useFetch("/roles");
-  React.useEffect(() => {
-    if (data) dispatch(setRoles(data));
-  }, [data, dispatch, setRoles]);
-  console.log(state);
   return (
     <>
       <h1>Roles</h1>
-      <button type="button" onClick={doLoad} disabled={loading}>
-        {`Refresh roles${loading ? " (loading)" : ""}`}
-      </button>
-      <ul>
-        {state.roles &&
-          state.roles.map(({ name, _id }) => <li key={_id}>{name}</li>)}
-      </ul>
+      <Switch>
+        <Route exact path={path}>
+          <RolesList roles={state.roles} />
+        </Route>
+        <Route exact path={`${path}/create`} component={RoleCreate} />
+        <Route path={`${path}/:id`} component={RoleDetail} />
+      </Switch>
     </>
   );
 };
-export default Users;
+export default Roles;

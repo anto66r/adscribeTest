@@ -1,7 +1,10 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { parseCognitoWebResponse, getCognitoSession } from '../../helpers/cognito';
-import { setCookie, getCookie } from '../../helpers/cookies';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import {
+  parseCognitoWebResponse,
+  getCognitoSession
+} from "../../helpers/cognito";
+import { setCookie, getCookie } from "../../helpers/cookies";
 
 type CredentialsModel = {
   credentials: {
@@ -13,7 +16,7 @@ type CredentialsModel = {
     userName: string;
     email: string;
   };
-}
+};
 
 const LoginCallback = () => {
   const history = useHistory();
@@ -21,30 +24,37 @@ const LoginCallback = () => {
   parseCognitoWebResponse(window.location.href) // parse the callback URL
     .then(() => getCognitoSession()) // get a new session
     .then(session => {
-      const credentialsModel = (session as CredentialsModel);
+      const credentialsModel = session as CredentialsModel;
       const { credentials } = credentialsModel;
-      const cognitoCookieLifetime: number = parseInt(`${process.env.REACT_APP_COGNITO_COOKIE_LIFE_TIME}`, 30);
+      const cognitoCookieLifetime: number = parseInt(
+        `${process.env.REACT_APP_COGNITO_COOKIE_LIFE_TIME}`,
+        30
+      );
 
-      setCookie('CognitoAccessToken', credentials.accessToken, cognitoCookieLifetime);
-      setCookie('CognitoIdToken', credentials.idToken, cognitoCookieLifetime);
-      setCookie('CognitoRefreshToken', credentials.refreshToken, cognitoCookieLifetime);
-      const redirectUrl: string = getCookie('CognitoRedirectCall');
+      setCookie(
+        "CognitoAccessToken",
+        credentials.accessToken,
+        cognitoCookieLifetime
+      );
+      setCookie("CognitoIdToken", credentials.idToken, cognitoCookieLifetime);
+      setCookie(
+        "CognitoRefreshToken",
+        credentials.refreshToken,
+        cognitoCookieLifetime
+      );
+      const redirectUrl: string = getCookie("CognitoRedirectCall");
       if (redirectUrl) {
         window.location.href = redirectUrl;
       }
     })
     .catch(errorMessage => {
       history.push({
-        pathname: '/error',
-        state: { errorMessage },
+        pathname: "/error",
+        state: { errorMessage }
       });
     });
 
-  return (
-    <div>
-      Hallo! Logged!
-    </div>
-  );
+  return <div>Hallo! Logged!</div>;
 };
 
 export { LoginCallback };

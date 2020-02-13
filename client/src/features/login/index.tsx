@@ -2,12 +2,12 @@ import { getCookie } from 'helpers/cookies';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { setUsers } from 'store/actions';
 import { ErrorContext } from '../../context/ErrorContext';
 import { UserContext } from '../../context/UserContext';
 import { login } from '../../helpers/cognito';
 import './style.scss';
 import { useStore } from '../../store';
-import { setUsers } from '../../store/actions';
 
 const Login = () => {
   const [userForm, setUserForm] = useState('');

@@ -1,4 +1,3 @@
-
 .middle-section-wrapper {
   display: flex;
   position: absolute;
@@ -7,4 +6,15 @@
 .content-wrapper {
   position: relative;
   margin-left: 70px;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+  color: blue;
+}
+
+.sidebar a {
+  color: white;
 }

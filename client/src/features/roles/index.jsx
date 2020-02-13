@@ -3,7 +3,7 @@ import { Route, useRouteMatch, Switch } from 'react-router-dom';
 
 import { useStore } from 'store';
 import { useFetch } from 'hooks';
-import { setUsers } from 'store/actions';
+import { setRoles } from 'store/actions';
 import RolesList from './RolesList';
 import RoleDetail from './RoleDetail';
 import RoleEdit from './RoleEdit';
@@ -16,7 +16,7 @@ const Roles = () => {
     doLoad();
   }, []);
   React.useEffect(() => {
-    if (data) dispatch(setUsers(data));
+    if (data) dispatch(setRoles(data));
   }, [data, dispatch]);
 
   const { path } = useRouteMatch();

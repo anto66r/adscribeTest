@@ -9,6 +9,7 @@ type ContentProps = {
 
 const RolesList: FunctionComponent<ContentProps> = ({ roles }) => {
   const { url } = useRouteMatch<{ url: string }>();
+
   return (
     <>
       <ul>

@@ -3,22 +3,19 @@ import { useParams, Link } from 'react-router-dom';
 
 import { useStore } from 'store';
 import globalPermissions from 'config/permissions';
+import IRole from 'types/role';
 
-const getPermissions = (master, obj = []) => master.filter(item => obj.includes(item));
+const getPermissions = (master: string[], obj: string[] = []): string[] => master.filter((item: string) => obj.includes(item));
 
 const RoleDetail = () => {
   const { id } = useParams();
   // const { path, url } = useRouteMatch();
   const [{ roles }] = useStore();
-  const { name, permissions } = roles.find(item => item._id === id) || {};
+  const { name, permissions } = roles.find((item: IRole) => item._id === id) || {};
 
   return (
     <>
       <h2>{name}</h2>
-      <h3>Permissions</h3>
-      Global:<pre>{JSON.stringify(globalPermissions, 0, 4)}</pre>
-      this role:<pre>{JSON.stringify(permissions, 0, 4)}</pre>
-      intersection:
       <ul>
         {getPermissions(globalPermissions, permissions).map(item => (
           <li key={item}>{item}</li>

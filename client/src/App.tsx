@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './App.scss';
+
 import { StoreProvider } from 'store';
 import reducers from 'store/reducers';
 import initialState from 'store/initialState';
-
 import { PrivateRoute } from 'components/PrivateRoute';
 import { Login } from './features/login';
 import { ErrorPage } from './features/error/ErrorPage';
 import Main from './features/main';
+import './App.scss';
 
 const App = () => (
   <Router>

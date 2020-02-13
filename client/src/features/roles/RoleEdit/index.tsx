@@ -13,12 +13,13 @@ const RoleEdit = () => {
 
   const handleCancel = () => history.goBack();
 
+  const handleSubmit = (role: IRole): void => console.log(role);
+
   const role = state.roles.find((item: IRole) => item._id === id);
   return (
     <RoleForm
-      permissions={role.permissions}
-      name={role.name}
-      onSubmit={console.log}
+      role={role}
+      onSubmit={handleSubmit}
       onCancel={handleCancel}
     />
   );

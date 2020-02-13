@@ -1,23 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, FunctionComponent } from 'react';
 import globalPermissions from 'config/permissions';
 
-const RoleEdit = ({
-  name = '', permissions = [], onSubmit, onCancel,
+import IRole from 'types/role';
+
+type ContentProps = {
+  role?: IRole;
+  onSubmit: (role: IRole) => void;
+  onCancel: () => void;
+};
+
+const RoleEdit: FunctionComponent<ContentProps> = ({
+  role = { permissions: [], name: '' }, onSubmit, onCancel,
 }) => {
+  const { name, permissions = [] } = role;
   const [formName, setFormName] = useState(name);
-  const [checkedItems, setCheckedItems] = useState(() => permissions.reduce((acc, cur) => {
+  const [checkedItems, setCheckedItems] = useState(() => permissions.reduce((acc: any, cur: string) => {
     acc[cur] = true;
     return acc;
   }, {}));
 
-  const handleCheckChange = e => {
-    const { name: permission, checked } = e.target;
-    setCheckedItems({ ...checkedItems, [permission]: checked });
+  const handleCheckChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setCheckedItems({ ...checkedItems, [e.target.name]: e.target.checked });
   };
 
-  const handleNameChange = e => setFormName(e.target.value);
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => setFormName(e.target.value);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     onSubmit({
       name,

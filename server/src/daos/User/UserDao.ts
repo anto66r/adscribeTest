@@ -15,14 +15,14 @@ export class UserDao implements IUserDao {
   // eslint-disable-next-line class-methods-use-this
   public async getAll(): Promise<IUserCollection> {
     return User.find({}).lean()
-      .then((users) => wrapCollection(users, {}))
-      .catch((err) => wrapCollection([], { data: err }));
+      .then((users) => wrapCollection(users) as IUserCollection)
+      .catch((err) => wrapCollection([], { data: err }) as IUserCollection);
   }
 
   public async findUser(username: string): Promise<IUserCollection> {
     return User.find({ username }).lean()
-      .then((user) => wrapCollection(user, {}))
-      .catch((err) => wrapCollection([], { data: err }));
+      .then((user) => wrapCollection(user, {}) as IUserCollection)
+      .catch((err) => wrapCollection([], { data: err }) as IUserCollection);
   }
 
 
@@ -43,19 +43,19 @@ export class UserDao implements IUserDao {
     return {} as any;
   }
 
-  public async createUser(username: string, cognitoId: string): Promise<IUserCollection> {
-    // Find if exists
-    const possibleUser = await User.find({ username });
+  // public async createUser(username: string, cognitoId: string): Promise<IUserCollection> {
+  //   // Find if exists
+  //   const possibleUser = await User.find({ username });
 
-    if (possibleUser.length) {
-      throw Error('User exists');
-    }
+  //   if (possibleUser.length) {
+  //     throw Error('User exists');
+  //   }
 
-    const user = await User.create({
-      username,
-      cognitoId,
-    });
+  //   const user = await User.create({
+  //     username,
+  //     cognitoId,
+  //   });
 
-    return wrapCollection([user]);
-  }
+  //   return wrapCollection([user]);
+  // }
 }

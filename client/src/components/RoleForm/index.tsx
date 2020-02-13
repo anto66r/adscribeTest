@@ -5,12 +5,14 @@ import IRole from 'types/role';
 
 type ContentProps = {
   role?: IRole;
+  loading?: boolean;
+  error?: string;
   onSubmit: (role: IRole) => void;
   onCancel: () => void;
 };
 
 const RoleEdit: FunctionComponent<ContentProps> = ({
-  role = { permissions: [], name: '' }, onSubmit, onCancel,
+  role = { permissions: [], name: '' }, onSubmit, onCancel, loading, error,
 }) => {
   const { name, permissions = [] } = role;
   const [formName, setFormName] = useState(name);
@@ -28,13 +30,14 @@ const RoleEdit: FunctionComponent<ContentProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     onSubmit({
-      name,
+      name: formName,
       permissions: Object.keys(checkedItems).filter(item => checkedItems[item]),
     });
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && <p>Error: {error}</p>}
       <label htmlFor="name">Name</label>
       <input
         type="text"
@@ -56,7 +59,7 @@ const RoleEdit: FunctionComponent<ContentProps> = ({
           </li>
         ))}
       </ul>
-      <button type="submit">Save</button>
+      <button type="submit" disabled={loading}>{loading ? 'Saving...' : 'Save'}</button>
       <button type="button" onClick={onCancel}>
         Cancel
       </button>

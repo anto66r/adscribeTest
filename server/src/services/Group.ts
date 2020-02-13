@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { ICollectionError } from '@daos';
+import { IError } from '@daos';
 
 const { Schema } = mongoose;
 
@@ -11,7 +11,7 @@ interface IGroup {
 
 interface IGroupCollection {
   data: IGroup;
-  error: ICollectionError;
+  error: IError;
 }
 
 const groupSchema = new Schema(

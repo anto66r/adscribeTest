@@ -11,7 +11,7 @@ import RoleCreate from './RoleCreate';
 
 const Roles = () => {
   const [state, dispatch] = useStore();
-  const { data, loading, doLoad } = useFetch('/roles');
+  const { data, doLoad } = useFetch('/roles');
   React.useEffect(() => {
     doLoad();
   }, []);

@@ -1,36 +1,38 @@
-import mongoose from "mongoose";
-import { ICollectionError } from "@daos";
+import mongoose from 'mongoose';
+import { IError } from '@daos';
 
 const { Schema } = mongoose;
 
 interface IRole {
   _id?: string;
-  //TODO what to do with this 'any'
-  permissions?: any;
+  permissions?: string[];
   name: string;
 }
 
 interface IRoleCollection {
   data: IRole[];
-  error: ICollectionError;
+  error: IError;
 }
 
 const roleSchema = new Schema(
   {
     name: {
       type: String,
-      trim: true
+      trim: true,
+      required: true,
+      unique: true,
     },
     permissions: {
       type: [String],
-      required: true
-    }
+    },
   },
   {
-    timestamps: true
-  }
+    timestamps: true,
+  },
 );
 
-const Role = mongoose.model("Role", roleSchema);
+const Role = mongoose.model('Role', roleSchema);
 
-export { Role, IRole, IRoleCollection };
+export {
+  Role, IRole, IRoleCollection,
+};

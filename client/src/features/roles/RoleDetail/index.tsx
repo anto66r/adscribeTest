@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { useStore } from 'store';
@@ -7,7 +7,7 @@ import IRole from 'types/role';
 
 const getPermissions = (master: string[], obj: string[] = []): string[] => master.filter((item: string) => obj.includes(item));
 
-const RoleDetail = () => {
+const RoleDetail: FunctionComponent = () => {
   const { id } = useParams();
   // const { path, url } = useRouteMatch();
   const [{ roles }] = useStore();

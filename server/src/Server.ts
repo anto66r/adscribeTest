@@ -33,7 +33,7 @@ mongoose.connect(uri, {
 mongoose.connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
-
+mongoose.set('useFindAndModify', false);
 
 // Export express instance
 export default app;

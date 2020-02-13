@@ -22,12 +22,13 @@ UsersRouter.get('/', async (req: Request, res: Response) => {
 });
 
 UsersRouter.post('/login', async (req: Request, res: Response) => {
-  const { user, cognitoId } = req.body;
+  // const { user, cognitoId } = req.body;
+  const { user } = req.body;
   try {
     const foundUser: IUserCollection = await userDao.findUser(user);
-    if (!foundUser.data.length) {
-      userDao.createUser(user, cognitoId);
-    }
+    // if (!foundUser.data.length) {
+    //   userDao.createUser(user, cognitoId);
+    // }
     return res.status(OK).json(foundUser);
   } catch (err) {
     logger.error(err.message, err);

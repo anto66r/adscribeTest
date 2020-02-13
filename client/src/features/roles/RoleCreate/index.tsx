@@ -1,24 +1,19 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import IRole from 'types/role';
 import RoleForm from 'components/RoleForm';
+import useRoleAdmin from '../hooks/useRoleAdmin';
 
-type SubmitProps = {
-  name: string;
-  permissions: string[];
-}
-const RoleCreate = () => {
+const RoleCreate: FunctionComponent = () => {
   const history = useHistory();
-
-  const handleCancel = (): void => history.goBack();
-
-  const handleSubmit = (role: IRole): void => console.log(role);
+  const goBack = (): void => { history.goBack(); };
+  const { handleSubmit, error } = useRoleAdmin({ action: 'CREATE', onActionDone: goBack });
 
   return (
     <RoleForm
       onSubmit={handleSubmit}
-      onCancel={handleCancel}
+      onCancel={goBack}
+      error={error}
     />
   );
 };

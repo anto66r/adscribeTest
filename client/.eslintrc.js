@@ -40,7 +40,9 @@ module.exports = {
     "jsx-a11y/label-has-associated-control": "off",
     "@typescript-eslint/no-empty-function": "off",
     "react/jsx-one-expression-per-line": "off",
-    "@typescript-eslint/interface-name-prefix": 'off'
+    "@typescript-eslint/interface-name-prefix": "off",
+    "no-underscore-dangle": "off",
+    "no-prototype-builtins": "off"
 
   },
   settings: {

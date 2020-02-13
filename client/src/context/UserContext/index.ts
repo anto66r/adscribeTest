@@ -4,6 +4,7 @@ import { UserContextProps } from './types';
 
 
 export const UserContext = createContext<UserContextProps>({
+  users: [],
   user: {
     username: getCookie('CognitoUsername'),
   },
@@ -19,4 +20,6 @@ export const UserContext = createContext<UserContextProps>({
   setCognito: () => {},
   setRemember: () => {},
   setLogged: () => {},
+  dispatch: () => null,
+
 });

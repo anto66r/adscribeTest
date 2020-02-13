@@ -12,6 +12,7 @@ export interface CognitoAuthentication {
 }
 
 export interface UserContextProps {
+  users: UserType[];
   user: UserType;
   cognito: CognitoAuthentication;
   remember: boolean;
@@ -20,4 +21,5 @@ export interface UserContextProps {
   setCognito: Dispatch<SetStateAction<CognitoAuthentication>>;
   setRemember: Dispatch<SetStateAction<boolean>>;
   setLogged: Dispatch<SetStateAction<boolean>>;
+  dispatch: any;
 }

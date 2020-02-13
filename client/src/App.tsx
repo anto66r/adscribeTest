@@ -4,11 +4,11 @@ import './App.scss';
 import { StoreProvider } from 'store';
 import reducers from 'store/reducers';
 import initialState from 'store/initialState';
-import Main from 'features/main';
 
 import { PrivateRoute } from 'components/PrivateRoute';
 import { Login } from './features/login';
 import { ErrorPage } from './features/error/ErrorPage';
+import Main from './features/main';
 
 const App = () => (
   <Router>

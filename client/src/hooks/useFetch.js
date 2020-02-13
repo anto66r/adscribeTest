@@ -1,9 +1,11 @@
 import {
+  useContext,
   useReducer,
 } from 'react';
 import {
   secureFetch,
 } from 'helpers/fetching';
+import { UserContext } from '../context/UserContext';
 
 const reducer = (state, {
   type,
@@ -33,14 +35,16 @@ const useFetch = url => {
   const [state, dispatch] = useReducer(reducer, {
     loading: false,
   });
+  const { cognito } = useContext(UserContext);
   const doLoad = async () => {
     dispatch({
       type: 'fetch',
     });
     try {
-      console.log('adsfasdloading');
-      const response = await secureFetch(url);
-      console.log(response);
+      const response = await secureFetch({
+        endpoint: url,
+        cognito,
+      });
       setTimeout(
         () => dispatch({
           type: 'success',

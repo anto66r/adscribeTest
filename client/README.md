@@ -52,7 +52,6 @@ All roles can be deleted except `Administrator` and `Basic`.
 
 Permissions are strings that specify a _route_ and an _action_, separated by `::`.
 
-The master list of permissions lives in the `src/config` folder of the client.
 
 For example, a permission which is
 `users|roles::assign` will allow the user to assign roles to users via the user editing screen.
@@ -70,3 +69,4 @@ Possible routes are:
 
 And so on.
 
+The master list of permissions lives in the `src/config` folder of the client.

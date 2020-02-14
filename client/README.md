@@ -59,7 +59,7 @@ For example, a permission which is
 There are four basic actions:
 - `create`: allows creation of resources at the route.
 - `delete`: allows deletion resources at the route.
-- `edit`: allows editing resources at the route.
+- `update`: allows editing resources at the route.
 - `view`: allows access to a listing of resources at the route.
 
 Possible routes are:

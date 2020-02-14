@@ -1,11 +1,13 @@
 export default [
   'users::create',
   'users::delete',
-  'users::edit',
+  'users::update',
   'users::view',
+  'users::detail',
   'users|roles::assign',
   'roles::create',
   'roles::delete',
-  'roles::edit',
+  'roles::update',
   'roles::view',
+  'roles::detail',
 ];

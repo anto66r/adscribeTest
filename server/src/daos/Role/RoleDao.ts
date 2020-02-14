@@ -37,7 +37,7 @@ export class RoleDao implements IRoleDao {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
   public delete(role: IRole): Promise<IRoleCollection> {
-    return Role.deleteOne(role)
+    return Role.deleteOne({ ...role, noDelete: false })
       .then(() => this.getAll());
   }
 }

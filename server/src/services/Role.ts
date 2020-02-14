@@ -7,6 +7,8 @@ interface IRole {
   _id?: string;
   permissions?: string[];
   name: string;
+  noDelete: boolean;
+  isSuper?: boolean;
 }
 
 interface IRoleCollection {
@@ -24,6 +26,14 @@ const roleSchema = new Schema(
     },
     permissions: {
       type: [String],
+    },
+    isSuper: {
+      type: Boolean,
+      default: false,
+    },
+    noDelete: {
+      type: Boolean,
+      default: false,
     },
   },
   {

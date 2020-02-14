@@ -1,44 +1,72 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Platf0rm-2 Client application
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+Install `yarn` and Node > 8.10.
 
-### `yarn start`
+Run `yarn` in the client, server and root directories.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Running locally
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Server
 
-### `yarn test`
+`cd server && yarn start:dev`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Client
 
-### `yarn build`
+`cd client && yarn start`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Concurrently
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+`yarn start`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deployment
+### Creating production build
 
-### `yarn eject`
+### Deploying
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## RBAC (Role Based Access Control)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Roles
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Two roles are read-only:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Administrator
+: By default has access to the Roles section.
 
-## Learn More
+Basic
+: Which is assigned automatically to newly created users
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+A role has an array of permissions assigned to it.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Creating roles
+Roles can be created but must have unique names.
+
+### Editing roles
+Roles can be edited to modify their name and assigned permissions.
+
+### Deleting roles
+All roles can be deleted except `Administrator` and `Basic`.
+
+## Permissions
+
+Permissions are strings that specify a _route_ and an _action_, separated by `::`.
+
+The master list of permissions lives in the `src/config` folder of the client.
+
+For example, a permission which is
+`users|roles::assign` will allow the user to assign roles to users via the user editing screen.
+
+There are four basic actions:
+- `create`: allows creation of resources at the route.
+- `delete`: allows deletion resources at the route.
+- `edit`: allows editing resources at the route.
+- `view`: allows access to a listing of resources at the route.
+
+Possible routes are:
+- `users`: users section
+  - `users|roles`: roles subsection of the users section
+- `roles`: roles section
+
+And so on.
+

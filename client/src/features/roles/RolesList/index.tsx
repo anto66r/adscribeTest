@@ -24,7 +24,7 @@ const RolesList: FunctionComponent<ContentProps> = ({ roles }) => {
           && roles.map((role: IRole) => (
             <li key={role._id}>
               <Link to={`${url}/${role._id}`}>{role.name}</Link>
-              {roles.length > 1 && <button onClick={(): void => handleDelete(role.name)}>Delete</button>}
+              {!role.noDelete && <button onClick={(): void => handleDelete(role.name)}>Delete</button>}
             </li>
           ))}
       </ul>

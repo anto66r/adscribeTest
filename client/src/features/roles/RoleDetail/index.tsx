@@ -9,7 +9,6 @@ const getPermissions = (master: string[], obj: string[] = []): string[] => maste
 
 const RoleDetail: FunctionComponent = () => {
   const { id } = useParams();
-  // const { path, url } = useRouteMatch();
   const [{ roles }] = useStore();
   const { name, permissions } = roles.find((item: IRole) => item._id === id) || {};
 

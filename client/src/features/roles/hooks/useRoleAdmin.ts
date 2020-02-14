@@ -1,21 +1,13 @@
-import { useState } from 'react';
 import { secureFetch } from 'helpers/fetching';
 import { useStore } from 'store';
 import { setRoles } from 'store/actions';
 
 import IRole from 'types/role';
 
-const actionToMethod = (action: string): string => {
-  switch (action) {
-    case 'DELETE':
-      return 'DELETE';
-    case 'CREATE':
-      return 'POST';
-    case 'UPDATE':
-      return 'PATCH';
-    default:
-      return '';
-  }
+const actionToMethod: { [key: string]: string } = {
+  DELETE: 'DELETE',
+  CREATE: 'POST',
+  UPDATE: 'PATCH',
 };
 
 type hookReturn = {
@@ -36,7 +28,7 @@ const useRoleAdmin = ({ action, onSuccess, onError }: hookProps): hookReturn => 
       const response = await secureFetch({
         endpoint: '/roles',
         payload: role,
-        method: actionToMethod(action),
+        method: actionToMethod[action],
       });
       if (response.error) throw Error(response.error.errmsg || response.error.message || response.error.errors?.message);
       dispatch(setRoles(response.data));

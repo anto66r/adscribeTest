@@ -4,6 +4,7 @@ import { Route, useRouteMatch, Switch } from 'react-router-dom';
 import { useStore } from 'store';
 import { useFetch } from 'hooks';
 import { setRoles } from 'store/actions';
+// import IRole from 'types/role';
 import RolesList from './RolesList';
 import RoleDetail from './RoleDetail';
 import RoleEdit from './RoleEdit';
@@ -11,9 +12,9 @@ import RoleCreate from './RoleCreate';
 
 const Roles = () => {
   const [state, dispatch] = useStore();
-  const { data, doLoad } = useFetch('/roles');
+  const { data, doFetch } = useFetch();
   React.useEffect(() => {
-    doLoad();
+    doFetch({ endpoint: '/roles' });
   }, []);
   React.useEffect(() => {
     if (data) dispatch(setRoles(data));

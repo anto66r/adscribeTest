@@ -1,7 +1,38 @@
-import { useContext, useReducer } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useReducer, useContext } from 'react';
 import { secureFetch } from 'helpers/fetching';
-import { UserContext } from '../context/UserContext';
-import { CognitoAuthentication } from '../context/UserContext/types';
+import { UserContext } from 'context/UserContext';
+
+type DoFetchProps<T> = {
+  endpoint: string;
+  payload?: T;
+  method?: string;
+  onSuccess?: (data: T[]) => void;
+  onError?: (message: string) => void;
+}
+
+type State<T> = {
+  loading: boolean;
+  data: T[];
+  error?: Error;
+}
+
+type Error = {
+  message?: string;
+  technical?: string;
+  code?: string;
+  data?: object;
+}
+
+const initState = {
+  data: [],
+  loading: false,
+};
+
+type Response = {
+  data: any;
+  error?: ICollectionError;
+};
 
 interface ICollectionError {
   message?: string;
@@ -10,29 +41,16 @@ interface ICollectionError {
   data?: object;
 }
 
-interface IFetchError {
-  message: string;
+type UseFetchReturn<T> = {
+  loading: boolean;
+  data: T[];
+  error?: Error;
+  doFetch: ({ endpoint, payload, method }: DoFetchProps<T>) => void;
 }
-
-type State<T> = {
-  data: T[];
-  isLoading: boolean;
-  error?: IFetchError;
-};
-
-type Response<T> = {
-  data: T[];
-  error?: ICollectionError;
-};
-
-const initState = {
-  data: [],
-  isLoading: false,
-};
 
 type Action<T> =
   | { type: 'request' }
-  | { type: 'success'; results: Response<T> }
+  | { type: 'success'; payload: T[] }
   | { type: 'failure'; error: string };
 
 function reducer<T>(state: State<T>, action: Action<T>): State<T> {
@@ -40,62 +58,67 @@ function reducer<T>(state: State<T>, action: Action<T>): State<T> {
     case 'request':
       return {
         ...state,
-        error: undefined,
-        isLoading: true,
+        error: {},
+        loading: true,
+      };
+    case 'success':
+      return {
+        error: {},
+        loading: false,
+        data: action.payload,
       };
     case 'failure':
       return {
-        data: [],
+        ...state,
+        loading: false,
         error: { message: action.error },
-        isLoading: false,
-      };
-    case 'success':
-      console.log(action);
-      return {
-        data: action.results.data,
-        error: undefined,
-        isLoading: false,
       };
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
-}
+};
 
-async function getJSON<T>(url: string, cognito: CognitoAuthentication): Promise<Response<T>> {
-  return ((await secureFetch({
-    endpoint: url,
-    cognito,
-  })) as unknown) as Response<T>;
-}
-
-// TODO: cuidadín con este any
-function useFetch<T>(
-  url: string,
-  options?: any,
-): { state: State<T>; doFetch: Function } {
-  const [state, dispatch] = useReducer<React.Reducer<State<T>, Action<T>>>(
-    reducer,
-    initState,
-  );
-
+function useFetch<T>(): UseFetchReturn<T> {
+  const [{ loading, error, data }, dispatch] = useReducer<React.Reducer<State<T>, Action<T>>>(reducer, initState);
   const { cognito } = useContext(UserContext);
 
-  function doFetch(): void {
-    const FetchData = async () => {
+  function doFetch<T>({
+    endpoint, payload, method, onSuccess, onError,
+  }: DoFetchProps<T>): void {
+    const fetchData = async (): Promise<void> => {
       try {
         dispatch({ type: 'request' });
-        const results: Response<T> = await getJSON<T>(url, cognito);
-        dispatch({ type: 'success', results });
-      } catch (error) {
-        dispatch({ type: 'failure', error });
+        const results: Response = await secureFetch({
+          endpoint,
+          payload,
+          cognito,
+          method,
+        });
+        if (results.error && !results.error.message) throw Error(results.error.message);
+        setTimeout(
+          () => {
+            dispatch({
+              type: 'success',
+              payload: results.data,
+            });
+            if (onSuccess) onSuccess(results.data);
+          },
+          1000,
+        );
+      } catch (message) {
+        dispatch({ type: 'failure', error: message });
+        console.log(message);
+        if (onError) onError(message);
       }
     };
-    FetchData();
+    fetchData();
   }
-
-  return { state, doFetch };
-}
+  return {
+    loading,
+    data,
+    error,
+    doFetch,
+  };
+};
 
 export default useFetch;

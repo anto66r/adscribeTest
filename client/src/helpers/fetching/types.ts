@@ -4,7 +4,7 @@ export interface SecureFetchType {
   endpoint: string;
   cognito?: CognitoAuthentication;
   accessToken?: string;
-  payload?: object;
+  payload?: any;
   method?: string;
 }
 export interface HeaderType {

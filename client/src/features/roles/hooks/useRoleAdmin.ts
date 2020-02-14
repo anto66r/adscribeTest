@@ -1,8 +1,8 @@
-import { secureFetch } from 'helpers/fetching';
 import { useStore } from 'store';
 import { setRoles } from 'store/actions';
 
 import IRole from 'types/role';
+import { useFetch } from 'hooks';
 
 const actionToMethod: { [key: string]: string } = {
   DELETE: 'DELETE',
@@ -12,6 +12,7 @@ const actionToMethod: { [key: string]: string } = {
 
 type hookReturn = {
   handleSubmit: (role: IRole) => Promise<void>;
+  loading: boolean;
 }
 
 type hookProps = {
@@ -22,24 +23,30 @@ type hookProps = {
 
 const useRoleAdmin = ({ action, onSuccess, onError }: hookProps): hookReturn => {
   const [, dispatch] = useStore();
+  const {
+    loading, doFetch,
+  } = useFetch<IRole>();
 
-  const handleSubmit = async (role: IRole): Promise<void> => {
-    try {
-      const response = await secureFetch({
-        endpoint: '/roles',
-        payload: role,
-        method: actionToMethod[action],
-      });
-      if (response.error) throw Error(response.error.errmsg || response.error.message || response.error.errors?.message);
-      dispatch(setRoles(response.data));
-      if (onSuccess) onSuccess();
-    } catch (e) {
-      if (onError) onError(e.message);
-    }
+  const handleSuccess = (data: IRole[]): void => {
+    dispatch(setRoles(data));
+    if (onSuccess) onSuccess();
   };
 
-  return { handleSubmit };
+  const handleError = (e: string): void => {
+    if (onError) onError(e);
+  };
+
+  const handleSubmit = async (role: IRole): Promise<void> => {
+    doFetch({
+      endpoint: '/roles',
+      payload: role,
+      method: actionToMethod[action],
+      onSuccess: handleSuccess,
+      onError: handleError,
+    });
+  };
+
+  return { handleSubmit, loading };
 };
 
-export default
-useRoleAdmin;
+export default useRoleAdmin;

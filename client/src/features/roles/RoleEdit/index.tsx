@@ -17,7 +17,7 @@ const RoleEdit: FunctionComponent = () => {
   const handleSuccess = (): void => { doSuccessToast('Role updated'); history.goBack(); };
   const handleError = (message: string): void => { doErrorToast(message); };
 
-  const { handleSubmit } = useRoleAdmin({ action: 'UPDATE', onSuccess: handleSuccess, onError: handleError });
+  const { handleSubmit, loading } = useRoleAdmin({ action: 'UPDATE', onSuccess: handleSuccess, onError: handleError });
 
   const role = state.roles.find((item: IRole) => item._id === id);
 
@@ -26,7 +26,7 @@ const RoleEdit: FunctionComponent = () => {
       role={role}
       onSubmit={(r: IRole): void => { handleSubmit({ ...r, _id: id }); }}
       onCancel={goBack}
-      loading={false}
+      loading={loading}
     />
   );
 };

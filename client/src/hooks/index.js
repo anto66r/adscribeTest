@@ -1,3 +1,7 @@
-import useFetch from './useFetch.js';
+import useFetch from './useFetch.ts';
+import useToast from './useToast.ts';
 
-export { useFetch };
+export {
+  useFetch,
+  useToast,
+};

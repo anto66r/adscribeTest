@@ -13,12 +13,13 @@ const RoleCreate: FunctionComponent = () => {
   const handleSuccess = (): void => { doSuccessToast('Role created'); history.goBack(); };
   const handleError = (message: string): void => { doErrorToast(message); };
 
-  const { handleSubmit } = useRoleAdmin({ action: 'CREATE', onSuccess: handleSuccess, onError: handleError });
+  const { handleSubmit, loading } = useRoleAdmin({ action: 'CREATE', onSuccess: handleSuccess, onError: handleError });
 
   return (
     <RoleForm
       onSubmit={handleSubmit}
       onCancel={goBack}
+      loading={loading}
     />
   );
 };

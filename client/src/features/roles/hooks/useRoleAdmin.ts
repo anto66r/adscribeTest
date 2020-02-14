@@ -20,11 +20,15 @@ const actionToMethod = (action: string): string => {
 
 type hookReturn = {
   handleSubmit: (role: IRole) => Promise<void>;
-  error: string;
 }
 
-const useRoleAdmin = ({ action, onActionDone }: {action: string; onActionDone?: () => void}): hookReturn => {
-  const [error, setError] = useState('');
+type hookProps = {
+  action: string;
+  onError?: (message: string) => void;
+  onSuccess?: () => void;
+}
+
+const useRoleAdmin = ({ action, onSuccess, onError }: hookProps): hookReturn => {
   const [, dispatch] = useStore();
 
   const handleSubmit = async (role: IRole): Promise<void> => {
@@ -34,15 +38,15 @@ const useRoleAdmin = ({ action, onActionDone }: {action: string; onActionDone?: 
         payload: role,
         method: actionToMethod(action),
       });
-      if (response.error) throw Error(response.error.errmsg);
+      if (response.error) throw Error(response.error.errmsg || response.error.message || response.error.errors?.message);
       dispatch(setRoles(response.data));
-      if (onActionDone) onActionDone();
+      if (onSuccess) onSuccess();
     } catch (e) {
-      setError(e.message);
+      if (onError) onError(e.message);
     }
   };
 
-  return { handleSubmit, error };
+  return { handleSubmit };
 };
 
 export default

@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import IRole from 'types/role';
+import useToast from 'hooks/useToast';
 import useRoleAdmin from '../hooks/useRoleAdmin';
 
 type ContentProps = {
@@ -10,15 +11,21 @@ type ContentProps = {
 
 const RolesList: FunctionComponent<ContentProps> = ({ roles }) => {
   const { url } = useRouteMatch<{ url: string }>();
-  const { handleSubmit, error } = useRoleAdmin({ action: 'DELETE' });
+  const { doSuccessToast, doErrorToast } = useToast();
+
+  const { handleSubmit } = useRoleAdmin({
+    action: 'DELETE',
+    onSuccess: (): void => { doSuccessToast('Role deleted'); },
+    onError: (message: string): void => { doErrorToast(message); },
+  });
 
   const handleDelete = (name: string): void => {
     handleSubmit({ name });
   };
 
+
   return (
     <>
-      {error && <p>Error: {error}</p>}
       <ul>
         {roles
           && roles.map((role: IRole) => (

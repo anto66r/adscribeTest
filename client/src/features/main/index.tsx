@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import Roles from 'features/roles';
 import Footer from '../../components/Footer';
@@ -9,8 +10,9 @@ import { Logout } from '../logout';
 import TestApi from '../testapi';
 import Users from '../users';
 
-const Main = () => (
+const Main: FunctionComponent = () => (
   <>
+    <ToastContainer />
     <Header />
     <div className="middle-section-wrapper">
       <div className="content-wrapper">

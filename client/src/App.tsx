@@ -9,6 +9,7 @@ import { Login } from './features/login';
 import { ErrorPage } from './features/error/ErrorPage';
 import Main from './features/main';
 import './App.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => (
   <Router>

@@ -26,18 +26,21 @@ export class RoleDao implements IRoleDao {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
   public add(role: IRole): Promise<IRoleCollection> {
     return Role.create(role)
-      .then(() => this.getAll());
+      .then(() => this.getAll())
+      .catch((err) => wrapCollection([], err) as IRoleCollection);
   }
 
   public update(role: IRole): Promise<IRoleCollection> {
     // eslint-disable-next-line no-underscore-dangle
-    return Role.findOneAndUpdate({ _id: role._id }, role)
-      .then(() => this.getAll());
+    return Role.findOneAndUpdate({ _id: role._id }, role, { runValidators: true })
+      .then(() => this.getAll())
+      .catch((err) => wrapCollection([], err) as IRoleCollection);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
   public delete(role: IRole): Promise<IRoleCollection> {
     return Role.deleteOne({ ...role, noDelete: false })
-      .then(() => this.getAll());
+      .then(() => this.getAll())
+      .catch((err) => wrapCollection([], err) as IRoleCollection);
   }
 }

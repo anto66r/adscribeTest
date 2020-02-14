@@ -6,13 +6,12 @@ import IRole from 'types/role';
 type ContentProps = {
   role?: IRole;
   loading?: boolean;
-  error?: string;
   onSubmit: (role: IRole) => void;
   onCancel: () => void;
 };
 
 const RoleEdit: FunctionComponent<ContentProps> = ({
-  role = { permissions: [], name: '' }, onSubmit, onCancel, loading, error,
+  role = { permissions: [], name: '' }, onSubmit, onCancel, loading,
 }) => {
   const { name, permissions = [] } = role;
   const [formName, setFormName] = useState(name);
@@ -37,7 +36,6 @@ const RoleEdit: FunctionComponent<ContentProps> = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {error && <p>Error: {error}</p>}
       <label htmlFor="name">Name</label>
       <input
         type="text"

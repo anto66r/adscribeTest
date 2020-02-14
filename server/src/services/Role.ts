@@ -23,6 +23,7 @@ const roleSchema = new Schema(
       trim: true,
       required: true,
       unique: true,
+      minlength: 1,
     },
     permissions: {
       type: [String],

@@ -1,5 +1,9 @@
 # Platf0rm-2 Client application
 
+> "I want nothing!"
+>
+> "And you shall receive it. In abudnance!"
+
 ## Installation
 
 Install `yarn` and Node > 8.10.

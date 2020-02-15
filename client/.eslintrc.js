@@ -4,6 +4,15 @@ module.exports = {
     es6: true,
     jest: true
   },
+  overrides: [{
+    files: [
+      "**/*.test.jsx",
+      "**/*.test.js"
+    ],
+    env: {
+      jest: true
+    }
+  }],
   extends: [
     "plugin:react/recommended",
     "airbnb",
@@ -28,7 +37,9 @@ module.exports = {
     semi: [2, "always"],
     "react/jsx-filename-extension": [
       1,
-      { extensions: [".js", ".jsx", ".ts", ".tsx"] }
+      {
+        extensions: [".js", ".jsx", ".ts", ".tsx"]
+      }
     ],
     "import/extensions": 0,
     "import/prefer-default-export": "off",
@@ -44,7 +55,9 @@ module.exports = {
     "no-underscore-dangle": "off",
     "no-extra-semi": "off",
     "no-prototype-builtins": "off",
-    "max-len": [2, 180, 4, { ignoreUrls: true }]
+    "max-len": [2, 180, 4, {
+      ignoreUrls: true
+    }]
   },
   settings: {
     "import/resolver": {

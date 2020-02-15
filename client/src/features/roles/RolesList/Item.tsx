@@ -24,7 +24,7 @@ const Item: FunctionComponent<PropsType> = props => {
   };
   return (
     <li key={role._id}>
-      <Link to={`${url}/${role._id}`}>{role.name}</Link>
+      <Link data-testid="pl2-role-itemlink" to={`${url}/${role._id}`}>{role.name}</Link>
       {
         !role.noDelete && (
           <button disabled={loading} onClick={(): void => handleDelete(role.name)}>

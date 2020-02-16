@@ -1,36 +1,81 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import { StoreProvider } from 'store';
 import reducers from 'store/reducers';
-// import initialState from 'store/initialState';
 import RoleEdit from '../index';
+import useRoleAdmin from '../../hooks/useRoleAdmin';
+
+jest.mock('config/permissions', () => [
+  'permission A',
+  'permission B',
+]);
+
+const mockDoSuccessToast = jest.fn();
+const mockDoErrorToast = jest.fn();
+jest.mock('hooks/useToast', () => () => ({
+  doSuccessToast: mockDoSuccessToast,
+  doErrorToast: mockDoErrorToast,
+}));
+
+const mockGoBack = jest.fn();
+jest.mock('react-router-dom', () => ({
+  useParams: () => ({ id: 1234 }),
+  useHistory: () => ({ goBack: mockGoBack }),
+}));
+
+jest.mock('components/RoleForm');
+jest.mock('../../hooks/useRoleAdmin');
+
+beforeEach(() => {
+  useRoleAdmin.mockImplementation(() => ({
+    handleSubmit: jest.fn(),
+    loading: false,
+  }));
+});
+
+
+const renderWrapper = () => render(
+  (
+    <StoreProvider
+      initialState={{
+        roles: [{
+          _id: '1234',
+        }],
+      }}
+      reducer={reducers}
+    >
+      <RoleEdit />
+    </StoreProvider>
+  ),
+);
 
 describe('<RoleEdit />', () => {
-  test('should display an item with correct link', () => {
-    render(
-      (
-        <StoreProvider
-          initialState={{
-            roles: [{
-              name: 'Role name',
-              _id: '1234',
-            }],
-          }}
-          reducer={reducers}
-        >
-          <MemoryRouter initialEntries={['/users/1234']}>
-            <Route path="/users/:id">
-              <RoleEdit />
-            </Route>
-          </MemoryRouter>
-        </StoreProvider>
-      ),
-    );
-    screen.debug();
-    // expect(screen.getByText('Role name')).toBeInTheDocument();
-    // expect(screen.getByText('Role name 2')).toBeInTheDocument();
-    // expect(screen.getByText('Create new')).toHaveAttribute('href', '//create')
+  test('should handle cancel correctly', () => {
+    renderWrapper();
+    fireEvent.click(screen.getByTestId('Cancel'));
+    expect(mockGoBack).toHaveBeenCalledWith();
+  });
+
+  test('should call success toast and go back on save', () => {
+    useRoleAdmin.mockImplementation(({ onSuccess }) => ({
+      handleSubmit: onSuccess,
+      loading: false,
+    }));
+    renderWrapper();
+    fireEvent.submit(screen.getByTestId('form'));
+    expect(mockDoSuccessToast).toHaveBeenCalledWith('Role updated');
+    expect(mockGoBack).toHaveBeenCalledWith();
+  });
+
+  test('should call error toast on save error', () => {
+    useRoleAdmin.mockImplementation(({ onError }) => ({
+      handleSubmit: () => { onError('Error message'); },
+      loading: false,
+    }));
+    renderWrapper();
+    fireEvent.submit(screen.getByTestId('form'));
+    expect(mockDoErrorToast).toHaveBeenCalledWith('Error message');
   });
 });

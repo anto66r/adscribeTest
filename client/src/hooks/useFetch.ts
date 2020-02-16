@@ -2,11 +2,12 @@
 import { useReducer, useContext } from 'react';
 import { secureFetch } from 'helpers/fetching';
 import { UserContext } from 'context/UserContext';
+import { fetchMethod } from 'types';
 
 type DoFetchProps<T> = {
   endpoint: string;
   payload?: T;
-  method?: string;
+  method?: fetchMethod;
   onSuccess?: (data: T[]) => void;
   onError?: (message: string) => void;
 }

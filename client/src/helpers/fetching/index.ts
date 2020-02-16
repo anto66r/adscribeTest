@@ -1,23 +1,22 @@
 import { cleanCookies } from 'helpers/cognito';
+import { fetchMethod } from 'types';
 import { getCookie, setCookie } from '../cookies';
 import { HeaderType, SecureFetchType } from './types';
-
 
 const secureFetch = ({
   endpoint,
   cognito,
   accessToken,
   payload,
-  method = payload ? 'POST' : 'GET',
+  method,
 }: SecureFetchType): Promise<any> => new Promise((resolve, reject) => {
   const params: HeaderType = {
-    method,
+    method: method || payload ? fetchMethod.POST : fetchMethod.GET,
     headers: {
       'Content-Type': 'application/json',
       accesstoken: getCookie('CognitoAccessToken')
         || cognito?.CognitoAccessToken || accessToken,
     },
-
   };
 
   if (payload && Object.keys(payload).length) {

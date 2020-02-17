@@ -17,7 +17,7 @@ describe('<RolesList />', () => {
               _id: '1234',
             },
             {
-              name: 'Role name 2',
+              name: 'Role name b',
               _id: '5678',
             }]}
             />
@@ -27,7 +27,7 @@ describe('<RolesList />', () => {
     );
     // screen.debug()
     expect(screen.getByText('Role name')).toBeInTheDocument();
-    expect(screen.getByText('Role name 2')).toBeInTheDocument();
+    expect(screen.getByText('Role name b')).toBeInTheDocument();
     expect(screen.getByText('Create new')).toHaveAttribute('href', '//create');
   });
 });

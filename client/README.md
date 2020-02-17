@@ -2,7 +2,7 @@
 
 > "I want nothing!"
 >
-> "And you shall receive it. In abudnance!"
+> "And you shall receive it. In abundance!"
 
 ## Installation
 
@@ -35,11 +35,9 @@ Run `yarn` in the client, server and root directories.
 
 Two roles are read-only:
 
-Administrator
-: By default has access to the Roles section.
+* **Administrator**: By default has access to the Roles section.
 
-Basic
-: Which is assigned automatically to newly created users
+* **Basic** : Which is assigned automatically to newly created users
 
 A role has an array of permissions assigned to it.
 

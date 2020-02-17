@@ -1,33 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../context/UserContext';
-import { secureFetch } from '../../helpers/fetching';
+import React from 'react';
+import Loading from 'components/Loading';
+import { useFetch } from '../../hooks';
 
 const Users = () => {
-  const [result, setResult] = useState('');
-  const { cognito } = useContext(UserContext);
+  const { data, loading, doFetch } = useFetch();
 
-
-  const fetchUsers = async () => {
-    const newResult = await secureFetch({
-      endpoint: '/users',
-      cognito,
-    });
-    setResult(JSON.stringify(newResult, null, 2));
+  const fetchUsers = () => {
+    doFetch({ endpoint: '/users' });
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetchUsers();
   }, []);
 
-
   return (
     <div>
-      {result && (
-        <>
-          <h4>Result</h4>
-          <pre>{result}</pre>
-        </>
-      )}
+      {
+        loading ? <Loading />
+          : (
+            <>
+              <h4>Result</h4>
+              <pre>{JSON.stringify(data, null, 2)}</pre>
+            </>
+          )
+      }
     </div>
   );
 };

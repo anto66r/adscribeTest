@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { message } from 'aws-sdk/clients/sns';
 import { useReducer, useContext } from 'react';
 import { secureFetch } from 'helpers/fetching';
 import { UserContext } from 'context/UserContext';
 import { FetchMethod } from 'types';
+import { useHistory } from 'react-router-dom';
+import { useStore } from '../store';
 
 type DoFetchProps<T> = {
   endpoint: string;
@@ -81,7 +84,10 @@ function reducer<T>(state: State<T>, action: Action<T>): State<T> {
 
 function useFetch<T>(): UseFetchReturn<T> {
   const [{ loading, error, data }, dispatch] = useReducer<React.Reducer<State<T>, Action<T>>>(reducer, initState);
-  const { cognito } = useContext(UserContext);
+
+  const [state = {}] = useStore();
+  // const history = useHistory();
+  const { auth } = state.user || {};
 
   function doFetch<T>({
     endpoint,
@@ -93,12 +99,14 @@ function useFetch<T>(): UseFetchReturn<T> {
     const fetchData = async (): Promise<void> => {
       try {
         dispatch({ type: 'request' });
+
         const results: Response = await secureFetch({
           endpoint,
           payload,
-          cognito,
+          auth,
           method,
         });
+
         if (results.error && results.error.message) throw Error(results.error.message);
         setTimeout(
           () => {
@@ -110,9 +118,16 @@ function useFetch<T>(): UseFetchReturn<T> {
           },
           1000,
         );
-      } catch (e) {
-        dispatch({ type: 'failure', error: e.message });
-        if (onError) onError(e.message);
+      } catch (fetchError) {
+        dispatch({ type: 'failure', error: fetchError.message });
+        console.log(fetchError);
+        // history.push({
+        //   pathname: '/error',
+        //   state: {
+        //     error: fetchError.message,
+        //   },
+        // });
+        if (onError) onError(fetchError.message);
       }
     };
     fetchData();

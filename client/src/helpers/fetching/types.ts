@@ -1,9 +1,9 @@
 import { FetchMethod } from 'types';
-import { CognitoAuthentication } from '../../context/UserContext/types';
+import { ICognitoAuthentication } from '../../context/UserContext/types';
 
 export interface SecureFetchType {
   endpoint: string;
-  cognito?: CognitoAuthentication;
+  auth?: ICognitoAuthentication;
   accessToken?: string;
   payload?: any;
   method?: FetchMethod;
@@ -15,4 +15,14 @@ export interface HeaderType {
   };
   method?: FetchMethod;
   body?: string;
+}
+export interface IAxiosConfig {
+  headers: {
+    accesstoken?: string;
+    'Content-Type': string;
+  };
+  method?: string;
+  data: any | undefined;
+  body?: string;
+  url: string;
 }

@@ -57,7 +57,8 @@ module.exports = {
     "no-prototype-builtins": "off",
     "max-len": [2, 180, 4, {
       ignoreUrls: true
-    }]
+    }],
+    "no-param-reassign": "off"
   },
   settings: {
     "import/resolver": {

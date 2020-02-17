@@ -4,14 +4,14 @@ import { IError } from '@daos';
 const { Schema } = mongoose;
 
 
-interface IGroup {
+interface IDashboard {
   _id?: string;
   groupId?: number;
   name: string;
 }
 
-interface IGroupCollection {
-  data: IGroup[];
+interface IDashboardCollection {
+  data: IDashboard[];
   error: IError;
 }
 
@@ -21,11 +21,9 @@ const groupSchema = new Schema(
       type: String,
       trim: true,
     },
-    groupId: {
-      type: Number,
+    userId: {
+      type: String,
       required: true,
-      unique: true,
-      trim: true,
     },
   },
   {
@@ -33,15 +31,15 @@ const groupSchema = new Schema(
   },
 );
 
-const Group = mongoose.model('Group', groupSchema);
+const Dashboard = mongoose.model('Dashboard', groupSchema);
 
-interface IGroup {
-  groupId?: number;
+interface IDashboard {
   name: string;
+  userId: string;
 }
 
 export {
-  Group,
-  IGroup,
-  IGroupCollection,
+  Dashboard,
+  IDashboard,
+  IDashboardCollection,
 };

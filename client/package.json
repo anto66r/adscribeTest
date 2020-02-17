@@ -18,6 +18,7 @@
     "amazon-cognito-identity-js": "^3.2.2",
     "aws-amplify": "^2.2.4",
     "aws-sdk": "^2.612.0",
+    "axios": "^0.19.2",
     "babel-eslint": "^10.0.3",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
@@ -36,7 +37,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:once": "./node_modules/react-scripts/bin/react-scripts.js test --watchAll=false --bail --reporters=jest-silent-reporter --silent --colors",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "node_modules/.bin/eslint src"
   },
   "eslintConfig": {
     "extends": "react-app"

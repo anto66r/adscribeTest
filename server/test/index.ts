@@ -1,10 +1,11 @@
 import find from 'find';
 import Jasmine from 'jasmine';
 import dotenv from 'dotenv';
-import commandLineArgs from 'command-line-args';
+// import commandLineArgs from 'command-line-args';
 import { logger } from '@shared';
 
 // Setup command line options
+/*
 const options = commandLineArgs([
   {
     name: 'testFile',
@@ -12,6 +13,7 @@ const options = commandLineArgs([
     type: String,
   },
 ]);
+ */
 
 // Set the env file
 const result2 = dotenv.config({
@@ -44,6 +46,7 @@ jasmine.onComplete((passed: boolean) => {
 });
 
 // Run all or a single unit-test
+/*
 if (options.testFile) {
   const { testFile } = options;
   find.file(`${testFile}.test.ts`, './test', (files) => {
@@ -57,3 +60,5 @@ if (options.testFile) {
 } else {
   jasmine.execute();
 }
+ */
+jasmine.execute();

@@ -44,7 +44,8 @@ module.exports = {
     "no-underscore-dangle": "off",
     "no-extra-semi": "off",
     "no-prototype-builtins": "off",
-    "max-len": [2, 180, 4, { ignoreUrls: true }]
+    "max-len": [2, 180, 4, { ignoreUrls: true }],
+    "no-param-reassign": "off"
   },
   settings: {
     "import/resolver": {

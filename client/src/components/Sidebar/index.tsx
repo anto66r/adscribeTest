@@ -31,13 +31,16 @@ const Sidebar: FunctionComponent = () => {
         </NavLink>
       </li>
       <li>
+        <NavLink to="/roles">
+          <i className="fa fa-lock" />
+          {expanded && 'Roles'}
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/testapi">
           <i className="fa fa-cog" />
           {expanded && 'Test API'}
         </NavLink>
-      </li>
-      <li>
-        <NavLink to="/roles">Roles</NavLink>
       </li>
     </nav>
   );

@@ -6,6 +6,7 @@ import { Router } from 'express';
 import GroupsRouter from './Groups';
 import UsersRouter from './Users';
 import RolesRouter from './Roles';
+import DashboardsRouter from './Dashboards';
 // Init router and path
 const router = Router();
 
@@ -16,7 +17,7 @@ const cognitoExpress = new CognitoExpress({
   region: process.env.COGNITO_REGION,
   cognitoUserPoolId: process.env.COGNITO_USER_POOL,
   tokenUse: 'access', // Possible Values: access | id
-  tokenExpiration: Number(process.env.COGNITO_COOKIE_LIFE_TIME) || 30, // Up to default expiration of 1 hour (3600000 ms)
+  tokenExpiration: Number(process.env.COGNITO_COOKIE_LIFE_TIME) || 3600000, // Up to default expiration of 1 hour (3600000 ms)
 });
 
 const options: cors.CorsOptions = {
@@ -66,6 +67,7 @@ router.use((req, res, next): any | undefined => {
 // Add sub-routes
 router.use('/users', UsersRouter);
 router.use('/groups', GroupsRouter);
+router.use('/dashboards', DashboardsRouter);
 router.use('/roles', RolesRouter);
 
 router.options('*', cors(options));

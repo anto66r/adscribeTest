@@ -9,10 +9,6 @@ export interface IUserDao {
 }
 
 export class UserDao implements IUserDao {
-  /**
-   *
-   */
-  // eslint-disable-next-line class-methods-use-this
   public async getAll(): Promise<IUserCollection> {
     return User.find({}).lean()
       .then((users) => wrapCollection(users) as IUserCollection)
@@ -23,6 +19,13 @@ export class UserDao implements IUserDao {
     return User.find({ username }).lean()
       .then((user) => wrapCollection(user, {}) as IUserCollection)
       .catch((err) => wrapCollection([], { data: err }) as IUserCollection);
+  }
+
+  public async getUserContext(): Promise<IUserCollection> {
+    // @ts-ignore
+    return User.find({}).lean()
+      .then((users) => wrapCollection(users, {}))
+      .catch((err) => wrapCollection([], { data: err }));
   }
 
 

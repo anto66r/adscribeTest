@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
+import React, { FunctionComponent } from 'react';
 import './styles.scss';
+import { useStore } from 'store';
 
 const Header: FunctionComponent = () => {
-  const { user } = useContext(UserContext);
+  const [state] = useStore();
+  const { user } = state;
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">

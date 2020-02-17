@@ -3,7 +3,7 @@ import { wrapCollection } from '@daos';
 import { Group, IGroupCollection } from '../../services';
 
 export interface IGroupDao {
-  getAll: () => Promise<IGroupCollection[]>;
+  getAll: () => Promise<IGroupCollection>;
   add: (group: IGroupCollection) => Promise<void>;
   update: (group: IGroupCollection) => Promise<void>;
   delete: (_id: string) => Promise<void>;
@@ -13,11 +13,10 @@ export class GroupDao implements IGroupDao {
   /**
    *
    */
-  // eslint-disable-next-line class-methods-use-this
-  public async getAll(): Promise<IGroupCollection[]> {
-    // @ts-ignore
-    return Group.find({}).then((groups) => wrapCollection(groups, {})) // todo, check! removing ts-ignore
-      .catch((err: any) => wrapCollection([], { data: err }));
+  public async getAll(): Promise<IGroupCollection> {
+    return Group.find({}).lean()
+      .then((groups) => wrapCollection(groups, {}) as IGroupCollection)
+      .catch((err: Error) => wrapCollection([], { data: err }) as IGroupCollection);
   }
 
   /**

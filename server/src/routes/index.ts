@@ -52,7 +52,7 @@ router.use((req, res, next): any | undefined => {
       if (err) {
         return res.status(401).send({
           result: false,
-          mesage: err,
+          message: err,
         });
       }
 
@@ -69,6 +69,29 @@ router.use('/users', UsersRouter);
 router.use('/groups', GroupsRouter);
 router.use('/dashboards', DashboardsRouter);
 router.use('/roles', RolesRouter);
+
+// Status 404 (Error) middleware
+router.use('*', (req, res) => {
+  res.status(404);
+  res.header('Content-Type', 'application/json');
+  res.send(JSON.stringify({
+    result: false,
+    message: 'Endpoint does not exist',
+    response: {
+      statusCode: res.statusCode,
+    },
+    request: {
+      url: req.url,
+      method: req.method,
+      baseUrl: req.baseUrl,
+      originalUrl: req.originalUrl,
+      params: req.params,
+      body: req.body,
+      cookies: req.headers.host,
+    },
+  }, null, 2));
+});
+
 
 router.options('*', cors(options));
 

@@ -2,12 +2,12 @@
 import { useReducer, useContext } from 'react';
 import { secureFetch } from 'helpers/fetching';
 import { UserContext } from 'context/UserContext';
-import { fetchMethod } from 'types';
+import { FetchMethod } from 'types';
 
 type DoFetchProps<T> = {
   endpoint: string;
   payload?: T;
-  method?: fetchMethod;
+  method?: FetchMethod;
   onSuccess?: (data: T[]) => void;
   onError?: (message: string) => void;
 }
@@ -84,7 +84,11 @@ function useFetch<T>(): UseFetchReturn<T> {
   const { cognito } = useContext(UserContext);
 
   function doFetch<T>({
-    endpoint, payload, method, onSuccess, onError,
+    endpoint,
+    payload,
+    method,
+    onSuccess,
+    onError,
   }: DoFetchProps<T>): void {
     const fetchData = async (): Promise<void> => {
       try {
@@ -95,7 +99,7 @@ function useFetch<T>(): UseFetchReturn<T> {
           cognito,
           method,
         });
-        if (results.error && !results.error.message) throw Error(results.error.message);
+        if (results.error && results.error.message) throw Error(results.error.message);
         setTimeout(
           () => {
             dispatch({
@@ -106,10 +110,9 @@ function useFetch<T>(): UseFetchReturn<T> {
           },
           1000,
         );
-      } catch (message) {
-        dispatch({ type: 'failure', error: message });
-        console.log(message);
-        if (onError) onError(message);
+      } catch (e) {
+        dispatch({ type: 'failure', error: e.message });
+        if (onError) onError(e.message);
       }
     };
     fetchData();

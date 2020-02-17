@@ -8,7 +8,6 @@ import { setRoles } from 'store/actions';
 import RolesList from './RolesList';
 import RoleDetail from './RoleDetail';
 import RoleEdit from './RoleEdit';
-import RoleCreate from './RoleCreate';
 
 const Roles = () => {
   const [state, dispatch] = useStore();
@@ -29,7 +28,7 @@ const Roles = () => {
         <Route exact path={path}>
           <RolesList roles={state.roles} />
         </Route>
-        <Route exact path={`${path}/create`} component={RoleCreate} />
+        <Route exact path={`${path}/create`} component={RoleEdit} />
         <Route exact path={`${path}/edit/:id`} component={RoleEdit} />
         <Route path={`${path}/:id`} component={RoleDetail} />
       </Switch>

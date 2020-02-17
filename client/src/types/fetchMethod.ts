@@ -1,9 +1,9 @@
-enum fetchMethodEnum {
-  POST = 'POST',
+enum FetchMethod {
+  POST= 'POST',
   GET = 'GET',
   PATCH = 'PATCH',
   UPDATE = 'UPDATE',
   DELETE = 'DELETE'
 }
 
-export default fetchMethodEnum;
+export default FetchMethod;

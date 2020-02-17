@@ -1,4 +1,4 @@
-import { fetchMethod } from 'types';
+import { FetchMethod } from 'types';
 import { CognitoAuthentication } from '../../context/UserContext/types';
 
 export interface SecureFetchType {
@@ -6,13 +6,13 @@ export interface SecureFetchType {
   cognito?: CognitoAuthentication;
   accessToken?: string;
   payload?: any;
-  method?: fetchMethod;
+  method?: FetchMethod;
 }
 export interface HeaderType {
   headers: {
     accesstoken?: string;
     'Content-Type': string;
   };
-  method?: fetchMethod;
+  method?: FetchMethod;
   body?: string;
 }

@@ -13,7 +13,7 @@ const Item: FunctionComponent<PropsType> = props => {
   const { role } = props;
   const { url } = useRouteMatch<{ url: string }>();
   const { doSuccessToast, doErrorToast } = useToast();
-  const { handleSubmit, loading } = useRoleAdmin({
+  const { handleSubmit, loading } = useRoleAdmin<IRole>({
     action: FetchAction.DELETE,
     onSuccess: (): void => { doSuccessToast('Role deleted'); },
     onError: (message: string): void => { doErrorToast(message); },

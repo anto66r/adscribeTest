@@ -12,6 +12,7 @@ import RoleEdit from './RoleEdit';
 const Roles = () => {
   const [state, dispatch] = useStore();
   const { data, doFetch } = useFetch();
+  console.log(state);
   React.useEffect(() => {
     doFetch({ endpoint: '/roles' });
   }, []);

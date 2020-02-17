@@ -1,31 +1,28 @@
 import React from 'react';
-import Loading from 'components/Loading';
-import { useFetch } from '../../hooks';
+import { Route, useRouteMatch, Switch } from 'react-router-dom';
 
-const Users = () => {
-  const { data, loading, doFetch } = useFetch();
+import { useStore } from 'store';
+// import IRole from 'types/role';
+// import UsersList from './UsersList';
+// import UsersDetail from './UsersDetail';
+// import UsersEdit from './UsersEdit';
 
-  const fetchUsers = () => {
-    doFetch({ endpoint: '/users' });
-  };
-
-  React.useEffect(() => {
-    fetchUsers();
-  }, []);
+const Roles = () => {
+  const [state] = useStore();
+  const { path } = useRouteMatch();
 
   return (
-    <div>
-      {
-        loading ? <Loading />
-          : (
-            <>
-              <h4>Result</h4>
-              <pre>{JSON.stringify(data, null, 2)}</pre>
-            </>
-          )
-      }
-    </div>
+    <>
+      <h1>Users</h1>
+      <Switch>
+        <Route exact path={path}>
+          {/* <UsersList roles={state.roles} /> */}
+        </Route>
+        {/* <Route exact path={`${path}/create`} component={RoleEdit} /> */}
+        {/* <Route exact path={`${path}/edit/:id`} component={UsersEdit} />
+        <Route path={`${path}/:id`} component={UsersDetail} /> */}
+      </Switch>
+    </>
   );
 };
-
-export default Users;
+export default Roles;

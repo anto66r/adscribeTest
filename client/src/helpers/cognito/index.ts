@@ -24,6 +24,7 @@ const tokenScopes = [
   'email',
   'profile',
   'http://localhost:5000/api',
+  'http://platf0rm-2-lb-1034170497.eu-west-1.elb.amazonaws.com/api',
   'transactions/api',
   'transactions/post',
   'transactions/get',
@@ -34,7 +35,6 @@ const tokenScopes = [
 
 const {
   REACT_APP_USER_POOL_BASE_URL: userPoolBaseUrl = '',
-  REACT_APP_COGNITO_CALLBACK_URL: callbackUrl = '',
   REACT_APP_COGNITO_USER_POOL: userPool = '',
   REACT_APP_COGNITO_CLIENT_ID: clientId = '',
   REACT_APP_COGNITO_SIGNOUT_URL: signoutUri = '',

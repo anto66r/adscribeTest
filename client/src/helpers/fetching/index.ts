@@ -50,9 +50,6 @@ const secureFetch = ({
     // we redirect to login and save current location
     if (error?.response?.status === 404) return Promise.reject(error);
     if (error?.response?.status === 500) return Promise.reject(error);
-
-    return Promise.reject(error);
-
     return Promise.reject(error);
   });
 

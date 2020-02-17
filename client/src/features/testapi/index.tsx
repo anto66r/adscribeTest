@@ -4,7 +4,7 @@ import { useStore } from 'store';
 import { secureFetch } from '../../helpers/fetching';
 
 const TestApi = () => {
-  const defaultUrl = 'http://localhost:5000/api/users';
+  const defaultUrl = `${window.location.origin}/api/users`;
   const [apiUrl, setApiUrl] = useState(defaultUrl);
   const [result, setResult] = useState('');
   const [state] = useStore();

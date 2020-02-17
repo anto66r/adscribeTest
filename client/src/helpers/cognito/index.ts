@@ -1,8 +1,6 @@
-// @ts-ignore
-import { CognitoAuth } from 'amazon-cognito-auth-js/dist/amazon-cognito-auth';
 import {
   CognitoRefreshToken,
-  CognitoUser, CognitoUserPool, CognitoUserSession,
+  CognitoUser, CognitoUserSession,
 } from 'amazon-cognito-identity-js';
 import Amplify, { Auth } from 'aws-amplify';
 import { config as AWSConfig } from 'aws-sdk';
@@ -106,7 +104,6 @@ const waitForAWSRefreshSession = (cognitoUser: CognitoUser, currentRefreshToken:
   });
 }));
 
-
 const refreshSession = async (remember: boolean) => {
   try {
     const cognitoUser = await Auth.currentAuthenticatedUser();
@@ -120,7 +117,6 @@ const refreshSession = async (remember: boolean) => {
   }
 };
 
-
 const logout = (setUserId: Function, setCognito: Function, setLogged: Function) => Auth.signOut()
   .then(() => {
     cleanCookies();
@@ -129,14 +125,8 @@ const logout = (setUserId: Function, setCognito: Function, setLogged: Function) 
   .then(() => setCognito({}))
   .then(() => setLogged(false));
 
-
-const getLoggedUser = (): AuthType => ({
-  username: getCookie('CognitoUsername'),
-});
-
 export {
   login,
-  getLoggedUser,
   logout,
   cleanCookies,
   refreshSession,

@@ -1,13 +1,13 @@
 import { useStore } from 'store';
 import { setRoles } from 'store/actions';
 
-import IRole from 'types/role';
+import { IRole, FetchAction, FetchMethod } from 'types';
 import { useFetch } from 'hooks';
 
-const actionToMethod: { [key: string]: string } = {
-  DELETE: 'DELETE',
-  CREATE: 'POST',
-  UPDATE: 'PATCH',
+const actionToMethod: { [key: string]: FetchMethod } = {
+  DELETE: FetchMethod.DELETE,
+  CREATE: FetchMethod.POST,
+  UPDATE: FetchMethod.PATCH,
 };
 
 type hookReturn = {
@@ -16,7 +16,7 @@ type hookReturn = {
 }
 
 type hookProps = {
-  action: string;
+  action: FetchAction;
   onError?: (message: string) => void;
   onSuccess?: () => void;
 }
@@ -40,6 +40,7 @@ const useRoleAdmin = ({ action, onSuccess, onError }: hookProps): hookReturn => 
     doFetch({
       endpoint: '/roles',
       payload: role,
+      // method: FetchMethod[actionToMethod[action]],
       method: actionToMethod[action],
       onSuccess: handleSuccess,
       onError: handleError,

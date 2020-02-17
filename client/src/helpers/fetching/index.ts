@@ -1,4 +1,5 @@
 import { CognitoAccessToken } from 'amazon-cognito-identity-js';
+import { FetchMethod } from 'types';
 import { cleanCookies, refreshSession } from 'helpers/cognito';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ICognitoSessionModel } from 'helpers/cognito/types';
@@ -10,16 +11,17 @@ const secureFetch = ({
   auth,
   accessToken,
   payload,
-  method = payload ? 'POST' : 'GET',
+  method,
 }: SecureFetchType): Promise<any> => new Promise((resolve, reject) => {
+  let fetchMethod = method;
+  if (!method) fetchMethod = payload ? FetchMethod.POST : FetchMethod.GET;
   const params: HeaderType = {
-    method,
+    method: fetchMethod,
     headers: {
       'Content-Type': 'application/json',
       accesstoken: getCookie('CognitoAccessToken')
         || auth?.cognitoAccessToken || accessToken,
     },
-
   };
 
   const axiosConfig: IAxiosConfig = {

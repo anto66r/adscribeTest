@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import IRole from 'types/role';
+import { IRole, FetchAction } from 'types';
 import RoleForm from 'components/RoleForm';
 import { useStore } from 'store';
 import useToast from 'hooks/useToast';
@@ -14,10 +14,10 @@ const RoleEdit: FunctionComponent = () => {
   const { doSuccessToast, doErrorToast } = useToast();
   const goBack = (): void => { history.goBack(); };
 
-  const handleSuccess = (): void => { doSuccessToast('Role updated'); history.goBack(); };
+  const handleSuccess = (): void => { doSuccessToast(id ? 'Role updated' : 'Role created'); history.goBack(); };
   const handleError = (message: string): void => { doErrorToast(message); };
 
-  const { handleSubmit, loading } = useRoleAdmin({ action: 'UPDATE', onSuccess: handleSuccess, onError: handleError });
+  const { handleSubmit, loading } = useRoleAdmin({ action: id ? FetchAction.UPDATE : FetchAction.CREATE, onSuccess: handleSuccess, onError: handleError });
 
   const role = state.roles.find((item: IRole) => item._id === id);
 

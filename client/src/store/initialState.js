@@ -1,5 +1,7 @@
 export default {
   users: [],
   roles: [],
-  user: {},
+  user: {
+    auth: {},
+  },
 };

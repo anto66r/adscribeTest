@@ -3,13 +3,14 @@ import { message } from 'aws-sdk/clients/sns';
 import { useReducer, useContext } from 'react';
 import { secureFetch } from 'helpers/fetching';
 import { UserContext } from 'context/UserContext';
+import { FetchMethod } from 'types';
 import { useHistory } from 'react-router-dom';
 import { useStore } from '../store';
 
 type DoFetchProps<T> = {
   endpoint: string;
   payload?: T;
-  method?: string;
+  method?: FetchMethod;
   onSuccess?: (data: T[]) => void;
   onError?: (message: string) => void;
 }
@@ -84,13 +85,16 @@ function reducer<T>(state: State<T>, action: Action<T>): State<T> {
 function useFetch<T>(): UseFetchReturn<T> {
   const [{ loading, error, data }, dispatch] = useReducer<React.Reducer<State<T>, Action<T>>>(reducer, initState);
 
-  const [state] = useStore();
-  const history = useHistory();
-  const { auth } = state.user;
-
+  const [state = {}] = useStore();
+  // const history = useHistory();
+  const { auth } = state.user || {};
 
   function doFetch<T>({
-    endpoint, payload, method, onSuccess, onError,
+    endpoint,
+    payload,
+    method,
+    onSuccess,
+    onError,
   }: DoFetchProps<T>): void {
     const fetchData = async (): Promise<void> => {
       try {
@@ -103,7 +107,7 @@ function useFetch<T>(): UseFetchReturn<T> {
           method,
         });
 
-        if (results.error && !results.error.message) throw Error(results.error.message);
+        if (results.error && results.error.message) throw Error(results.error.message);
         setTimeout(
           () => {
             dispatch({
@@ -117,12 +121,12 @@ function useFetch<T>(): UseFetchReturn<T> {
       } catch (fetchError) {
         dispatch({ type: 'failure', error: fetchError.message });
         console.log(fetchError);
-        history.push({
-          pathname: '/error',
-          state: {
-            error: fetchError.message,
-          },
-        });
+        // history.push({
+        //   pathname: '/error',
+        //   state: {
+        //     error: fetchError.message,
+        //   },
+        // });
         if (onError) onError(fetchError.message);
       }
     };

@@ -10,7 +10,7 @@ type ContentProps = {
   onCancel: () => void;
 };
 
-const RoleEdit: FunctionComponent<ContentProps> = ({
+const RoleForm: FunctionComponent<ContentProps> = ({
   role = { permissions: [], name: '' }, onSubmit, onCancel, loading,
 }) => {
   const { name, permissions = [] } = role;
@@ -48,6 +48,7 @@ const RoleEdit: FunctionComponent<ContentProps> = ({
         {globalPermissions.sort().map(item => (
           <li key={item}>
             <input
+              data-testid={item}
               type="checkbox"
               name={item}
               checked={checkedItems[item] || false}
@@ -65,4 +66,4 @@ const RoleEdit: FunctionComponent<ContentProps> = ({
   );
 };
 
-export default RoleEdit;
+export default RoleForm;

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
-import IRole from 'types/role';
+import { IRole, FetchAction } from 'types';
 import useToast from 'hooks/useToast';
 import useRoleAdmin from '../hooks/useRoleAdmin';
 
@@ -14,7 +14,7 @@ const Item: FunctionComponent<PropsType> = props => {
   const { url } = useRouteMatch<{ url: string }>();
   const { doSuccessToast, doErrorToast } = useToast();
   const { handleSubmit, loading } = useRoleAdmin({
-    action: 'DELETE',
+    action: FetchAction.DELETE,
     onSuccess: (): void => { doSuccessToast('Role deleted'); },
     onError: (message: string): void => { doErrorToast(message); },
   });
@@ -24,7 +24,7 @@ const Item: FunctionComponent<PropsType> = props => {
   };
   return (
     <li key={role._id}>
-      <Link to={`${url}/${role._id}`}>{role.name}</Link>
+      <Link data-testid="pl2-role-itemlink" to={`${url}/${role._id}`}>{role.name}</Link>
       {
         !role.noDelete && (
           <button disabled={loading} onClick={(): void => handleDelete(role.name)}>

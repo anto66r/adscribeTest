@@ -1,7 +1,7 @@
 import { useStore } from 'store';
 import { setRoles } from 'store/actions';
 
-import { IRole, FetchAction, FetchMethod } from 'types';
+import { FetchAction, FetchMethod } from 'types';
 import { useFetch } from 'hooks';
 
 const actionToMethod: { [key: string]: FetchMethod } = {
@@ -10,8 +10,8 @@ const actionToMethod: { [key: string]: FetchMethod } = {
   UPDATE: FetchMethod.PATCH,
 };
 
-type hookReturn = {
-  handleSubmit: (role: IRole) => Promise<void>;
+type hookReturn<T> = {
+  handleSubmit: (item: T) => Promise<void>;
   loading: boolean;
 }
 
@@ -21,13 +21,17 @@ type hookProps = {
   onSuccess?: () => void;
 }
 
-const useRoleAdmin = ({ action, onSuccess, onError }: hookProps): hookReturn => {
+function useRoleAdmin<T>({
+  action,
+  onSuccess,
+  onError,
+}: hookProps): hookReturn<T> {
   const [, dispatch] = useStore();
   const {
     loading, doFetch,
-  } = useFetch<IRole>();
+  } = useFetch<T>();
 
-  const handleSuccess = (data: IRole[]): void => {
+  const handleSuccess = (data: T[]): void => {
     dispatch(setRoles(data));
     if (onSuccess) onSuccess();
   };
@@ -36,11 +40,10 @@ const useRoleAdmin = ({ action, onSuccess, onError }: hookProps): hookReturn => 
     if (onError) onError(e);
   };
 
-  const handleSubmit = async (role: IRole): Promise<void> => {
+  const handleSubmit = async (item: T): Promise<void> => {
     doFetch({
       endpoint: '/roles',
-      payload: role,
-      // method: FetchMethod[actionToMethod[action]],
+      payload: item,
       method: actionToMethod[action],
       onSuccess: handleSuccess,
       onError: handleError,

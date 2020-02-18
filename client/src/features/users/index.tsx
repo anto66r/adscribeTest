@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Route, useRouteMatch, Switch } from 'react-router-dom';
 
 import { useStore } from 'store';
-// import IRole from 'types/role';
-// import UsersList from './UsersList';
-// import UsersDetail from './UsersDetail';
-// import UsersEdit from './UsersEdit';
+import UsersList from './UsersList';
+import UsersDetail from './UsersDetail';
+import UsersEdit from './UsersEdit';
 
-const Roles = () => {
-  const [state] = useStore();
+const Roles: FC = () => {
+  const [{ users }] = useStore();
+
   const { path } = useRouteMatch();
 
   return (
@@ -16,11 +16,11 @@ const Roles = () => {
       <h1>Users</h1>
       <Switch>
         <Route exact path={path}>
-          {/* <UsersList roles={state.roles} /> */}
+          <UsersList users={users} />
         </Route>
-        {/* <Route exact path={`${path}/create`} component={RoleEdit} /> */}
-        {/* <Route exact path={`${path}/edit/:id`} component={UsersEdit} />
-        <Route path={`${path}/:id`} component={UsersDetail} /> */}
+        <Route exact path={`${path}/create`} component={UsersEdit} />
+        <Route exact path={`${path}/edit/:id`} component={UsersEdit} />
+        <Route path={`${path}/:id`} component={UsersDetail} />
       </Switch>
     </>
   );

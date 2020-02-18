@@ -1,15 +1,15 @@
 import React, { FunctionComponent } from 'react';
 
 type ContentProps = {
-  onSubmit: ({ name, permissions }: { name: string; permissions: string[] }) => void;
+  onSubmit: ({ username, roles }: { username: string; roles: string[] }) => void;
   onCancel: () => void;
 };
 
-const RoleForm: FunctionComponent<ContentProps> = ({ onSubmit, onCancel }) => (
+const UserForm: FunctionComponent<ContentProps> = ({ onSubmit, onCancel }) => (
   <form
     data-testid="form"
     onSubmit={
-    (): void => onSubmit({ name: 'Name', permissions: ['A', 'B'] })
+    (): void => onSubmit({ username: 'User Name', roles: ['A', 'B'] })
   }
   >
     <button type="submit" data-testid="Save">Save</button>
@@ -17,4 +17,4 @@ const RoleForm: FunctionComponent<ContentProps> = ({ onSubmit, onCancel }) => (
   </form>
 );
 
-export default RoleForm;
+export default UserForm;

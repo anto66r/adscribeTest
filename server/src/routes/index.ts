@@ -30,7 +30,7 @@ router.use(cors(options));
 router.use((req, res, next): any | undefined => {
   // I'm passing in the access token in header under key accessToken
   const accessTokenFromClient = req.headers.accesstoken;
-  console.log(`Access token obtained: ${accessTokenFromClient}`);
+  // console.log(`Access token obtained: ${accessTokenFromClient}`);
 
   // Fail if token not present in header.
   if (process.env.NODE_ENV === 'development' && BYPASS_SECURITY) {

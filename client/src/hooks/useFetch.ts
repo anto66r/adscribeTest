@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { message } from 'aws-sdk/clients/sns';
-import { useReducer, useContext } from 'react';
+// import { message } from 'aws-sdk/clients/sns';
+import { useReducer } from 'react';
 import { secureFetch } from 'helpers/fetching';
-import { UserContext } from 'context/UserContext';
+// import { UserContext } from 'context/UserContext';
 import { FetchMethod } from 'types';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { useStore } from '../store';
 
 type DoFetchProps<T> = {
@@ -106,21 +106,15 @@ function useFetch<T>(): UseFetchReturn<T> {
           auth,
           method,
         });
-
         if (results.error && results.error.message) throw Error(results.error.message);
-        setTimeout(
-          () => {
-            dispatch({
-              type: 'success',
-              payload: results.data,
-            });
-            if (onSuccess) onSuccess(results.data);
-          },
-          1000,
-        );
+        dispatch({
+          type: 'success',
+          payload: results.data,
+        });
+        if (onSuccess) onSuccess(results.data);
       } catch (fetchError) {
         dispatch({ type: 'failure', error: fetchError.message });
-        console.log(fetchError);
+        // console.log(fetchError);
         // history.push({
         //   pathname: '/error',
         //   state: {

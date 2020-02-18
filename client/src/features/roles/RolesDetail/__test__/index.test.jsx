@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 
 import { RouteProvider } from 'testing';
 import { StoreProvider } from 'store';
-import RoleDetail from '..';
+import RolesDetail from '..';
 
 jest.mock('config/permissions');
 
@@ -22,13 +22,13 @@ const renderWrapper = () => render(
         }],
       }}
       >
-        <RoleDetail />
+        <RolesDetail />
       </StoreProvider>
     </RouteProvider>
   ),
 );
 
-describe('<RoleDetail />', () => {
+describe('<RolesDetail />', () => {
   test('should display a role correctly. Should only show permission A because permission D is not defined in global permission config.', () => {
     renderWrapper();
     // screen.debug();

@@ -1,7 +1,7 @@
 import React, { ElementType, useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { useStore } from 'store';
-import { IUserState } from 'types/user';
+import { IUserState } from 'types/userState';
 import { setUser } from 'store/actions';
 import { getCookie } from '../../helpers/cookies';
 

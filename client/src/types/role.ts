@@ -1,6 +1,7 @@
+
 interface IRole {
   name: string;
-  _id?: string;
+  _id: string;
   permissions?: string[];
   noDelete?: boolean;
 }

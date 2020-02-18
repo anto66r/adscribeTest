@@ -1,7 +1,7 @@
-import { ICognitoAuthentication } from '../context/UserContext/types';
-
-export interface IUserState {
-  userId: string;
-  isLogged: boolean;
-  auth: ICognitoAuthentication;
+interface IUser {
+  username: string;
+  _id: string;
+  roles?: string[];
 }
+
+export default IUser;

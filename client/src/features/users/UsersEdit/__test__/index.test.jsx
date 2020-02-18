@@ -4,10 +4,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 
 import { StoreProvider } from 'store';
 import reducers from 'store/reducers';
-import RoleEdit from '../index';
-import useRoleAdmin from '../../hooks/useRoleAdmin';
-
-jest.mock('config/permissions');
+import useItemAdmin from 'hooks/useItemAdmin';
+import UsersEdit from '..';
 
 const mockDoSuccessToast = jest.fn();
 const mockDoErrorToast = jest.fn();
@@ -22,12 +20,12 @@ jest.mock('react-router-dom', () => ({
   useHistory: () => ({ goBack: mockGoBack }),
 }));
 
-jest.mock('components/RoleForm');
-jest.mock('../../hooks/useRoleAdmin');
+jest.mock('components/UserForm');
+jest.mock('hooks/useItemAdmin');
 
 beforeEach(() => {
-  useRoleAdmin.mockImplementation(() => ({
-    handleSubmit: jest.fn(),
+  useItemAdmin.mockImplementation(() => ({
+    doUpdate: jest.fn(),
     loading: false,
   }));
 });
@@ -37,18 +35,19 @@ const renderWrapper = () => render(
   (
     <StoreProvider
       initialState={{
-        roles: [{
+        users: [{
           _id: '1234',
         }],
+        roles: [],
       }}
       reducer={reducers}
     >
-      <RoleEdit />
+      <UsersEdit />
     </StoreProvider>
   ),
 );
 
-describe('<RoleEdit />', () => {
+describe('<UserEdit />', () => {
   test('should handle cancel correctly', () => {
     renderWrapper();
     fireEvent.click(screen.getByTestId('Cancel'));
@@ -56,19 +55,19 @@ describe('<RoleEdit />', () => {
   });
 
   test('should call success toast and go back on save', () => {
-    useRoleAdmin.mockImplementation(({ onSuccess }) => ({
-      handleSubmit: onSuccess,
+    useItemAdmin.mockImplementation(() => ({
+      doUpdate: ({ onSuccess }) => onSuccess(),
       loading: false,
     }));
     renderWrapper();
     fireEvent.submit(screen.getByTestId('form'));
-    expect(mockDoSuccessToast).toHaveBeenCalledWith('Role updated');
+    expect(mockDoSuccessToast).toHaveBeenCalledWith('User updated');
     expect(mockGoBack).toHaveBeenCalledWith();
   });
 
   test('should call error toast on save error', () => {
-    useRoleAdmin.mockImplementation(({ onError }) => ({
-      handleSubmit: () => { onError('Error message'); },
+    useItemAdmin.mockImplementation(() => ({
+      doUpdate: ({ onError }) => { onError('Error message'); },
       loading: false,
     }));
     renderWrapper();

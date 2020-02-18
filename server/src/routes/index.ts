@@ -23,6 +23,7 @@ const cognitoExpress = new CognitoExpress({
 
 const freeUrls: string[] = [
   '/logs',
+  '/',
 ];
 
 const options: cors.CorsOptions = {
@@ -75,6 +76,10 @@ router.use('/groups', GroupsRouter);
 router.use('/dashboards', DashboardsRouter);
 router.use('/roles', RolesRouter);
 router.use('/logs', LogsRouter);
+
+router.use('*', (req, res) => {
+  res.send('api root!');
+});
 
 // Status 404 (Error) middleware
 router.use('*', (req, res) => {

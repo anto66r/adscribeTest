@@ -28,6 +28,7 @@
     "module-alias": "^2.2.2",
     "mongoose": "^5.8.11",
     "morgan": "^1.9.1",
+    "promisify": "^0.0.3",
     "validator": "^12.2.0",
     "winston": "^3.2.1"
   },

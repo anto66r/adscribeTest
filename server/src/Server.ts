@@ -1,12 +1,12 @@
 import cookieParser from 'cookie-parser';
-import express from 'express';
+import express, { Express } from 'express';
 import mongoose from 'mongoose';
 import logger from 'morgan';
 import path from 'path';
 import BaseRouter from './routes';
 
 // Init express
-const app = express();
+const app: Express = express();
 
 // Add middleware/settings/routes to express.
 app.use(logger('dev'));
@@ -17,8 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/api', BaseRouter);
 
-
-const staticDir = path.join(__dirname, 'public');
+const staticDir: string = path.join(__dirname, 'public');
 app.use(express.static(staticDir));
 
 // Mongoose connection
@@ -30,7 +29,7 @@ mongoose.connect(uri, {
   dbName: 'platf0rm-2',
 });
 
-mongoose.connection.once('open', () => {
+mongoose.connection.once('open', (): void => {
   console.log('MongoDB database connection established successfully');
 });
 mongoose.set('useFindAndModify', false);

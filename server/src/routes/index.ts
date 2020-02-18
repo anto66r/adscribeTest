@@ -7,6 +7,7 @@ import GroupsRouter from './Groups';
 import UsersRouter from './Users';
 import RolesRouter from './Roles';
 import DashboardsRouter from './Dashboards';
+import LogsRouter from './Logs';
 // Init router and path
 const router = Router();
 
@@ -20,6 +21,11 @@ const cognitoExpress = new CognitoExpress({
   tokenExpiration: Number(process.env.COGNITO_COOKIE_LIFE_TIME) || 3600000, // Up to default expiration of 1 hour (3600000 ms)
 });
 
+const freeUrls: string[] = [
+  '/logs',
+  '/',
+];
+
 const options: cors.CorsOptions = {
   origin: '*',
 };
@@ -27,13 +33,13 @@ const options: cors.CorsOptions = {
 // use cors middleware
 router.use(cors(options));
 
-router.use((req, res, next): any | undefined => {
+router.use((req, res, next): any => {
   // I'm passing in the access token in header under key accessToken
   const accessTokenFromClient = req.headers.accesstoken;
   // console.log(`Access token obtained: ${accessTokenFromClient}`);
 
   // Fail if token not present in header.
-  if (process.env.NODE_ENV === 'development' && BYPASS_SECURITY) {
+  if (process.env.NODE_ENV === 'development' && (BYPASS_SECURITY || freeUrls.includes(req.url))) {
     next();
     return undefined;
   }
@@ -52,7 +58,7 @@ router.use((req, res, next): any | undefined => {
       if (err) {
         return res.status(401).send({
           result: false,
-          mesage: err,
+          message: err,
         });
       }
 
@@ -69,6 +75,33 @@ router.use('/users', UsersRouter);
 router.use('/groups', GroupsRouter);
 router.use('/dashboards', DashboardsRouter);
 router.use('/roles', RolesRouter);
+router.use('/logs', LogsRouter);
+
+router.use('*', (req, res) => {
+  res.send('api root!');
+});
+
+// Status 404 (Error) middleware
+router.use('*', (req, res) => {
+  res.status(404);
+  res.header('Content-Type', 'application/json');
+  res.send(JSON.stringify({
+    result: false,
+    message: 'Endpoint does not exist',
+    response: {
+      statusCode: res.statusCode,
+    },
+    request: {
+      url: req.url,
+      method: req.method,
+      baseUrl: req.baseUrl,
+      originalUrl: req.originalUrl,
+      params: req.params,
+      body: req.body,
+      cookies: req.headers.host,
+    },
+  }, null, 2));
+});
 
 router.options('*', cors(options));
 

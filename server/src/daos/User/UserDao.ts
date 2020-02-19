@@ -1,24 +1,24 @@
 import { wrapCollection } from '@daos';
-import { IUserCollection, User } from '../../services';
+import { IUserCollection, User, IUser } from '../../services';
 
 export interface IUserDao {
   getAll: () => Promise<IUserCollection>;
-  add: (user: IUserCollection) => Promise<void>;
-  update: (user: IUserCollection) => Promise<void>;
-  delete: (_id: string) => Promise<void>;
+  add: (user: IUser) => Promise<IUserCollection>;
+  update: (user: IUser) => Promise<IUserCollection>;
+  delete: (user: IUser) => Promise<IUserCollection>;
 }
 
 export class UserDao implements IUserDao {
   public async getAll(): Promise<IUserCollection> {
     return User.find({}).lean()
       .then((users) => wrapCollection(users) as IUserCollection)
-      .catch((err) => wrapCollection([], { data: err }) as IUserCollection);
+      .catch((err) => wrapCollection([], err) as IUserCollection);
   }
 
   public async findUser(username: string): Promise<IUserCollection> {
     return User.find({ username }).lean()
       .then((user) => wrapCollection(user, {}) as IUserCollection)
-      .catch((err) => wrapCollection([], { data: err }) as IUserCollection);
+      .catch((err) => wrapCollection([], err) as IUserCollection);
   }
 
   public async getUserContext(): Promise<IUserCollection> {
@@ -28,37 +28,22 @@ export class UserDao implements IUserDao {
       .catch((err) => wrapCollection([], { data: err }));
   }
 
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  public add(user: IUserCollection): Promise<void> {
-    return {} as any;
+  public add(user: IUser): Promise<IUserCollection> {
+    return User.create(user)
+      .then(() => this.getAll())
+      .catch((err) => wrapCollection([], err) as IUserCollection);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  public update(user: IUserCollection): Promise<void> {
-    // TODO
-    return {} as any;
+  public update(user: IUser): Promise<IUserCollection> {
+    // eslint-disable-next-line no-underscore-dangle
+    return User.findOneAndUpdate({ _id: user._id }, user, { runValidators: true })
+      .then(() => this.getAll())
+      .catch((err) => wrapCollection([], err) as IUserCollection);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  public delete(_id: string): Promise<void> {
-    // TODO
-    return {} as any;
+  public delete(user: IUser): Promise<IUserCollection> {
+    return User.deleteOne({ ...user })
+      .then(() => this.getAll())
+      .catch((err) => wrapCollection([], err) as IUserCollection);
   }
-
-  // public async createUser(username: string, cognitoId: string): Promise<IUserCollection> {
-  //   // Find if exists
-  //   const possibleUser = await User.find({ username });
-
-  //   if (possibleUser.length) {
-  //     throw Error('User exists');
-  //   }
-
-  //   const user = await User.create({
-  //     username,
-  //     cognitoId,
-  //   });
-
-  //   return wrapCollection([user]);
-  // }
 }

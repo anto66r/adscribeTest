@@ -8,6 +8,7 @@ interface IUser {
   _id?: string;
   cognitoId?: string;
   username: string;
+  roles: string[];
 }
 
 interface IUserCollection {
@@ -21,6 +22,9 @@ const userSchema = new Schema(
       type: String,
       trim: true,
       required: true,
+    },
+    roles: {
+      type: [String],
     },
     cognitoId: {
       type: String,

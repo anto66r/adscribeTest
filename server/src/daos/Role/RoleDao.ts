@@ -12,10 +12,6 @@ export interface IRoleDao {
 }
 
 export class RoleDao implements IRoleDao {
-  /**
-   *
-   */
-  // eslint-disable-next-line class-methods-use-this
   public async getAll(): Promise<IRoleCollection> {
     return Role.find({})
       .lean()
@@ -23,7 +19,6 @@ export class RoleDao implements IRoleDao {
       .catch((err) => wrapCollection([], err) as IRoleCollection);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
   public add(role: IRole): Promise<IRoleCollection> {
     return Role.create(role)
       .then(() => this.getAll())
@@ -37,7 +32,6 @@ export class RoleDao implements IRoleDao {
       .catch((err) => wrapCollection([], err) as IRoleCollection);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
   public delete(role: IRole): Promise<IRoleCollection> {
     return Role.deleteOne({ ...role, noDelete: false })
       .then(() => this.getAll())

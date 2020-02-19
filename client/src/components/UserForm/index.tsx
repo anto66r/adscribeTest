@@ -1,27 +1,28 @@
 import React, { useState, FunctionComponent } from 'react';
-import globalPermissions from 'config/permissions';
 
-import IRole from 'types/role';
+import { IUser, IRole } from 'types';
+import { useStore } from 'store';
 
 type ContentProps = {
-  role?: IRole;
+  user?: IUser;
   loading?: boolean;
-  onSubmit: ({ name, permissions }: { name: string; permissions: string[]}) => void;
+  onSubmit: ({ username, roles }: {username: string; roles: string[]}) => void;
   onCancel: () => void;
 };
 
-const RoleForm: FunctionComponent<ContentProps> = ({
-  role = { permissions: [], name: '' }, onSubmit, onCancel, loading,
+const UserForm: FunctionComponent<ContentProps> = ({
+  user = { roles: [], username: '' }, onSubmit, onCancel, loading,
 }) => {
-  const { name, permissions = [] } = role;
-  const [formName, setFormName] = useState(name);
-  const [checkedItems, setCheckedItems] = useState(() => permissions.reduce((acc: any, cur: string) => {
+  const [state] = useStore();
+  const { username, roles = [] } = user;
+  const [formName, setFormName] = useState(username);
+  const [checkedItems, setCheckedItems] = useState(() => roles.reduce((acc: any, cur: string) => {
     acc[cur] = true;
     return acc;
   }, {}));
 
   const handleCheckChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setCheckedItems({ ...checkedItems, [e.target.name]: e.target.checked });
+    setCheckedItems({ ...checkedItems, [e.target.value]: e.target.checked });
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => setFormName(e.target.value);
@@ -29,32 +30,33 @@ const RoleForm: FunctionComponent<ContentProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     onSubmit({
-      name: formName,
-      permissions: Object.keys(checkedItems).filter(item => checkedItems[item]),
+      username: formName,
+      roles: Object.keys(checkedItems).filter(item => checkedItems[item]),
     });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Name</label>
+      <label htmlFor="username">User Name</label>
       <input
         type="text"
-        id="name"
-        name="name"
+        id="username"
+        name="username"
         onChange={handleNameChange}
         value={formName}
       />
       <ul>
-        {globalPermissions.sort().map(item => (
-          <li key={item}>
+        {state.roles.sort().map((item: IRole) => (
+          <li key={item.name}>
             <input
               data-testid={item}
               type="checkbox"
-              name={item}
-              checked={checkedItems[item] || false}
+              name={item.name}
+              value={item._id}
+              checked={checkedItems[item._id] || false}
               onChange={handleCheckChange}
             />
-            {item}
+            {item.name}
           </li>
         ))}
       </ul>
@@ -66,4 +68,4 @@ const RoleForm: FunctionComponent<ContentProps> = ({
   );
 };
 
-export default RoleForm;
+export default UserForm;

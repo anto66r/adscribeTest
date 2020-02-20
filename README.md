@@ -20,7 +20,7 @@
 
 ### Server
 
-`cd server && yarn startdev`
+`cd server && yarn start:dev`
 
 ### Code cleaning and tests:
 Important! Change the git hooks default folder for this project

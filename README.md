@@ -24,7 +24,7 @@
 
 ### Components
 
-Run locally storybook app to see and test all our UI components
+Run storybook app locally to see and test all our UI components
 
 `yarn run components`
 

@@ -37,7 +37,7 @@ const secureFetch = ({
       return Promise.reject(error);
     }
     if (error.config && error.response && error.response.status === 401) {
-      return refreshSession(auth?.remember || false)
+      return refreshSession()
         .then((newSession: ICognitoSessionModel) => {
           error.config.headers.accesstoken = newSession.accessToken.jwtToken;
           return axios.request(error.config);

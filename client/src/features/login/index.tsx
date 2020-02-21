@@ -14,29 +14,24 @@ import { useStore } from '../../store';
 const Login = () => {
   const [userForm, setUserForm] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberForm, setRememberForm] = useState(false);
   const [isLogging, setIsLogging] = useState(false);
 
   const [state, dispatch] = useStore();
-
-  useEffect(() => {
-    dispatch(setUser({
-      remember: rememberForm,
-    }));
-  }, [rememberForm]);
+  const [error, setError] = useState('');
 
   const history = useHistory();
   const { message: errorMessage } = useContext(ErrorContext);
 
   const doLogin = async (): Promise<void> => {
     setIsLogging(true);
+    setError('');
     const foundUser = await login(
       userForm,
       password,
-      rememberForm,
     )
       .then((loginResult: ILoginResult) => {
         const { user, auth } = loginResult;
+
         dispatch(setUser({
           userId: user.data[0]._id,
           isLogged: true,
@@ -48,10 +43,8 @@ const Login = () => {
         history.push(redirectTo === '/login' ? '' : redirectTo);
       })
       .catch((err: Error) => {
-        history.push({
-          pathname: '/error',
-          state: { errorMessage: err.message },
-        });
+        setError(err.message);
+        setIsLogging(false);
       });
     dispatch(setUsers(foundUser));
   };
@@ -91,18 +84,7 @@ const Login = () => {
               onChange={e => setPassword(e.target.value)}
             />
           </div>
-          <div className="mt-3" style={{ textAlign: 'center' }}>
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="remember"
-              checked={rememberForm}
-              onChange={e => {
-                setRememberForm(e.target.checked);
-              }}
-            />
-            <label className="form-check-label">Stay logged in</label>
-          </div>
+          <div className="mt-3" style={{ textAlign: 'center' }} />
           <div className="d-flex justify-content-center mt-3 mb-2">
             <button
               type="submit"
@@ -122,6 +104,13 @@ const Login = () => {
               )}
             </button>
           </div>
+          {
+              error && (
+                <div className="d-flex justify-content-center">
+                  <p>{error}</p>
+                </div>
+              )
+          }
         </div>
       </div>
     </div>

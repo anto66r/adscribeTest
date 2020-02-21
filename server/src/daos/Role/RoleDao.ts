@@ -1,15 +1,8 @@
 import { wrapCollection } from '@daos';
+import { IRoleDao } from 'src/daos/Role/types';
 import {
   Role, IRole, IRoleCollection,
-} from '../../services';
-
-
-export interface IRoleDao {
-  getAll: () => Promise<IRoleCollection>;
-  add: (role: IRole) => Promise<IRoleCollection>;
-  update: (role: IRole) => Promise<IRoleCollection>;
-  delete: (role: IRole) => Promise<IRoleCollection>;
-}
+} from 'src/services';
 
 export class RoleDao implements IRoleDao {
   public async getAll(): Promise<IRoleCollection> {

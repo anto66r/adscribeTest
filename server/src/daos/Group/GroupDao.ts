@@ -1,13 +1,7 @@
 import { wrapCollection } from '@daos';
+import { IGroupDao } from 'src/daos/Group/types';
 // eslint-disable-next-line no-unused-vars
 import { Group, IGroupCollection } from '../../services';
-
-export interface IGroupDao {
-  getAll: () => Promise<IGroupCollection>;
-  add: (group: IGroupCollection) => Promise<void>;
-  update: (group: IGroupCollection) => Promise<void>;
-  delete: (_id: string) => Promise<void>;
-}
 
 export class GroupDao implements IGroupDao {
   /**
@@ -24,7 +18,7 @@ export class GroupDao implements IGroupDao {
    * @param group
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  public add(group: IGroupCollection): Promise<void> {
+  public add(group: IGroupCollection): Promise<IGroupCollection> {
     return {} as any;
   }
 
@@ -33,7 +27,7 @@ export class GroupDao implements IGroupDao {
    * @param group
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  public update(group: IGroupCollection): Promise<void> {
+  public update(group: IGroupCollection): Promise<IGroupCollection> {
     // TODO
     return {} as any;
   }

@@ -6,6 +6,6 @@ import App from '../App';
 describe('<App />', () => {
   test('should display Main page! header', () => {
     const { getByText } = render(<App />);
-    expect(getByText('Stay logged in')).toBeTruthy();
+    expect(getByText('Login')).toBeTruthy();
   });
 });

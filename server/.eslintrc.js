@@ -16,11 +16,12 @@ module.exports = {
     rules: {
         'import/no-unresolved': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off',
-        "max-len": [2, 180, 4, {"ignoreUrls": true}],
-        'interface-name-prefix': 'off',
-        '@typescript-eslint/interface-name-prefix': 'off',
+        'max-len': [2, 180, 4, {'ignoreUrls': true}],
+        '@typescript-eslint/interface-name-prefix':  ["error",{ "prefixWithI": "always" }],
         'import/prefer-default-export': 'off',
-        'class-methods-use-this': 'off'
+        'class-methods-use-this': 'off',
+        'no-underscore-dangle': 'off',
+        'no-shadow': 'off',
     }
 };
 

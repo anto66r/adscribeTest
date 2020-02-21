@@ -8,15 +8,12 @@ type FooterProps = {
 };
 
 const Footer: FunctionComponent<FooterProps> = ({ label }) => {
-  const { remember, user, cognito } = useContext(UserContext);
+  const { user, cognito } = useContext(UserContext);
 
   return (
     <div className="footer">
       The Footer label: {label}
       <div className="rightSide">
-        <li>
-          remember: {JSON.stringify(remember)}
-        </li>
         <li>
           user: {JSON.stringify(user)}
         </li>

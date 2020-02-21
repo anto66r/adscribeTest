@@ -4,4 +4,4 @@ export const SET_USER = 'SET_USER';
 export const SET_USER_AUTH = 'SET_USER_AUTH';
 export const SET_USER_LOGGED = 'SET_USER_LOGGED';
 export const SET_USER_ID = 'SET_USER_ID';
-export const SET_USER_REMEMBER = 'SET_USER_REMEMBER';
+export const SET_USER_CONTEXT = 'SET_USER_CONTEXT';

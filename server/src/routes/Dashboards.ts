@@ -5,13 +5,13 @@ import { BAD_REQUEST, OK } from 'http-status-codes';
 
 // Init shared
 const DashboardsRouter = Router();
-const dashboardDao = new DashboardDao();
+const dashboardDao: DashboardDao = new DashboardDao();
 
 
 DashboardsRouter.post('/', async (req: Request, res: Response) => {
   const { userId }: {userId: string} = req.body;
   try {
-    const dashboards = await dashboardDao.getByUser(userId);
+    const dashboards = await dashboardDao.getByUserId(userId);
     return res.status(OK).json(dashboards); // define later if we should wrap them in a property
   } catch (err) {
     logger.error(err.message, err);

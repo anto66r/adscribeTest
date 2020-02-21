@@ -11,8 +11,6 @@ import LogsRouter from './Logs';
 // Init router and path
 const router = Router();
 
-const BYPASS_SECURITY = false;
-
 // Initializing CognitoExpress constructor // todo: change to config file
 const cognitoExpress = new CognitoExpress({
   region: process.env.COGNITO_REGION,
@@ -39,7 +37,7 @@ router.use((req, res, next): any => {
   // console.log(`Access token obtained: ${accessTokenFromClient}`);
 
   // Fail if token not present in header.
-  if (process.env.NODE_ENV === 'development' && (BYPASS_SECURITY || freeUrls.includes(req.url))) {
+  if (process.env.NODE_ENV === 'development' && (process.env.BYPASS_API_SECURITY || freeUrls.includes(req.url))) {
     next();
     return undefined;
   }

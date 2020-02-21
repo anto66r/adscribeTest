@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import { IError } from '@daos';
+import { IDashboard } from 'src/services/Dashboard';
+import { IRole } from 'src/services/Role';
 
 const { Schema } = mongoose;
 
@@ -16,6 +18,21 @@ interface IUserCollection {
   error: IError;
 }
 
+interface IUserGeneral {
+  user: IUser;
+  domains: {
+    dashboard?: IDashboard;
+    users?: IUser[];
+    roles?: IRole[];
+  };
+}
+
+interface IUserGeneralCollection {
+  data: IUserGeneral;
+  error: IError;
+}
+
+
 const userSchema = new Schema(
   {
     username: {
@@ -30,12 +47,12 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      trim: true,
     },
   },
   {
     timestamps: true,
   },
+
 );
 
 const User = mongoose.model('User', userSchema);
@@ -44,4 +61,6 @@ export {
   User,
   IUser,
   IUserCollection,
+  IUserGeneral,
+  IUserGeneralCollection,
 };

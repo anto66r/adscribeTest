@@ -25,13 +25,12 @@ export const setUserLogged = isLogged => ({
   payload: { isLogged },
 });
 
-
-export const setUserRemember = remember => ({
-  type: types.SET_USER_REMEMBER,
-  payload: { remember },
-});
-
 export const setRoles = roles => ({
   type: types.SET_ROLES,
   payload: { roles },
+});
+
+export const setUserContext = context => ({
+  type: types.SET_USER_CONTEXT,
+  payload: context,
 });

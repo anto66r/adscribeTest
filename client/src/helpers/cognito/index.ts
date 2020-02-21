@@ -21,12 +21,16 @@ const setAuthSession = ({
   cognitoAccessToken,
   cognitoIdToken,
   cognitoRefreshToken,
+  cognitoId,
+  userId,
 }: ICognitoAuthentication) => {
   const cognitoCookieLifetime: number = parseInt(`${process.env.REACT_APP_COGNITO_COOKIE_LIFE_TIME}`, 3600000);
   setCookie('CognitoUsername', cognitoUsername || '', cognitoCookieLifetime);
   setCookie('CognitoAccessToken', cognitoAccessToken || '', cognitoCookieLifetime);
   setCookie('CognitoIdToken', cognitoIdToken || '', cognitoCookieLifetime);
   setCookie('CognitoRefreshToken', cognitoRefreshToken || '', cognitoCookieLifetime);
+  setCookie('CognitoId', cognitoId || '', cognitoCookieLifetime);
+  setCookie('UserId', userId || '', cognitoCookieLifetime);
 };
 
 const cleanCookies = () => {
@@ -35,82 +39,95 @@ const cleanCookies = () => {
   deleteCookie('CognitoIdToken');
   deleteCookie('CognitoRefreshToken');
   deleteCookie('CognitoRedirectCall');
+  deleteCookie('CognitoId');
+  deleteCookie('UserId');
+};
+
+const getUserSession = () => {
+  const userId = getCookie('UserId');
+  const username = getCookie('CognitoUsername');
+  return {
+    userId,
+    isLogged: true,
+    username,
+    auth: {
+      cognitoUsername: getCookie('CognitoUsername'),
+      cognitoId: getCookie('CognitoId'),
+      cognitoAccessToken: getCookie('CognitoAccessToken'),
+      cognitoIdToken: getCookie('CognitoIdToken'),
+      cognitoRefreshToken: getCookie('CognitoRefreshToken'),
+      userId,
+    },
+  };
 };
 
 const login = async (
   username: string,
   password: string,
-  remember: boolean,
 ): Promise<ILoginResult> => {
   cleanCookies();
-
   const data = await Auth.signIn(username, password);
-
   const { accessToken, idToken, refreshToken } = data.signInUserSession;
-  const cognitoUserId = accessToken.jwtToken;
-
+  const { sub } = data.attributes;
   let user: IUserCollection;
   try {
     // @ts-ignore
     user = await secureFetch({
       endpoint: '/users/login',
-      accessToken: cognitoUserId,
+      accessToken,
       payload: {
         username,
-        cognitoId: cognitoUserId,
+        cognitoId: sub,
       },
     });
   } catch (err) {
-    throw Error('Cannot sync login data in database');
+    throw Error('Cannot connect with server');
   }
 
   // Set cookies with access token datatext/UserContext/index
 
   const auth: ICognitoAuthentication = {
     cognitoUsername: data.username,
-    cognitoAccessToken: cognitoUserId,
+    cognitoId: sub,
+    cognitoAccessToken: accessToken.jwtToken,
     cognitoIdToken: idToken.jwtToken,
     cognitoRefreshToken: refreshToken.token,
-    remember,
+    userId: user.data[0]._id || '',
   };
-
-  if (remember) {
-    setAuthSession(auth);
-  }
-
+  // accessToken empty
+  setAuthSession(auth);
   auth.loginDate = new Date();
-
   return {
     user,
     auth,
   };
 };
 
-const waitForAWSRefreshSession = (cognitoUser: CognitoUser, currentRefreshToken: CognitoRefreshToken, remember: boolean) => new Promise(((resolve, reject) => {
+const waitForAWSRefreshSession = (cognitoUser: CognitoUser, currentRefreshToken: CognitoRefreshToken) => new Promise(((resolve, reject) => {
   cognitoUser.refreshSession(currentRefreshToken, (err: Error, session: ICognitoSessionModel) => {
     if (err) reject(err);
     const { idToken, refreshToken, accessToken } = session;
-    if (remember) {
-      setAuthSession({
-        cognitoUsername: getCookie('CognitoUsername'),
-        cognitoAccessToken: accessToken.jwtToken,
-        cognitoIdToken: idToken.jwtToken,
-        cognitoRefreshToken: refreshToken.token,
-        remember,
-      });
-    }
+
+    setAuthSession({
+      cognitoUsername: getCookie('CognitoUsername'),
+      cognitoId: getCookie('CognitoId'),
+      userId: getCookie('UserId'),
+      cognitoAccessToken: accessToken.jwtToken,
+      cognitoIdToken: idToken.jwtToken,
+      cognitoRefreshToken: refreshToken.token,
+    });
     resolve(session);
     // do whatever you want to do now :)
   });
 }));
 
-const refreshSession = async (remember: boolean) => {
+const refreshSession = async () => {
   try {
     const cognitoUser = await Auth.currentAuthenticatedUser();
     const currentSession: CognitoUserSession = await Auth.currentSession();
     // @ts-ignore
     const currentRefreshToken = currentSession.refreshToken;
-    const newSession = await waitForAWSRefreshSession(cognitoUser, currentRefreshToken, remember);
+    const newSession = await waitForAWSRefreshSession(cognitoUser, currentRefreshToken);
     return newSession as ICognitoSessionModel;
   } catch (e) {
     throw Error('Unable to refresh Token');
@@ -130,6 +147,7 @@ export {
   logout,
   cleanCookies,
   refreshSession,
+  getUserSession,
 };
 
 

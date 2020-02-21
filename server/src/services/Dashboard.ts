@@ -4,12 +4,6 @@ import { IError } from '@daos';
 const { Schema } = mongoose;
 
 
-interface IDashboard {
-  _id?: string;
-  groupId?: number;
-  name: string;
-}
-
 interface IDashboardCollection {
   data: IDashboard[];
   error: IError;
@@ -34,8 +28,9 @@ const groupSchema = new Schema(
 const Dashboard = mongoose.model('Dashboard', groupSchema);
 
 interface IDashboard {
-  name: string;
-  userId: string;
+  _id?: string;
+  name?: string;
+  userId?: string;
 }
 
 export {

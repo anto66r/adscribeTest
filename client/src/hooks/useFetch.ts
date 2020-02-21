@@ -99,7 +99,6 @@ function useFetch<T>(): UseFetchReturn<T> {
     const fetchData = async (): Promise<void> => {
       try {
         dispatch({ type: 'request' });
-
         const results: Response = await secureFetch({
           endpoint,
           payload,

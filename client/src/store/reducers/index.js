@@ -19,5 +19,5 @@ export default createReducer({
   [types.SET_USER_AUTH]: user.setAuth,
   [types.SET_USER_LOGGED]: user.setLogged,
   [types.SET_USER_ID]: user.setUserId,
-  [types.SET_USER_REMEMBER]: user.setRemember,
+  [types.SET_USER_CONTEXT]: user.setUserContext,
 });

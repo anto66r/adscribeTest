@@ -1,49 +1,88 @@
 import { wrapCollection } from '@daos';
-import { IUserCollection, User, IUser } from '../../services';
-
-export interface IUserDao {
-  getAll: () => Promise<IUserCollection>;
-  add: (user: IUser) => Promise<IUserCollection>;
-  update: (user: IUser) => Promise<IUserCollection>;
-  delete: (user: IUser) => Promise<IUserCollection>;
-}
+import { IDomains, IUserDao } from 'src/daos/User/types';
+import {
+  Dashboard, IDashboard, IRole, IUser, IUserCollection, IUserGeneral, IUserGeneralCollection, Role, User,
+} from 'src/services';
 
 export class UserDao implements IUserDao {
   public async getAll(): Promise<IUserCollection> {
     return User.find({}).lean()
       .then((users) => wrapCollection(users) as IUserCollection)
-      .catch((err) => wrapCollection([], err) as IUserCollection);
+      .catch((error) => wrapCollection([], error) as IUserCollection);
   }
 
-  public async findUser(username: string): Promise<IUserCollection> {
+  public async getById(_id: string): Promise<IUserCollection> {
+    return User.find({ _id }).lean()
+      .then((user) => wrapCollection(user, {}) as IUserCollection)
+      .catch((error) => wrapCollection([], error) as IUserCollection);
+  }
+
+  public async getByCognitoId(cognitoId: string): Promise<IUserCollection> {
+    return User.find({ cognitoId }).lean()
+      .then((user) => wrapCollection(user) as IUserCollection)
+      .catch((error: Error) => wrapCollection([], error) as IUserCollection);
+  }
+
+  public async getByUsername(username: string): Promise<IUserCollection> {
     return User.find({ username }).lean()
       .then((user) => wrapCollection(user, {}) as IUserCollection)
-      .catch((err) => wrapCollection([], err) as IUserCollection);
+      .catch((error) => wrapCollection([], error) as IUserCollection);
   }
 
-  public async getUserContext(): Promise<IUserCollection> {
-    // @ts-ignore
-    return User.find({}).lean()
-      .then((users) => wrapCollection(users, {}))
-      .catch((err) => wrapCollection([], { data: err }));
+  public async getDomains(_id: string): Promise<IDomains> {
+    const users = await User.find({}).lean<IUser>();
+    const dashboard = await Dashboard.findOne({ userId: _id }).lean<IDashboard>() || {};
+    const roles = await Role.find({}).lean<IRole>();
+    return {
+      users,
+      dashboard,
+      roles,
+    };
   }
 
+  public async getUserContext(_id: string): Promise<IUserGeneralCollection> {
+    const user = await User.findById({ _id }).lean<IUser>();
+    if (!user) throw Error(`No user found with id ${_id}`);
+    const domains = await this.getDomains(_id);
+    const userData: IUserGeneral = {
+      user,
+      domains,
+    };
+    return wrapCollection(userData, {}) as IUserGeneralCollection;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
   public add(user: IUser): Promise<IUserCollection> {
-    return User.create(user)
-      .then(() => this.getAll())
-      .catch((err) => wrapCollection([], err) as IUserCollection);
+    // @ts-ignore
+    return {} as IUserCollection;
   }
 
   public update(user: IUser): Promise<IUserCollection> {
     // eslint-disable-next-line no-underscore-dangle
     return User.findOneAndUpdate({ _id: user._id }, user, { runValidators: true })
       .then(() => this.getAll())
-      .catch((err) => wrapCollection([], err) as IUserCollection);
+      .catch((error) => wrapCollection([], error) as IUserCollection);
   }
 
-  public delete(user: IUser): Promise<IUserCollection> {
-    return User.deleteOne({ ...user })
-      .then(() => this.getAll())
-      .catch((err) => wrapCollection([], err) as IUserCollection);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
+  public delete(_id: string): Promise<IUserCollection> {
+    // @ts-ignore
+    return {} as IUserCollection;
   }
+
+  // public async createUser(username: string, cognitoId: string): Promise<IUserCollection> {
+  //   // Find if exists
+  //   const possibleUser = await User.find({ username });
+
+  //   if (possibleUser.length) {
+  //     throw Error('User exists');
+  //   }
+
+  //   const user = await User.create({
+  //     username,
+  //     cognitoId,
+  //   });
+
+  //   return wrapCollection([user]);
+  // }
 }

@@ -1,27 +1,21 @@
 import { wrapCollection } from '@daos';
 import { Dashboard, IDashboardCollection } from '../../services';
-
-export interface IDashboardDao {
-  getByUser: (userId: string) => Promise<IDashboardCollection>;
-  add: (user: IDashboardCollection) => Promise<void>;
-  update: (user: IDashboardCollection) => Promise<void>;
-  delete: (_id: string) => Promise<void>;
-}
+import { IDashboardDao } from './types';
 
 export class DashboardDao implements IDashboardDao {
-  public async getByUser(userId: string): Promise<IDashboardCollection> {
-    return Dashboard.find({ userId }).lean()
+  public async getByUserId(_id: string): Promise<IDashboardCollection> {
+    return Dashboard.find({ userId: _id }).lean()
       .then((dashboards) => wrapCollection(dashboards) as IDashboardCollection)
       .catch((err: Error) => wrapCollection([], { data: err }) as IDashboardCollection);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  public add(user: IDashboardCollection): Promise<void> {
+  public add(user: IDashboardCollection): Promise<IDashboardCollection> {
     return {} as any;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  public update(user: IDashboardCollection): Promise<void> {
+  public update(user: IDashboardCollection): Promise<IDashboardCollection> {
     // TODO
     return {} as any;
   }

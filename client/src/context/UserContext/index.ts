@@ -1,9 +1,9 @@
-import { createContext } from 'react';
+import { createContext, Context } from 'react';
 import { getCookie } from '../../helpers/cookies';
 import { IUserContextProps } from './types';
 
 
-export const UserContext = createContext<IUserContextProps>({
+export const UserContext: Context<IUserContextProps> = createContext<IUserContextProps>({
   users: [],
   user: {
     username: getCookie('CognitoUsername'),
@@ -14,14 +14,13 @@ export const UserContext = createContext<IUserContextProps>({
     cognitoAccessToken: '',
     cognitoIdToken: '',
     cognitoRefreshToken: '',
+    cognitoId: '',
+    userId: '',
     loginDate: undefined,
-    remember: false,
   },
-  remember: false,
   isLogged: false,
   setUser: () => {},
   setCognito: () => {},
-  setRemember: () => {},
   setLogged: () => {},
   dispatch: () => null,
 

@@ -27,10 +27,7 @@ export const setUserId = (state: any, { payload }: {payload: any}) => ({
   },
 });
 
-export const setRemember = (state: any, { payload }: {payload: any}) => ({
+export const setUserContext = (state: any, { payload }: {payload: any}) => ({
   ...state,
-  user: {
-    ...payload.user,
-    remember: payload,
-  },
+  ...payload,
 });

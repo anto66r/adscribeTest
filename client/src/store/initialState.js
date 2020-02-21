@@ -1,7 +1,6 @@
 export default {
-  users: [],
-  roles: [],
   user: {
     auth: {},
   },
+  domains: {},
 };

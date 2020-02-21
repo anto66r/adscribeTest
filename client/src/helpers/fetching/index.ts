@@ -1,9 +1,8 @@
-import { CognitoAccessToken } from 'amazon-cognito-identity-js';
 import { FetchMethod } from 'types';
 import { cleanCookies, refreshSession } from 'helpers/cognito';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ICognitoSessionModel } from 'helpers/cognito/types';
-import { getCookie, setCookie } from '../cookies';
+import { getCookie } from '../cookies';
 import { HeaderType, SecureFetchType, IAxiosConfig } from './types';
 
 const secureFetch = ({

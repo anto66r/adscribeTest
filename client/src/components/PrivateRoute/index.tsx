@@ -10,7 +10,7 @@ import Loading from 'components/Loading';
 
 const isLogged = (user: IUserState): boolean => !!user?.auth?.cognitoAccessToken || !!getCookie('CognitoAccessToken');
 
-const hasStateLoaded = (state: any) => state?.domains && Object.keys(state.domains).length;
+const hasStateLoaded = (state: any) => state?.domains?.loaded;
 
 const PrivateRoute = ({ component: Component }: PrivateRouteProps) => {
   const [state, dispatch] = useStore();

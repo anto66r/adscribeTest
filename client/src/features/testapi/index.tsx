@@ -1,5 +1,4 @@
-import { UserContext } from 'context/UserContext';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useStore } from 'store';
 import { secureFetch } from '../../helpers/fetching';
 

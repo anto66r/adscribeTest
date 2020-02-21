@@ -9,7 +9,7 @@ const Logout = () => {
     logout(setUser, setCognito, setLogged).then(() => {
       window.location.href = '/login';
     });
-  }, []);
+  }, [setUser, setCognito, setLogged]);
 
   return <div className="container">Loging off...</div>;
 };

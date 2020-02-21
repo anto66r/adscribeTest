@@ -1,37 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../context/UserContext';
-import { secureFetch } from '../../helpers/fetching';
+import React from 'react';
+import { IDashboard } from './types';
 import { useStore } from '../../store';
 
 const Dashboards = () => {
-  const [result, setResult] = useState('');
-  const [state, dispatch] = useStore();
-
-  const fetchDashboards = async () => {
-    console.log(state);
-    const { userId, user } = state;
-    const { auth } = user;
-    const newResult = await secureFetch({
-      endpoint: '/dashboards',
-      payload: {
-        userId,
-      },
-      auth,
-    });
-    setResult(JSON.stringify(newResult, null, 2));
-  };
-
-  useEffect(() => {
-    fetchDashboards();
-  }, []);
-
-
+  const [state] = useStore();
+  const { loaded, dashboards } = state.domains;
   return (
     <div>
-      {result && (
+      {loaded && (
         <>
           <h4>Result</h4>
-          <pre>{result}</pre>
+          {
+            dashboards.map((dashboard: IDashboard) => <li key={dashboard.name}>{dashboard.name}</li>)
+          }
         </>
       )}
     </div>

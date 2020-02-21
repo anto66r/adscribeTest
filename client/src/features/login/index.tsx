@@ -1,5 +1,5 @@
 import { getCookie } from 'helpers/cookies';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -16,7 +16,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isLogging, setIsLogging] = useState(false);
 
-  const [state, dispatch] = useStore();
+  const [dispatch] = useStore();
   const [error, setError] = useState('');
 
   const history = useHistory();

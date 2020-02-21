@@ -7,8 +7,8 @@ import RolesDetail from './RolesDetail';
 import RolesEdit from './RolesEdit';
 
 const Roles: FC = () => {
-  const [{ roles }] = useStore();
-
+  const [state] = useStore();
+  const { roles } = state.domains;
   const { path } = useRouteMatch();
 
   return (

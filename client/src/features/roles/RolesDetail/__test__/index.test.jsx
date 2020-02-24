@@ -3,27 +3,19 @@ import { render, screen } from '@testing-library/react';
 
 import { RouteProvider } from 'testing';
 import { StoreProvider } from 'store';
+import initialState from 'store/initialState';
 import RolesDetail from '..';
+
+jest.mock('store/initialState');
+
+screen.debug();
 
 jest.mock('config/permissions');
 
 const renderWrapper = () => render(
   (
     <RouteProvider route="/roles/1234" path="/roles/:id">
-      <StoreProvider initialState={{
-        domains: {
-          roles: [{
-            name: 'Role name',
-            _id: '1234',
-            permissions: ['permission A', 'permission D'],
-          }, {
-            name: 'another role',
-            _id: '1235',
-            permissions: ['permission A', 'permission D'],
-          }],
-        },
-      }}
-      >
+      <StoreProvider initialState={initialState}>
         <RolesDetail />
       </StoreProvider>
     </RouteProvider>
@@ -33,7 +25,6 @@ const renderWrapper = () => render(
 describe('<RolesDetail />', () => {
   test('should display a role correctly. Should only show permission A because permission D is not defined in global permission config.', () => {
     renderWrapper();
-    // screen.debug();
     expect(screen.getByText('Role name')).toBeInTheDocument();
     expect(screen.getByText('Edit role')).toBeInTheDocument();
     expect(screen.getByText('permission A')).toBeInTheDocument();

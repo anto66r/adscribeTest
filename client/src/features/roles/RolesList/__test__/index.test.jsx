@@ -11,7 +11,6 @@ describe('<RolesList />', () => {
       (
         <MemoryRouter>
           <StoreProvider>
-
             <RolesList roles={[{
               name: 'Role name',
               _id: '1234',

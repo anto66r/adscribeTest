@@ -16,7 +16,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [isLogging, setIsLogging] = useState(false);
 
-  const [dispatch] = useStore();
+  const [state, dispatch] = useStore();
   const [error, setError] = useState('');
 
   const history = useHistory();
@@ -25,28 +25,23 @@ const Login = () => {
   const doLogin = async (): Promise<void> => {
     setIsLogging(true);
     setError('');
-    const foundUser = await login(
-      userForm,
-      password,
-    )
-      .then((loginResult: ILoginResult) => {
-        const { user, auth } = loginResult;
 
-        dispatch(setUser({
-          userId: user.data[0]._id,
-          isLogged: true,
-          username: auth.cognitoUsername,
-          auth,
-        }));
-        // return here to CognitoRedirectCall
-        const redirectTo = getCookie('CognitoRedirectCall');
-        history.push(redirectTo === '/login' ? '' : redirectTo);
-      })
-      .catch((err: Error) => {
-        setError(err.message);
-        setIsLogging(false);
-      });
-    dispatch(setUsers(foundUser));
+    try {
+      const foundUser = await login(userForm, password);
+      const { user, auth } = foundUser;
+      dispatch(setUser({
+        userId: user.data[0]._id,
+        isLogged: true,
+        username: auth.cognitoUsername,
+        auth,
+      }));
+      // return here to CognitoRedirectCall
+      const redirectTo = getCookie('CognitoRedirectCall');
+      history.push(redirectTo === '/login' ? '' : redirectTo);
+    } catch (err) {
+      setError(err.message);
+      setIsLogging(false);
+    }
   };
 
   return (

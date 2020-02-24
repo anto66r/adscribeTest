@@ -31,11 +31,11 @@ export class UserDao implements IUserDao {
 
   public async getDomains(_id: string): Promise<IDomains> {
     const users = await User.find({}).lean<IUser>();
-    const dashboard = await Dashboard.findOne({ userId: _id }).lean<IDashboard>() || {};
+    const dashboards = await Dashboard.find({ userId: _id }).lean<IDashboard>() || {};
     const roles = await Role.find({}).lean<IRole>();
     return {
       users,
-      dashboard,
+      dashboards,
       roles,
     };
   }

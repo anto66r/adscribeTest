@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-import { useStore } from 'store';
+import { useUsers, useRoles } from 'hooks';
 import { IUser, IRole } from 'types';
 import { getRoles } from 'helpers/roles';
 
 const UsersDetail: FunctionComponent = () => {
   const { id } = useParams();
-  const [{ users, roles: allRoles }] = useStore();
-
+  const { users } = useUsers();
+  const { roles: allRoles } = useRoles();
   const { username, roles = [] } = users.find((item: IUser) => item._id === id) || {};
 
   return (

@@ -2,12 +2,12 @@ import React, { FunctionComponent } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import { getPermissions } from 'helpers/roles';
-import { useStore } from 'store';
+import { useRoles } from 'hooks';
 import IRole from 'types/role';
 
 const RoleDetail: FunctionComponent = () => {
   const { id } = useParams();
-  const [{ roles }] = useStore();
+  const { roles } = useRoles();
 
   const { name, permissions } = roles.find((item: IRole) => item._id === id) || {};
 

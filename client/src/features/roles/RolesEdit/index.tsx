@@ -3,20 +3,18 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import { IRole } from 'types';
 import RoleForm from 'components/RoleForm';
-import { useStore } from 'store';
 import useToast from 'hooks/useToast';
-import { useItemAdmin } from 'hooks';
-import { setRoles } from 'store/actions';
+import { useItemAdmin, useRoles } from 'hooks';
 
 const RoleEdit: FunctionComponent = () => {
   const history = useHistory();
-  const [{ roles = [] }, dispatch] = useStore();
+  const { roles, setRoles } = useRoles();
   const { id } = useParams<{ id: string }>();
   const { doSuccessToast, doErrorToast } = useToast();
   const goBack = (): void => { history.goBack(); };
 
   const handleSuccess = (collection: IRole[]): void => {
-    dispatch(setRoles(collection));
+    setRoles(collection);
     doSuccessToast(id ? 'Role updated' : 'Role created'); history.goBack();
   };
   const handleError = (message: string): void => { doErrorToast(message); };
@@ -26,7 +24,7 @@ const RoleEdit: FunctionComponent = () => {
   });
 
   const role = roles.find((item: IRole) => item._id === id);
-  const handleSubmit = ({ name, permissions }: { name: string; permissions: string[]}): void => {
+  const handleSubmit = ({ name, permissions }: { name: string; permissions: string[] }): void => {
     const item = { name, permissions, _id: id };
     if (id) {
       doUpdate({

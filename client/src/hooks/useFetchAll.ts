@@ -2,7 +2,7 @@ import React from 'react';
 
 // eslint-disable-next-line import/no-cycle
 import { useFetch } from '.';
-import { setUsers, setRoles } from '../store/actions';
+import { setUsers } from '../store/actions';
 import { useStore } from '../store';
 
 

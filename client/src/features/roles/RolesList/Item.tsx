@@ -3,9 +3,7 @@ import { Link, useRouteMatch } from 'react-router-dom';
 
 import { IRole } from 'types';
 import useToast from 'hooks/useToast';
-import { useItemAdmin } from 'hooks';
-import { useStore } from 'store';
-import { setRoles } from 'store/actions';
+import { useItemAdmin, useRoles } from 'hooks';
 
 type PropsType = {
   role: IRole;
@@ -13,7 +11,7 @@ type PropsType = {
 
 const Item: FunctionComponent<PropsType> = props => {
   const { role } = props;
-  const [, dispatch] = useStore();
+  const { setRoles } = useRoles();
   const { url } = useRouteMatch<{ url: string }>();
   const { doSuccessToast, doErrorToast } = useToast();
   const { doDelete, loading } = useItemAdmin<IRole>({
@@ -24,7 +22,7 @@ const Item: FunctionComponent<PropsType> = props => {
     doDelete({
       item: role,
       onSuccess: (collection: IRole[]): void => {
-        dispatch(setRoles(collection));
+        setRoles(collection);
         doSuccessToast('Role deleted');
       },
       onError: (message: string): void => { doErrorToast(message); },

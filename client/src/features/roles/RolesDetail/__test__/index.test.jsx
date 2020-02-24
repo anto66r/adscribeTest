@@ -11,15 +11,17 @@ const renderWrapper = () => render(
   (
     <RouteProvider route="/roles/1234" path="/roles/:id">
       <StoreProvider initialState={{
-        roles: [{
-          name: 'Role name',
-          _id: '1234',
-          permissions: ['permission A', 'permission D'],
-        }, {
-          name: 'another role',
-          _id: '1235',
-          permissions: ['permission A', 'permission D'],
-        }],
+        domains: {
+          roles: [{
+            name: 'Role name',
+            _id: '1234',
+            permissions: ['permission A', 'permission D'],
+          }, {
+            name: 'another role',
+            _id: '1235',
+            permissions: ['permission A', 'permission D'],
+          }],
+        },
       }}
       >
         <RolesDetail />

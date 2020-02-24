@@ -29,5 +29,8 @@ export const setUserId = (state: any, { payload }: {payload: any}) => ({
 
 export const setUserContext = (state: any, { payload }: {payload: any}) => ({
   ...state,
-  ...payload,
+  domains: {
+    ...payload.domains,
+    loaded: true,
+  },
 });

@@ -2,5 +2,10 @@ export default {
   user: {
     auth: {},
   },
-  domains: {},
+  domains: {
+    users: [],
+    roles: [],
+    dashboards: [],
+    loaded: false,
+  },
 };

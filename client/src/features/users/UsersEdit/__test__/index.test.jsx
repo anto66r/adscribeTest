@@ -35,10 +35,12 @@ const renderWrapper = () => render(
   (
     <StoreProvider
       initialState={{
-        users: [{
-          _id: '1234',
-        }],
-        roles: [],
+        domains: {
+          users: [{
+            _id: '1234',
+          }],
+          roles: [],
+        },
       }}
       reducer={reducers}
     >

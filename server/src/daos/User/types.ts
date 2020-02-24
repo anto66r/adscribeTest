@@ -18,6 +18,6 @@ export type TRequestParams = {
 
 export interface IDomains {
   users?: IUser[];
-  dashboard?: IDashboard;
+  dashboards?: IDashboard[];
   roles?: IRole[];
 }

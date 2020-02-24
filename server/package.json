@@ -15,7 +15,7 @@
     "@daos": "dist/daos",
     "@entities": "dist/entities",
     "@shared": "dist/shared",
-    "@server": "dist/Server"
+    "@server": "dist/server"
   },
   "dependencies": {
     "@types/uuid": "^3.4.7",

@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { Route, useRouteMatch, Switch } from 'react-router-dom';
 
-import { useStore } from 'store';
+import { useUsers } from 'hooks';
 import UsersList from './UsersList';
 import UsersDetail from './UsersDetail';
 import UsersEdit from './UsersEdit';
 
 const Roles: FC = () => {
-  const [{ users }] = useStore();
-
+  const { users } = useUsers();
+  // console.log(users)
   const { path } = useRouteMatch();
 
   return (

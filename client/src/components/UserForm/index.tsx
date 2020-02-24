@@ -1,19 +1,19 @@
 import React, { useState, FunctionComponent } from 'react';
 
 import { IUser, IRole } from 'types';
-import { useStore } from 'store';
+import { useRoles } from 'hooks';
 
 type ContentProps = {
   user?: IUser;
   loading?: boolean;
-  onSubmit: ({ username, roles }: {username: string; roles: string[]}) => void;
+  onSubmit: ({ username, roles }: { username: string; roles: string[] }) => void;
   onCancel: () => void;
 };
 
 const UserForm: FunctionComponent<ContentProps> = ({
   user = { roles: [], username: '' }, onSubmit, onCancel, loading,
 }) => {
-  const [state] = useStore();
+  const { roles: allRoles } = useRoles();
   const { username, roles = [] } = user;
   const [formName, setFormName] = useState(username);
   const [checkedItems, setCheckedItems] = useState(() => roles.reduce((acc: any, cur: string) => {
@@ -46,7 +46,7 @@ const UserForm: FunctionComponent<ContentProps> = ({
         value={formName}
       />
       <ul>
-        {state.roles.sort().map((item: IRole) => (
+        {allRoles.sort().map((item: IRole) => (
           <li key={item.name}>
             <input
               data-testid={item}

@@ -2,9 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import { IUser } from 'types';
-import { useToast, useItemAdmin } from 'hooks';
-import { useStore } from 'store';
-import { setUsers } from 'store/actions';
+import { useToast, useItemAdmin, useUsers } from 'hooks';
 
 type PropsType = {
   user: IUser;
@@ -12,7 +10,7 @@ type PropsType = {
 
 const Item: FunctionComponent<PropsType> = props => {
   const { user } = props;
-  const [, dispatch] = useStore();
+  const { setUsers } = useUsers();
   const { url } = useRouteMatch<{ url: string }>();
   const { doSuccessToast, doErrorToast } = useToast();
   const { doDelete, loading } = useItemAdmin<IUser>({
@@ -23,7 +21,7 @@ const Item: FunctionComponent<PropsType> = props => {
     doDelete({
       item: user,
       onSuccess: (collection: IUser[]): void => {
-        dispatch(setUsers(collection));
+        setUsers(collection);
         doSuccessToast('User deleted');
       },
       onError: (message: string): void => { doErrorToast(message); },

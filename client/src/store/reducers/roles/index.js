@@ -1,4 +1,9 @@
-export const set = (state, { payload }) => ({
+export const set = (state, {
+  payload,
+}) => ({
   ...state,
-  roles: payload.roles,
+  domains: {
+    ...state.domains,
+    roles: payload.roles,
+  },
 });

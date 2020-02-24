@@ -14,7 +14,6 @@ const createReducer = handlers => (state, action) => {
 export default createReducer({
   [types.SET_USERS]: users.set,
   [types.SET_ROLES]: roles.set,
-
   [types.SET_USER]: user.set,
   [types.SET_USER_AUTH]: user.setAuth,
   [types.SET_USER_LOGGED]: user.setLogged,

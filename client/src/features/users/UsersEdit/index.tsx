@@ -3,20 +3,18 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import { IUser } from 'types';
 import UserForm from 'components/UserForm';
-import { useStore } from 'store';
 import useToast from 'hooks/useToast';
-import { useItemAdmin } from 'hooks';
-import { setUsers } from 'store/actions';
+import { useItemAdmin, useUsers } from 'hooks';
 
 const UserEdit: FunctionComponent = () => {
   const history = useHistory();
-  const [{ users = [] }, dispatch] = useStore();
+  const { users = [], setUsers } = useUsers();
   const { id } = useParams<{ id: string }>();
   const { doSuccessToast, doErrorToast } = useToast();
   const goBack = (): void => { history.goBack(); };
 
   const handleSuccess = (collection: IUser[]): void => {
-    dispatch(setUsers(collection));
+    setUsers(collection);
     doSuccessToast(id ? 'User updated' : 'User created'); history.goBack();
   };
   const handleError = (message: string): void => { doErrorToast(message); };
@@ -27,7 +25,7 @@ const UserEdit: FunctionComponent = () => {
 
   const user = users.find((item: IUser) => item._id === id);
 
-  const handleSubmit = ({ username, roles }: {username: string; roles: string[]}): void => {
+  const handleSubmit = ({ username, roles }: { username: string; roles: string[] }): void => {
     const item = { username, roles, _id: id };
     if (id) {
       doUpdate({

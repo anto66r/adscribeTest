@@ -2,8 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { StoreProvider } from 'store';
-import reducers from 'store/reducers';
-import initialState from 'store/initialState';
 import { PrivateRoute } from 'components/PrivateRoute';
 import { Login } from './features/login';
 import { ErrorPage } from './features/error/ErrorPage';
@@ -13,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => (
   <Router>
-    <StoreProvider initialState={initialState} reducer={reducers}>
+    <StoreProvider>
       <Switch>
         <Route path="/error" component={ErrorPage} />
         <Route exact path="/login" component={Login} />

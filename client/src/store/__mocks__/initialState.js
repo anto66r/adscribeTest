@@ -7,6 +7,10 @@ export default {
       username: 'User 1',
       _id: '2',
       roles: ['1234'],
+    }, {
+      username: 'User 2',
+      _id: '3',
+      roles: ['1235', '1234'],
     }],
     roles: [{
       name: 'Role name',

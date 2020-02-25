@@ -7,9 +7,6 @@ import initialState from 'store/initialState';
 import RolesDetail from '..';
 
 jest.mock('store/initialState');
-
-screen.debug();
-
 jest.mock('config/permissions');
 
 const renderWrapper = () => render(

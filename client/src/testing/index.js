@@ -1,3 +1,5 @@
 import RouteProvider from './RouteProvider';
 
-export { RouteProvider };
+export {
+  RouteProvider,
+};

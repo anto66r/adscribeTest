@@ -60,6 +60,8 @@ Where
 
 This would be an example of a proper branch name: `fix/P2-21-correct-session-control`.
 
+See [PR-labeler](https://github.com/TimonVS/pr-labeler-action) and [Release drafter](https://github.com/release-drafter/release-drafter).
+
 ## Commits
 
 Commits should begin with the Jira ticket number.

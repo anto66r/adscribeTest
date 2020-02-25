@@ -47,7 +47,7 @@ describe('<RolesList /> delete', () => {
     renderWrapper();
     fireEvent.click(screen.getByTestId('pl2-delete-role-1234'));
     expect(screen.getByTestId('pl2-delete-role-1234')).toHaveAttribute('disabled');
-    await waitForElementToBeRemoved(() => screen.getByText(/deleting.../i));
+    await waitForElementToBeRemoved(() => screen.getByText(/deleting/i));
     expect(screen.queryByText('Role name')).toBeFalsy();
     expect(mockDoSuccessToast).toHaveBeenCalledWith('Role deleted');
   });

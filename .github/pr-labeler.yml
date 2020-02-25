@@ -1,0 +1,4 @@
+feature: ['feature/*', 'feat/*']
+fix: ['fix/*', 'bugfix/*', 'bug/*']
+chore: chore/*
+other: other/*

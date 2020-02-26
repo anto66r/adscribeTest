@@ -1,4 +1,6 @@
-feature: ['feature/*', 'feat/*']
-fix: ['fix/*', 'bugfix/*', 'bug/*']
+feature: feat/*
+fix: fix/*
 chore: chore/*
+docs: docs/*
 other: other/*
+refactor: refactor/*

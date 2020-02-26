@@ -50,10 +50,18 @@ Where
 
 * `TASK`: when a PR is opened on this branch, a label is automatically attached to it. TASKS can be:
   
-  1. bug fixes: `fix`, `bugfix`, or `bug`
-  2. features: `feature` or `feat`
-  3. chores: `chore`
-  4. other: `other`
+  1. Features: `feat`  
+   New features added.
+  2. Bug fixes: `fix`  
+   Bug fixes.
+  3. Maintenance: `chore`  
+   Updating grunt tasks etc; no production code change.
+  4. Documentation: `docs`  
+   Changes to documentation
+  5. Refactor: `refactor`  
+   Refactoring production code.
+
+See [Semantic commit messages](https://seesparkbox.com/foundry/semantic_commit_messages).
 
 * `JIRA`: this is the Jira ticket number for the corresponding ticket.
 * `DESCRIPTION`: should be clear and concise.

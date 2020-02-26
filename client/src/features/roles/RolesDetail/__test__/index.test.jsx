@@ -33,7 +33,6 @@ const renderWrapper = () => render(
 describe('<RolesDetail />', () => {
   test('should display a role correctly. Should only show permission A because permission D is not defined in global permission config.', () => {
     renderWrapper();
-    // screen.debug();
     expect(screen.getByText('Role name')).toBeInTheDocument();
     expect(screen.getByText('Edit role')).toBeInTheDocument();
     expect(screen.getByText('permission A')).toBeInTheDocument();

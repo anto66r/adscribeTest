@@ -25,7 +25,6 @@ describe('<RolesList />', () => {
         </MemoryRouter>
       ),
     );
-    // screen.debug()
     expect(screen.getByText('User name')).toBeInTheDocument();
     expect(screen.getByText('User name b')).toBeInTheDocument();
     expect(screen.getByText('Create new')).toHaveAttribute('href', '//create');

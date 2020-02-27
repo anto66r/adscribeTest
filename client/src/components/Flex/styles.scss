@@ -1,4 +1,5 @@
-$prefix-components: 'ads';
+@import "../../components/components.scss";
+
 $flex-component-name: 'flex';
 
 .#{$prefix-components}-#{$flex-component-name} {

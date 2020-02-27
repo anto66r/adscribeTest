@@ -1,9 +1,10 @@
 import React, { ReactNode, FunctionComponent } from 'react';
 import classnames from 'classnames';
+
+import { prefixComponents } from '../components';
 import './styles.scss';
 
-const prefixComponents = 'ads';
-const flexComponentName = 'flex';
+export const flexComponentName = 'flex';
 
 type option = {
   propValue: string | boolean;
@@ -19,14 +20,14 @@ type options = {
   multi?: option;
 }
 
-const direction: options = {
+export const direction: options = {
   column: {
     propValue: 'column',
     class: 'column',
   }
 }
 
-const vertical: options = {
+export const vertical: options = {
   top: {
     propValue: 'top',
     class: 'top',
@@ -37,7 +38,7 @@ const vertical: options = {
   }
 }
 
-const horizontal: options = {
+export const horizontal: options = {
   left: {
     propValue: 'left',
     class: 'left',
@@ -48,7 +49,7 @@ const horizontal: options = {
   }
 }
 
-const line: options = {
+export const line: options = {
   multi: {
     propValue: true,
     class: 'multi',
@@ -62,10 +63,21 @@ export interface IFlexProps {
   vertical?: string;
   horizontal?: string;
   multiLine?: boolean;
+  testId?: string;
   children?: ReactNode;
 }
 
 const Flex: FunctionComponent<IFlexProps> = (props) => {
+  const getTestId = () => {
+    let testId = `${prefixComponents}-${flexComponentName}`;
+
+    if (props?.testId) {
+      testId += `-${props.testId}`;
+    }
+
+    return testId;
+  }
+
   const getDirection = (): classes => {
     let column = '';
     if (props.direction === direction?.column?.propValue) {
@@ -116,10 +128,12 @@ const Flex: FunctionComponent<IFlexProps> = (props) => {
   }
 
   const classesName = getClassesName();
+  const testId = getTestId();
 
   return (
     <div
       className={classnames(`${classesName}`)}
+      data-testid={testId}
     >
       {props.children}
     </div>

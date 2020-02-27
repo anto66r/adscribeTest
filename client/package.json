@@ -38,7 +38,9 @@
     "test": "react-scripts test",
     "test:once": "./node_modules/react-scripts/bin/react-scripts.js test --watchAll=false --bail --reporters=jest-silent-reporter --silent --colors",
     "eject": "react-scripts eject",
-    "eslint": "node_modules/.bin/eslint src"
+    "eslint": "node_modules/.bin/eslint src",
+    "components": "start-storybook -p 9009 -s public",
+    "components:build": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -58,6 +60,10 @@
   "jest": {},
   "devDependencies": {
     "@babel/preset-typescript": "^7.8.3",
+    "@storybook/addon-actions": "^5.3.13",
+    "@storybook/addon-links": "^5.3.13",
+    "@storybook/preset-create-react-app": "^1.5.2",
+    "@storybook/react": "^5.3.13",
     "@testing-library/react-hooks": "^3.2.1",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",

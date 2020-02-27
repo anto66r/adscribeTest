@@ -109,11 +109,11 @@ describe('<Fex /> ', () => {
       const { getByTestId, unmount } = render(<Flex><p data-testid={wrappedTestId}>Child example</p></Flex>);
       const flexNode = getByTestId(flexTestId);scrollX
       const wrappedNode = getByTestId(wrappedTestId);
-      const wrappedNodeParentNode = wrappedNode.parentNode;
+      const wrappedParentNode = wrappedNode.parentNode;
 
       expect(flexNode).toBeDefined();
       expect(wrappedNode).toBeDefined();
-      expect(wrappedNodeParentNode).toBe(flexNode);
+      expect(wrappedParentNode).toBe(flexNode);
 
       unmount();
     });

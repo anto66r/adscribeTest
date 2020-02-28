@@ -1,7 +1,7 @@
 import React, { ReactNode, FunctionComponent } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents } from '../components';
+import { prefixComponents, Classes } from '../components';
 import './styles.scss';
 
 export const flexComponentName = 'flex';
@@ -56,8 +56,6 @@ export const line: options = {
   },
 }
 
-type classes = string;
-
 export interface IFlexProps {
   direction?: string;
   vertical?: string;
@@ -78,7 +76,7 @@ const Flex: FunctionComponent<IFlexProps> = (props) => {
     return testId;
   }
 
-  const getDirection = (): classes => {
+  const getDirection = (): Classes => {
     let column = '';
     if (props.direction === direction?.column?.propValue) {
       return column + direction?.column?.class;
@@ -87,7 +85,7 @@ const Flex: FunctionComponent<IFlexProps> = (props) => {
     return column;
   }
 
-  const getAlign = (): classes => {
+  const getAlign = (): Classes => {
     let align = '';
 
     if (props.vertical === vertical?.bottom?.propValue) {
@@ -111,7 +109,7 @@ const Flex: FunctionComponent<IFlexProps> = (props) => {
     return align;
   }
 
-  const getMultiLine = (): classes => {
+  const getMultiLine = (): Classes => {
     if (props.multiLine && line?.multi?.class) {
       return line.multi.class;
     }
@@ -119,7 +117,7 @@ const Flex: FunctionComponent<IFlexProps> = (props) => {
     return "";
    }
 
-  const getClassesName = (): classes => {
+  const getClassesName = (): Classes => {
     const direction = getDirection();
     const align = getAlign();
     const multiline = getMultiLine();

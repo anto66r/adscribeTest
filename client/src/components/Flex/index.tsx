@@ -1,33 +1,19 @@
 import React, { ReactNode, FunctionComponent } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents, Classes } from '../components';
+import { prefixComponents, Classes, Options } from '../components';
 import './styles.scss';
 
 export const flexComponentName = 'flex';
 
-type option = {
-  propValue: string | boolean;
-  class: string;
-}
-
-type options = {
-  column?: option;
-  top?: option;
-  bottom?: option;
-  left?: option;
-  right?: option;
-  multi?: option;
-}
-
-export const direction: options = {
+export const direction: Options = {
   column: {
     propValue: 'column',
     class: 'column',
   }
 }
 
-export const vertical: options = {
+export const vertical: Options = {
   top: {
     propValue: 'top',
     class: 'top',
@@ -38,7 +24,7 @@ export const vertical: options = {
   }
 }
 
-export const horizontal: options = {
+export const horizontal: Options = {
   left: {
     propValue: 'left',
     class: 'left',
@@ -49,7 +35,7 @@ export const horizontal: options = {
   }
 }
 
-export const line: options = {
+export const line: Options = {
   multi: {
     propValue: true,
     class: 'multi',

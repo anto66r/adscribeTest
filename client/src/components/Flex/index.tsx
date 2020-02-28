@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
 import classnames from 'classnames';
 
 import { prefixComponents, Class, Classes, IOption } from '../components';
@@ -60,7 +60,7 @@ export interface IFlexProps {
   children?: ReactNode;
 }
 
-const Flex: FunctionComponent<IFlexProps> = (props) => {
+const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
   const getTestId = () => {
     let testId = `${prefixComponents}-${flexComponentName}`;
 

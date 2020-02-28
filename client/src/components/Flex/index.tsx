@@ -1,10 +1,19 @@
 import React, { ReactNode, FunctionComponent } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents, Classes, Options } from '../components';
+import { prefixComponents, Classes, IOption } from '../components';
 import './styles.scss';
 
 export const flexComponentName = 'flex';
+
+type Options = {
+  column?: IOption;
+  top?: IOption;
+  bottom?: IOption;
+  left?: IOption;
+  right?: IOption;
+  multi?: IOption;
+}
 
 export const direction: Options = {
   column: {

@@ -1,10 +1,12 @@
 export const prefixComponents = 'ads';
 
-export type Classes = string;
+export type Class = string | undefined;
+
+export type Classes = Array<Class>;
 
 export interface IOption {
   propValue: string | boolean;
-  class: string;
+  class: Class;
 }
 
 

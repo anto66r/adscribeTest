@@ -6,7 +6,7 @@ export type Classes = Array<Class>;
 
 export interface IOption {
   propValue: string | boolean;
-  class: Class;
+  class?: Class;
 }
 
 

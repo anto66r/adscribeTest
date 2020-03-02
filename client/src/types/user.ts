@@ -1,7 +1,8 @@
-interface IUser {
-  username: string;
-  _id: string;
+export interface IUser {
+  name: string;
+  _id?: string;
   roles?: string[];
+  email: string;
+  isNew?: boolean;
+  authId?: string;
 }
-
-export default IUser;

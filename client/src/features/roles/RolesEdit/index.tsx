@@ -11,11 +11,12 @@ const RoleEdit: FunctionComponent = () => {
   const { roles, setRoles } = useRoles();
   const { id } = useParams<{ id: string }>();
   const { doSuccessToast, doErrorToast } = useToast();
-  const goBack = (): void => { history.goBack(); };
+  const goToRoles = (): void => { history.push('/roles'); };
 
   const handleSuccess = (collection: IRole[]): void => {
     setRoles(collection);
-    doSuccessToast(id ? 'Role updated' : 'Role created'); history.goBack();
+    doSuccessToast(id ? 'Role updated' : 'Role created');
+    history.push('/roles');
   };
   const handleError = (message: string): void => { doErrorToast(message); };
 
@@ -45,7 +46,7 @@ const RoleEdit: FunctionComponent = () => {
     <RoleForm
       role={role}
       onSubmit={handleSubmit}
-      onCancel={goBack}
+      onCancel={goToRoles}
       loading={loading}
     />
   );

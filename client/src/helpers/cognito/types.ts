@@ -14,7 +14,7 @@ export interface ICognitoSessionModel {
     jwtToken: string;
     payload?: {
       email: string;
-      'cognito:username': string;
+      'cognito:name': string;
     };
   };
   refreshToken: {

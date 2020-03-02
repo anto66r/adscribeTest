@@ -8,9 +8,11 @@ const { Schema } = mongoose;
 
 interface IUser {
   _id?: string;
-  cognitoId?: string;
-  username: string;
-  roles: string[];
+  authId?: string;
+  name: string;
+  email: string;
+  roles?: string[];
+  phoneNumber?: string;
 }
 
 interface IUserCollection {
@@ -35,15 +37,19 @@ interface IUserGeneralCollection {
 
 const userSchema = new Schema(
   {
-    username: {
+    name: {
       type: String,
       trim: true,
-      required: true,
     },
     roles: {
       type: [String],
     },
-    cognitoId: {
+    email: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+    authId: {
       type: String,
       required: true,
       unique: true,

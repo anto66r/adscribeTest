@@ -35,8 +35,9 @@ git config core.hooksPath hooks
 ```
 
 ### Cognito testing login:
-user: javier
+user: javier.olmo@zartis.com
 password: javier
+(You can make your own through the user panel!)
 
 ## Build
 

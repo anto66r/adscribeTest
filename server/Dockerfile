@@ -1,19 +1,26 @@
-FROM node:10
+# build stage
+FROM node:12.13.0 AS builder
 
-# Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY package*.json ./
-
-# RUN npm install
-# If you are building your code for production
-RUN npm i --only=production
-
-# Bundle app source
 COPY . .
 
+RUN yarn
+RUN yarn clean
+RUN yarn build
+
+# run stage
+FROM node:12.13.0-slim
+
+WORKDIR /app
+
+COPY package.json ./
+RUN yarn
+RUN npm install pm2 -g
+
+COPY --from=builder /app/dist ./dist
+COPY env ./env
+
 EXPOSE 5000
-CMD node -r module-alias/register ./dist
+
+CMD [ "pm2-runtime", "dist/index.js" ]

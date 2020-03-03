@@ -1,0 +1,27 @@
+@import "../../App.scss";
+@import "../../components/components.scss";
+@import "../../theme/default/button.scss";
+
+$button-component-name: "button";
+
+.#{$prefix-components}-#{$button-component-name} {
+  font-family: $button---font-family;
+  font-size: $button---font-size;
+  padding: $button--vertical---padding $button--horizontal---padding;
+  border-radius: $button---border-radius;
+  cursor: pointer;
+
+  &.primary {
+    border: $button--primary---border;
+    background-color: $button--primary---background-color;
+    color: $button--primary---color;
+
+    &:hover {
+      background-color: $button--primary--hover---background-color;
+    }
+
+    &[disabled]{
+      background-color: $button--primary--disabled---background-color;
+    }
+  }
+}

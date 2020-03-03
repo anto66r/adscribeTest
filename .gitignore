@@ -11,6 +11,9 @@ coverage
 # logs
 logs
 
+# pre transpile theme folder
+client/src/theme/default
+
 # production
 build
 dist

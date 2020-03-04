@@ -28,7 +28,7 @@ describe('<Fex /> ', () => {
       expect(flexNodeClasses).toBe(`${prefixComponents}-${flexComponentName}`);
     });
 
-    unmount()
+    unmount();
   });
 
   describe('Custom behavior', () => {
@@ -42,7 +42,7 @@ describe('<Fex /> ', () => {
       expect(flexNode).toBeDefined();
       expect(flexNodeClasses).toBe(`${prefixComponents}-${flexComponentName} ${directionColumnClass}`);
 
-      unmount()
+      unmount();
     });
 
     it('should has row direction with top left align in one line', () => {
@@ -64,7 +64,7 @@ describe('<Fex /> ', () => {
       expect(flexNodeClasses).
         toBe(`${prefixComponents}-${flexComponentName} ${verticalTopClass} ${horizontalLeftClass}`);
 
-      unmount()
+      unmount();
     });
 
     it('should has row direction with bottom right align in one line', () => {
@@ -86,7 +86,7 @@ describe('<Fex /> ', () => {
       expect(flexNodeClasses).
         toBe(`${prefixComponents}-${flexComponentName} ${verticalBottomClass} ${horizontalRightClass}`);
 
-      unmount()
+      unmount();
     });
 
     it('should has row direction with center align in multiple lines', () => {
@@ -99,7 +99,7 @@ describe('<Fex /> ', () => {
       expect(flexNode).toBeDefined();
       expect(flexNodeClasses).toBe(`${prefixComponents}-${flexComponentName} ${multiLineClass}`);
 
-      unmount()
+      unmount();
     });
   });
 

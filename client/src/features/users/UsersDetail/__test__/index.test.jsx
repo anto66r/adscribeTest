@@ -40,7 +40,7 @@ const renderWrapper = () => render(
 describe('<UsersDetail />', () => {
   test('should display a user correctly. Should only show "Role name".', () => {
     renderWrapper();
-    expect(screen.getByText('User 1')).toBeInTheDocument();
+    expect(screen.getByText('Test user')).toBeInTheDocument();
     expect(screen.getByText('Edit user')).toBeInTheDocument();
     expect(screen.queryByText('another role')).toBeFalsy();
   });

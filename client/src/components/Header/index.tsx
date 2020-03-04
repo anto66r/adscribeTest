@@ -28,10 +28,10 @@ const Header: FunctionComponent = () => {
           </li>
         </ul>
         {
-           user.username ? (
+           user.email ? (
              <>
                <h6 className="mr-3">
-                 {user.username}
+                 {user.email}
                </h6>
                <a href="/logout" className="btn btn-outline-success my-2 my-sm-0">Logout</a>
              </>

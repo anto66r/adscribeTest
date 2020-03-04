@@ -16,10 +16,12 @@ jest.mock('hooks/useToast', () => () => ({
   doErrorToast: mockDoErrorToast,
 }));
 
-const mockGoBack = jest.fn();
+const mockPush = jest.fn();
 jest.mock('react-router-dom', () => ({
   useParams: () => ({ id: 1234 }),
-  useHistory: () => ({ goBack: mockGoBack }),
+  useHistory: () => ({
+    push: mockPush,
+  }),
 }));
 
 jest.mock('components/UserForm');
@@ -47,8 +49,9 @@ const renderWrapper = () => render(
 describe('<UserEdit />', () => {
   test('should handle cancel correctly', () => {
     renderWrapper();
-    fireEvent.click(screen.getByTestId('Cancel'));
-    expect(mockGoBack).toHaveBeenCalledWith();
+    const cancelButton = screen.getByText('Cancel');
+    fireEvent.click(cancelButton);
+    expect(mockPush).toHaveBeenCalled();
   });
 
   test('should call success toast and go back on save', () => {
@@ -59,7 +62,7 @@ describe('<UserEdit />', () => {
     renderWrapper();
     fireEvent.submit(screen.getByTestId('form'));
     expect(mockDoSuccessToast).toHaveBeenCalledWith('User updated');
-    expect(mockGoBack).toHaveBeenCalledWith();
+    expect(mockPush).toHaveBeenCalled();
   });
 
   test('should call error toast on save error', () => {

@@ -18,7 +18,7 @@
     "@server": "dist/server"
   },
   "dependencies": {
-    "@types/uuid": "^3.4.7",
+    "aws-sdk": "^2.625.0",
     "cognito-express": "^2.0.16",
     "command-line-args": "^5.1.1",
     "cookie-parser": "^1.4.4",
@@ -30,7 +30,6 @@
     "mongoose": "^5.8.11",
     "morgan": "^1.9.1",
     "promisify": "^0.0.3",
-    "uuid": "^3.4.0",
     "validator": "^12.2.0",
     "winston": "^3.2.1"
   },

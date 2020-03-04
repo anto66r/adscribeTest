@@ -55,10 +55,11 @@ module.exports = {
     "no-underscore-dangle": "off",
     "no-extra-semi": "off",
     "no-prototype-builtins": "off",
+    "@typescript-eslint/camelcase": 'off',
     "max-len": [2, 180, 4, {
       ignoreUrls: true
     }],
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
   },
   settings: {
     "import/resolver": {

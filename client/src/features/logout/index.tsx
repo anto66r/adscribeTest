@@ -1,5 +1,5 @@
 import { UserContext } from 'context/UserContext';
-import { logout } from 'helpers/cognito';
+import { logout } from 'helpers/cognito/login';
 import React, { useContext, useEffect } from 'react';
 
 const Logout = () => {

@@ -3,19 +3,32 @@ import React, { useState, FunctionComponent } from 'react';
 import { IUser, IRole } from 'types';
 import { useRoles } from 'hooks';
 
-type ContentProps = {
+type UserFormProps = {
   user?: IUser;
   loading?: boolean;
-  onSubmit: ({ username, roles }: { username: string; roles: string[] }) => void;
+  onSubmit: (user: IUser) => void;
   onCancel: () => void;
 };
 
-const UserForm: FunctionComponent<ContentProps> = ({
-  user = { roles: [], username: '' }, onSubmit, onCancel, loading,
+const UserForm: FunctionComponent<UserFormProps> = ({
+  user = {
+    email: '',
+    roles: [],
+    name: '',
+  },
+  onSubmit,
+  onCancel,
+  loading,
 }) => {
   const { roles: allRoles } = useRoles();
-  const { username, roles = [] } = user;
-  const [formName, setFormName] = useState(username);
+  const { roles = [] } = user;
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  const emptyFields = () => [name, email].some(x => !x.length);
+
   const [checkedItems, setCheckedItems] = useState(() => roles.reduce((acc: any, cur: string) => {
     acc[cur] = true;
     return acc;
@@ -25,46 +38,67 @@ const UserForm: FunctionComponent<ContentProps> = ({
     setCheckedItems({ ...checkedItems, [e.target.value]: e.target.checked });
   };
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => setFormName(e.target.value);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    onSubmit({
-      username: formName,
-      roles: Object.keys(checkedItems).filter(item => checkedItems[item]),
-    });
+
+    if (emptyFields()) {
+      setMessage('All fields should be filled');
+      return;
+    }
+
+    const filteredRoles = Object.keys(checkedItems).filter(item => checkedItems[item]);
+    try {
+      onSubmit({
+        roles: filteredRoles,
+        name,
+        email,
+      });
+    } catch (err) {
+      setMessage(`Error creating a new account: ${err.technical}`);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">User Name</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        onChange={handleNameChange}
-        value={formName}
-      />
-      <ul>
-        {allRoles.sort().map((item: IRole) => (
-          <li key={item.name}>
-            <input
-              data-testid={item}
-              type="checkbox"
-              name={item.name}
-              value={item._id}
-              checked={checkedItems[item._id] || false}
-              onChange={handleCheckChange}
-            />
-            {item.name}
-          </li>
-        ))}
-      </ul>
-      <button type="submit" disabled={loading}>{loading ? 'Saving...' : 'Save'}</button>
-      <button type="button" onClick={onCancel}>
-        Cancel
-      </button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        {
+          message && (
+            <div className="alert alert-danger">
+              {message}
+            </div>
+          )
+        }
+        <div className="form-group">
+          <label>Name</label>
+          <input type="user" className="form-control" value={name} onChange={e => setName(e.target.value)} />
+        </div>
+
+        <div className="form-group">
+          <label>Email</label>
+          <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} />
+        </div>
+
+        <ul>
+          {allRoles.sort().map((item: IRole) => (
+            <li key={item.name}>
+              <input
+                data-testid={item}
+                type="checkbox"
+                name={item.name}
+                value={item._id}
+                checked={checkedItems[item._id] || false}
+                onChange={handleCheckChange}
+              />
+              {item.name}
+            </li>
+          ))}
+        </ul>
+        <button className="btn btn-primary" type="submit" disabled={loading}>{loading ? 'Saving...' : 'Save'}</button>
+        <button className="btn btn-secondary" type="button" onClick={onCancel}>
+          Cancel
+        </button>
+      </form>
+    </div>
   );
 };
 

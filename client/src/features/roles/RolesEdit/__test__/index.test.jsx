@@ -18,10 +18,12 @@ jest.mock('hooks/useToast', () => () => ({
   doErrorToast: mockDoErrorToast,
 }));
 
-const mockGoBack = jest.fn();
+const mockPush = jest.fn();
 jest.mock('react-router-dom', () => ({
   useParams: () => ({ id: 1234 }),
-  useHistory: () => ({ goBack: mockGoBack }),
+  useHistory: () => ({
+    push: mockPush,
+  }),
 }));
 
 jest.mock('components/RoleForm');
@@ -47,9 +49,11 @@ const renderWrapper = () => render(
 
 describe('<RolesEdit />', () => {
   test('should handle cancel correctly', () => {
-    renderWrapper();
+    const test = renderWrapper();
+    const { queryAllByText, container } = test;
+    console.log(container.innerHTML);
     fireEvent.click(screen.getByTestId('Cancel'));
-    expect(mockGoBack).toHaveBeenCalledWith();
+    expect(mockPush).toHaveBeenCalled();
   });
 
   test('should call success toast and go back on save', () => {
@@ -60,7 +64,7 @@ describe('<RolesEdit />', () => {
     renderWrapper();
     fireEvent.submit(screen.getByTestId('form'));
     expect(mockDoSuccessToast).toHaveBeenCalledWith('Role updated');
-    expect(mockGoBack).toHaveBeenCalledWith();
+    expect(mockPush).toHaveBeenCalled();
   });
 
   test('should call error toast on save error', () => {

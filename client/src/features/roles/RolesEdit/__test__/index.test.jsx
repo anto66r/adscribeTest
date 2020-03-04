@@ -32,6 +32,7 @@ beforeEach(() => {
     doUpdate: () => jest.fn(),
     loading: false,
   }));
+  jest.clearAllMocks();
 });
 
 const renderWrapper = () => render(
@@ -46,12 +47,6 @@ const renderWrapper = () => render(
 );
 
 describe('<RolesEdit />', () => {
-  test('should handle cancel correctly', () => {
-    renderWrapper();
-    fireEvent.click(screen.getByTestId('Cancel'));
-    expect(mockGoBack).toHaveBeenCalledWith();
-  });
-
   test('should call success toast and go back on save', () => {
     useItemAdmin.mockImplementation(() => ({
       doUpdate: ({ onSuccess }) => onSuccess(),

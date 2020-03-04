@@ -12,7 +12,7 @@ import Flex, {
 
 const flexTestId = `${prefixComponents}-${flexComponentName}`;
 
-describe('<Fex /> ', () => {
+describe('<Flex /> ', () => {
   afterAll(cleanup);
 
   describe('Default behavior ', () => {

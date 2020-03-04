@@ -70,3 +70,4 @@ fi
 echo '✅  Executed Serverside Jasmine tests   - 4/4'
 
 echo "🎉 All tests working, Good job! commiting now!"
+

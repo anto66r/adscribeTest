@@ -26,6 +26,7 @@ describe('<UsersDetail />', () => {
     expect(screen.getByText('Edit user')).toBeInTheDocument();
     expect(screen.queryByText('another role')).toBeFalsy();
   });
+
   test('Show show link to edit role.', () => {
     renderWrapper();
     expect(screen.getByTestId('pl2-role-edit')).toHaveAttribute('href', '/users/edit/2');

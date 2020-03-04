@@ -1,9 +1,10 @@
 import { FetchMethod } from 'types';
-import { cleanCookies, refreshSession } from 'helpers/cognito';
+import { refreshSession } from 'helpers/cognito/login';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ICognitoSessionModel } from 'helpers/cognito/types';
 import { getCookie } from '../cookies';
 import { HeaderType, SecureFetchType, IAxiosConfig } from './types';
+import { cleanCookies } from '../cognito/utils';
 
 const secureFetch = ({
   endpoint,

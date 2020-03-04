@@ -1,111 +1,120 @@
 import { getCookie } from 'helpers/cookies';
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import {
-  setUsers, setUser,
+  setUser,
 } from 'store/actions';
-import { ErrorContext } from '../../context/ErrorContext';
-import { login } from '../../helpers/cognito';
 import './style.scss';
-import { ILoginResult } from '../../helpers/cognito/types';
+import LoginForm from 'components/LoginForm';
+
+import { resendSignUp, confirmSignUp } from 'helpers/cognito/management';
+import { login } from 'helpers/cognito/login';
+import ErrorMessage from 'ErrorMessage';
+import ConfirmCodeForm from '../../components/ConfirmCodeForm';
+import { ErrorContext } from '../../context/ErrorContext';
 import { useStore } from '../../store';
+import { ERROR_NEW_PASSWORD_REQUIRED, ERROR_USER_NOT_CONFIRMED } from './constants';
 
 const Login = () => {
-  const [userForm, setUserForm] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogging, setIsLogging] = useState(false);
+  const [resendSignUpData, setResendSignUpData] = useState();
+  const [confirmationCode, setConfirmationCode] = useState('');
 
-  const [state, dispatch] = useStore();
-  const [error, setError] = useState('');
+
+  const [, dispatch] = useStore();
+  const [message, setMessage] = useState('');
 
   const history = useHistory();
   const { message: errorMessage } = useContext(ErrorContext);
 
-  const doLogin = async (): Promise<void> => {
+  const handleLogin = async (): Promise<void> => {
     setIsLogging(true);
-    setError('');
+    setMessage('');
 
     try {
-      const foundUser = await login(userForm, password);
+      const foundUser = await login(email, password);
       const { user, auth } = foundUser;
       dispatch(setUser({
         userId: user.data[0]._id,
         isLogged: true,
-        username: auth.cognitoUsername,
+        email: foundUser.auth.cognitoEmail,
         auth,
       }));
       // return here to CognitoRedirectCall
       const redirectTo = getCookie('CognitoRedirectCall');
       history.push(redirectTo === '/login' ? '' : redirectTo);
     } catch (err) {
-      setError(err.message);
+      if (err.code === ERROR_NEW_PASSWORD_REQUIRED) {
+        history.push({
+          pathname: '/new-password',
+          state: { newPasswordRequired: true },
+        });
+      } else if (err.code === ERROR_USER_NOT_CONFIRMED) {
+        const resendResult = await resendSignUp(email);
+
+        setResendSignUpData(resendResult);
+        setMessage('');
+      }
+      setMessage(err.message);
       setIsLogging(false);
     }
   };
 
+  const handleConfirm = async () => {
+    setIsLogging(true);
+    setMessage('');
+
+    try {
+      await confirmSignUp(email, confirmationCode);
+      setMessage('User is confirmed correctly. Please, login again');
+      setResendSignUpData(undefined);
+    } catch (err) {
+      setMessage(`Cannot confirm user: ${err.message}`);
+    }
+    setIsLogging(false);
+  };
+
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="row">
-        <div className="col">
-          {errorMessage && (
-            <div className="alert alert-danger">{errorMessage}</div>
-          )}
-          <div className="d-flex justify-content-center mb-4">
-            <img
-              src="/logo/adscribe-full-black.png"
-              width="200"
-              alt="adscribe"
-            />
-          </div>
-          <div className="form-inline">
-            <label>User</label>
-            <input
-              type="email"
-              className="form-control d-lg-inline-block"
-              name="user"
-              value={userForm}
-              aria-describedby="emailHelp"
-              onChange={e => setUserForm(e.target.value)}
-            />
-          </div>
-          <div className="form-inline">
-            <label>Password</label>
-            <input
-              type="password"
-              className="form-control d-lg-inline-block"
-              name="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="mt-3" style={{ textAlign: 'center' }} />
-          <div className="d-flex justify-content-center mt-3 mb-2">
-            <button
-              type="submit"
-              onClick={doLogin}
-              className="btn btn-primary"
-              disabled={isLogging}
-            >
-              {isLogging ? 'Please wait...' : 'Login'}{' '}
-              {isLogging && (
-                <div
-                  className="spinner-border text-light ml-1"
-                  role="status"
-                  style={{ width: 20, height: 20 }}
-                >
-                  <span className="sr-only">Loading...</span>
-                </div>
-              )}
-            </button>
-          </div>
-          {
-              error && (
-                <div className="d-flex justify-content-center">
-                  <p>{error}</p>
-                </div>
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="row">
+          <div className="col">
+            {errorMessage && (
+              <div className="alert alert-danger">{errorMessage}</div>
+            )}
+            <div className="d-flex justify-content-center mb-4">
+              <img
+                src="/logo/adscribe-full-black.png"
+                width="200"
+                alt="adscribe"
+              />
+            </div>
+            {
+              !resendSignUpData ? (
+                <LoginForm
+                  email={email}
+                  handleLogin={handleLogin}
+                  isLogging={isLogging}
+                  password={password}
+                  setEmail={setEmail}
+                  setPassword={setPassword}
+                />
+              ) : (
+                <ConfirmCodeForm
+
+                  isLogging={isLogging}
+                  confirmationCode={confirmationCode}
+                  handleConfirm={handleConfirm}
+                  setConfirmationCode={setConfirmationCode}
+                />
               )
-          }
+            }
+            {
+              message && <ErrorMessage message={message} />
+            }
+          </div>
         </div>
       </div>
     </div>

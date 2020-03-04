@@ -20,7 +20,13 @@
 
 ### Server
 
-`cd server && yarn startdev`
+`cd server && yarn start:dev`
+
+### Components
+
+Run storybook app locally to see and test all our UI components
+
+`yarn run components`
 
 ### Code cleaning and tests:
 Important! Change the git hooks default folder for this project
@@ -29,5 +35,14 @@ git config core.hooksPath hooks
 ```
 
 ### Cognito testing login:
-user: javier
+user: javier.olmo@zartis.com
 password: javier
+(You can make your own through the user panel!)
+
+## Build
+
+### Components
+
+Build storybook with all our UI components
+
+`yarn run components:build`

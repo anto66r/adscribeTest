@@ -35,8 +35,8 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "yarn config:theme:adscribe && yarn run pre:transpile && node themeSassWatcher.js && start",
-    "start:theme:605": "yarn config:theme:605 && yarn run pre:transpile && react-scripts start",
+    "start": "yarn config:theme:adscribe && yarn run pre:transpile && yarn run pre:transpile:sass:watch && react-scripts start",
+    "start:theme:605": "yarn config:theme:605 && yarn run pre:transpile && yarn run pre:transpile:sass:watch && react-scripts start",
     "build": "yarn config:theme:adscribe && yarn run pre:transpile && react-scripts build",
     "build:theme:605": "yarn config:theme:605 && yarn run pre:transpile && react-scripts build",
     "test": "react-scripts test",
@@ -45,14 +45,15 @@
     "eslint": "node_modules/.bin/eslint src",
     "config:theme:605": "yarn config set client:theme \"605\"",
     "config:theme:adscribe": "yarn config set client:theme \"adscribe\"",
-    "components": "yarn config:theme:adscribe && yarn run pre:transpile && start-storybook -p 9009 -s public",
-    "components:theme:605": "yarn config:theme:605 && yarn run pre:transpile && start-storybook -p 9009 -s public",
+    "components": "yarn config:theme:adscribe && yarn run pre:transpile && yarn run pre:transpile:sass:watch && start-storybook -p 9009 -s public",
+    "components:theme:605": "yarn config:theme:605 && yarn run pre:transpile && yarn run pre:transpile:sass:watch && start-storybook -p 9009 -s public",
     "components:build": "yarn config:theme:adscribe && yarn run pre:transpile && build-storybook -s public",
     "components:build:theme:605": "yarn config:theme:605 && yarn run pre:transpile && build-storybook -s public",
     "pre:transpile:sass:clean": "rm -rf ./src/theme/default",
     "pre:transpile:sass:create": "mkdir ./src/theme/default",
     "pre:transpile:sass:move": "cp -R \"./src/theme/$npm_package_config_theme/.\" \"./src/theme/default\"",
-    "pre:transpile:sass": "pre:transpile:sass:clean && pre:transpile:sass:create && pre:transpile:sass:move",
+    "pre:transpile:sass:watch": "node scripts/themeSassWatcher.js &",
+    "pre:transpile:sass": "yarn run pre:transpile:sass:clean && yarn run pre:transpile:sass:create && yarn run pre:transpile:sass:move",
     "pre:transpile": "yarn run pre:transpile:sass"
   },
   "eslintConfig": {

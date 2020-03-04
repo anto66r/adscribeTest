@@ -1,7 +1,7 @@
 # Platf0rm-2 Client application
 
 > "I want nothing!"
->
+> 
 > "And you shall receive it. In abundance!"
 
 ## Installation
@@ -18,13 +18,44 @@ Run `yarn` in the client, server and root directories.
 
 ### Client
 
-`cd client && yarn start`
+client could be run with every style theme that we provide, by default run up with `adscrbe` theme.
+
+```shell
+cd client && yarn start
+```
+
+
+
+#### with 605 theme
+
+```shell
+cd client && yarn start:theme:605
+```
 
 ### Concurrently
 
 `yarn start`
 
+
+
+### Components
+
+To run the storybook application with all components stock
+
+```shell
+cd client && yarn run components
+```
+
+#### with 605 theme
+
+```shell
+cd client && yarn run components:theme:605
+```
+
+
+
 ## Deployment
+
 ### Creating production build
 
 ### Deploying
@@ -42,29 +73,33 @@ Two roles are read-only:
 A role has an array of permissions assigned to it.
 
 ### Creating roles
+
 Roles can be created but must have unique names.
 
 ### Editing roles
+
 Roles can be edited to modify their name and assigned permissions.
 
 ### Deleting roles
+
 All roles can be deleted except `Administrator` and `Basic`.
 
 ## Permissions
 
 Permissions are strings that specify a _route_ and an _action_, separated by `::`.
 
-
 For example, a permission which is
 `users|roles::assign` will allow the user to assign roles to users via the user editing screen.
 
 There are four basic actions:
+
 - `create`: allows creation of resources at the route.
 - `delete`: allows deletion resources at the route.
 - `update`: allows editing resources at the route.
 - `view`: allows access to a listing of resources at the route.
 
 Possible routes are:
+
 - `users`: users section
   - `users|roles`: roles subsection of the users section
 - `roles`: roles section

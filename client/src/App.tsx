@@ -10,6 +10,9 @@ import { ErrorPage } from './features/error/ErrorPage';
 import Main from './features/main';
 import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import { NewPassword } from './features/newPassword';
+import { ForgotPassword } from './features/forgotPassword';
+import { NewAccount } from './features/newAccount';
 
 const App = () => (
   <Router>
@@ -17,6 +20,9 @@ const App = () => (
       <Switch>
         <Route path="/error" component={ErrorPage} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/new-password" component={NewPassword} />
+        <Route exact path="/forgot-password" component={ForgotPassword} />
+        <Route exact path="/activate-account" component={NewAccount} />
         <PrivateRoute component={Main} />
       </Switch>
     </StoreProvider>

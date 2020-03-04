@@ -26,6 +26,12 @@ Run `yarn` in the client, server and root directories.
 
 `yarn start`
 
+### Components
+
+Run storybook app locally to see and test all our UI components
+
+`yarn run components`
+
 ## Code cleaning and tests:
 Important! Change the git hooks default folder for this project
 ```
@@ -134,3 +140,16 @@ Possible routes are:
 And so on.
 
 The master list of permissions lives in the `src/config` folder of the client.
+
+### Cognito testing login:
+user: javier.olmo@zartis.com
+password: javier
+(You can make your own through the user panel!)
+
+## Build
+
+### Components
+
+Build storybook with all our UI components
+
+`yarn run components:build`

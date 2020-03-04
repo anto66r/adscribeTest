@@ -20,7 +20,7 @@ const Item: FunctionComponent<PropsType> = props => {
   const handleDelete = (): void => {
     doDelete({
       item: user,
-      onSuccess: (collection: IUser[]): void => {
+      onSuccess: async (collection: IUser[]): Promise<void> => {
         setUsers(collection);
         doSuccessToast('User deleted');
       },
@@ -29,7 +29,7 @@ const Item: FunctionComponent<PropsType> = props => {
   };
   return (
     <li key={user._id}>
-      <Link data-testid="pl2-role-itemlink" to={`${url}/${user._id}`}>{user.username}</Link>
+      <Link data-testid="pl2-role-itemlink" to={`${url}/${user._id}`}>{user.name}</Link>
 
       <button disabled={loading} onClick={handleDelete}>
         {loading ? 'Deleting...' : 'Delete'}

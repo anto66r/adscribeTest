@@ -6,15 +6,15 @@ import { IUserContextProps } from './types';
 export const UserContext: Context<IUserContextProps> = createContext<IUserContextProps>({
   users: [],
   user: {
-    username: getCookie('CognitoUsername'),
+    email: getCookie('CognitoEmail'),
     id: '',
   },
   cognito: {
-    cognitoUsername: '',
+    cognitoEmail: '',
     cognitoAccessToken: '',
-    cognitoIdToken: '',
+    authIdToken: '',
     cognitoRefreshToken: '',
-    cognitoId: '',
+    authId: '',
     userId: '',
     loginDate: undefined,
   },

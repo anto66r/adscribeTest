@@ -14,7 +14,8 @@ const renderWrapper = () => render(
         domains: {
 
           users: [{
-            username: 'User 1',
+            email: 'test@email.com',
+            name: 'Test user',
             _id: '2',
             roles: ['1234'],
           }],
@@ -39,11 +40,11 @@ const renderWrapper = () => render(
 describe('<UsersDetail />', () => {
   test('should display a user correctly. Should only show "Role name".', () => {
     renderWrapper();
-    screen.debug();
-    expect(screen.getByText('User 1')).toBeInTheDocument();
+    expect(screen.getByText('Test user')).toBeInTheDocument();
     expect(screen.getByText('Edit user')).toBeInTheDocument();
     expect(screen.queryByText('another role')).toBeFalsy();
   });
+
   test('Show show link to edit role.', () => {
     renderWrapper();
     expect(screen.getByTestId('pl2-role-edit')).toHaveAttribute('href', '/users/edit/2');

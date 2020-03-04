@@ -7,13 +7,14 @@ import Item from '../Item';
 
 describe('<Item />', () => {
   test('should display an item with correct link', () => {
-    render(
+    const test = render(
       (
         <MemoryRouter>
           <StoreProvider>
 
             <Item user={{
-              username: 'User name',
+              name: 'User name',
+              email: 'email@test.com',
               _id: '1234',
             }}
             />

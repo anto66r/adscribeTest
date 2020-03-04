@@ -3,12 +3,12 @@ import { logger } from '@shared';
 import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, OK } from 'http-status-codes';
 import { TRequestParams } from 'src/daos/User/types';
-import { v4 as uuid } from 'uuid';
-import { IUserCollection, IUserGeneralCollection } from '../services';
+import { IUser, IUserCollection, IUserGeneralCollection } from '../services';
 
 // Init shared
 const UsersRouter: Router = Router();
 const userDao: UserDao = new UserDao();
+
 
 UsersRouter.get('/', async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -23,9 +23,21 @@ UsersRouter.get('/', async (req: Request, res: Response): Promise<Response> => {
 });
 
 UsersRouter.post('/login', async (req: Request, res: Response): Promise<Response> => {
-  const { cognitoId } = req.body;
+  const { authId, email } = req.body;
   try {
-    const foundUser: IUserCollection = await userDao.getByCognitoId(cognitoId);
+    let foundUser: IUserCollection = await userDao.getByAuthId(authId);
+
+    if (!foundUser.data.length) {
+      // This means the user was created directly from cognito, so we should create it
+
+      const newUser = {
+        authId,
+        email,
+        name: email,
+      };
+      foundUser = await userDao.add(newUser);
+    }
+
     return res.status(OK).json(foundUser);
   } catch (err) {
     logger.error(err.message, err);
@@ -35,10 +47,19 @@ UsersRouter.post('/login', async (req: Request, res: Response): Promise<Response
   }
 });
 
-
 UsersRouter.post('/', async (req: Request, res: Response) => {
+  const {
+    name, email, authId, roles,
+  } = req.body;
+  const newUser: IUser = {
+    authId,
+    name,
+    email,
+    roles,
+  };
+
   try {
-    const user = await userDao.add({ ...req.body, cognitoId: uuid() }); // todo ***: change uuid() to cognito ID
+    const user = await userDao.add(newUser);
     return res.status(OK).json(user);
   } catch (err) {
     logger.error(err.message, err);
@@ -63,8 +84,8 @@ UsersRouter.patch('/', async (req: Request, res: Response) => {
 UsersRouter.delete('/', async (req: Request, res: Response) => {
   try {
     const { _id }: {_id: string} = req.body as TRequestParams;
-    await userDao.delete(_id);
-    return res.status(OK).end();
+    const users = await userDao.delete(_id);
+    return res.status(OK).json(users);
   } catch (err) {
     logger.error(err.message, err);
     return res.status(BAD_REQUEST).json({

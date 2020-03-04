@@ -8,8 +8,8 @@ export interface IUserDao {
   delete: (_id: string) => Promise<IUserCollection>;
   getAll: () => Promise<IUserCollection>;
   getById: (_id: string) => Promise<IUserCollection> ;
-  getByCognitoId: (cognitoId: string) => Promise<IUserCollection> ;
-  getByUsername: (username: string) => Promise<IUserCollection>;
+  getByAuthId: (authId: string) => Promise<IUserCollection> ;
+  getByEmail: (email: string) => Promise<IUserCollection>;
 }
 
 export type TRequestParams = {

@@ -22,6 +22,8 @@ module.exports = {
         'class-methods-use-this': 'off',
         'no-underscore-dangle': 'off',
         'no-shadow': 'off',
+        'no-param-reassign': 'off',
+        "no-console": "error",
     }
 };
 

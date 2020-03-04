@@ -1,21 +1,25 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
-import { IUser } from 'types';
 import UserForm from 'components/UserForm';
 import useToast from 'hooks/useToast';
 import { useItemAdmin, useUsers } from 'hooks';
+import { IUser } from '../../../types';
 
 const UserEdit: FunctionComponent = () => {
   const history = useHistory();
   const { users = [], setUsers } = useUsers();
   const { id } = useParams<{ id: string }>();
   const { doSuccessToast, doErrorToast } = useToast();
-  const goBack = (): void => { history.goBack(); };
+  const goToUsers = (): void => {
+    history.push('/users');
+  };
+  const [error, setError] = useState('');
 
   const handleSuccess = (collection: IUser[]): void => {
     setUsers(collection);
-    doSuccessToast(id ? 'User updated' : 'User created'); history.goBack();
+    doSuccessToast(id ? 'User updated' : 'User created');
+    history.push('/users');
   };
   const handleError = (message: string): void => { doErrorToast(message); };
 
@@ -25,29 +29,39 @@ const UserEdit: FunctionComponent = () => {
 
   const user = users.find((item: IUser) => item._id === id);
 
-  const handleSubmit = ({ username, roles }: { username: string; roles: string[] }): void => {
-    const item = { username, roles, _id: id };
+  const handleSubmit = async (updateUser: IUser): Promise<void> => {
+    setError('');
+
     if (id) {
       doUpdate({
-        item,
+        item: updateUser,
         onSuccess: handleSuccess,
         onError: handleError,
       });
     } else {
-      doCreate({
-        item,
-        onSuccess: handleSuccess,
-        onError: handleError,
-      });
+      try {
+        doCreate({
+          item: {
+            ...updateUser,
+          },
+          onSuccess: handleSuccess,
+          onError: handleError,
+        });
+      } catch (err) {
+        setError(`${err.message}: ${err.code}`);
+      }
     }
   };
   return (
-    <UserForm
-      user={user}
-      onSubmit={handleSubmit}
-      onCancel={goBack}
-      loading={loading}
-    />
+    <>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <UserForm
+        user={user}
+        onSubmit={handleSubmit}
+        onCancel={goToUsers}
+        loading={loading}
+      />
+    </>
   );
 };
 

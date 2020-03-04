@@ -5,7 +5,7 @@ on:
 
 jobs:
   job_1:
-    name: Build and push client
+    name: Build and push package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

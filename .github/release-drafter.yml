@@ -2,16 +2,15 @@ name-template: 'v$NEXT_PATCH_VERSION'
 tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
   - title: 'Features'
-    labels:
-      - 'feature'
-      - 'enhancement'
+    label: 'feat'
   - title: 'Bug Fixes'
-    labels:
-      - 'fix'
-      - 'bugfix'
-      - 'bug'
+    label: 'fix'
   - title: 'Maintenance'
     label: 'chore'
+  - title: 'Documentation'
+    label: 'docs'
+  - title: 'Refactor'
+    label: 'refactor'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 template: |
   ## Changes

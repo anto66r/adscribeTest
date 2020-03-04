@@ -1,0 +1,76 @@
+name: Release Publish
+on:
+  release:
+    types: [published]
+
+jobs:
+  job_1:
+    name: Build and push package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Client - Build, tag, and push image
+        id: build-server-image
+        working-directory: client
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.event.release.tag_name }}
+          ECR_REPOSITORY: platf0rm-2-client
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      - name: Server - Build, tag, and push image
+        id: build-client-image
+        working-directory: server
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.event.release.tag_name }}
+          ECR_REPOSITORY: platf0rm-2-server 
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+      - name: Parse ECS task definition JSON
+        env: 
+          CLIENT_IMAGE: ${{ steps.build-client-image.outputs.image }}
+          SERVER_IMAGE: ${{ steps.build-server-image.outputs.image }}
+          EXECUTIONROLE_ARN: ${{ secrets.AWS_EXECUTIONROLEARN }}
+        run: |
+          node .github/actions/parseJson.js .aws/ecs-task-definition.json CLIENT_IMAGE=$CLIENT_IMAGE SERVER_IMAGE=$SERVER_IMAGE EXECUTIONROLE_ARN=$EXECUTIONROLE_ARN > ./ecs-task-definition.json
+      - name: Get task revision
+        id: get-task-revision
+        run: |
+          TASKREVISION=$(aws ecs register-task-definition --cli-input-json file://./ecs-task-definition.json --query "taskDefinition.revision" --output text)
+          echo "::set-output name=taskrevision::$TASKREVISION"
+      - name: Parse ECS service definition JSON
+        env: 
+          TARGETGROUP80: ${{ secrets.AWS_TARGETGROUP80 }}
+          TARGETGROUP5000: ${{ secrets.AWS_TARGETGROUP5000 }}
+          AWS_SUBNET1: ${{ secrets.AWS_SUBNET1 }}
+          AWS_SUBNET2: ${{ secrets.AWS_SUBNET2 }}
+          AWS_SECURITY_GROUP: ${{ secrets.AWS_SECURITY_GROUP }}
+          TASKREVISION: ${{ steps.get-task-revision.outputs.taskrevision }}
+        run: |
+          node .github/actions/parseJson.js .aws/ecs-service-definition.json \
+          TARGETGROUP80=$TARGETGROUP80 \
+          TARGETGROUP5000=$TARGETGROUP5000 \
+          TASKREVISION=$TASKREVISION \
+          AWS_SUBNET1=$AWS_SUBNET1 \
+          AWS_SUBNET2=$AWS_SUBNET2 \
+          AWS_SECURITY_GROUP=$AWS_SECURITY_GROUP \
+          > ./ecs-service-definition.json
+      - name: Create service
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          aws ecs create-service --cli-input-json file://./ecs-service-definition.json --region $AWS_REGION

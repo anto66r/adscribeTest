@@ -21,7 +21,9 @@ $button-component-name: "button";
     }
 
     &[disabled]{
+      color: $button--primary--disabled---color;
       background-color: $button--primary--disabled---background-color;
+      cursor: not-allowed;
     }
   }
 }

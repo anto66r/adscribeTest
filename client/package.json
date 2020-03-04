@@ -48,7 +48,10 @@
     "components:theme:605": "yarn config:theme:605 && yarn run pre:transpile && start-storybook -p 9009 -s public",
     "components:build": "yarn config:theme:adscribe && yarn run pre:transpile && build-storybook -s public",
     "components:build:theme:605": "yarn config:theme:605 && yarn run pre:transpile && build-storybook -s public",
-    "pre:transpile:sass": "rm -rf ./src/theme/default && mkdir ./src/theme/default && cp -R \"./src/theme/$npm_package_config_theme/.\" \"./src/theme/default\"",
+    "pre:transpile:sass:clean": "rm -rf ./src/theme/default",
+    "pre:transpile:sass:create": "mkdir ./src/theme/default",
+    "pre:transpile:sass:move": "cp -R \"./src/theme/$npm_package_config_theme/.\" \"./src/theme/default\"",
+    "pre:transpile:sass": "pre:transpile:sass:clean && pre:transpile:sass:create && pre:transpile:sass:move",
     "pre:transpile": "yarn run pre:transpile:sass"
   },
   "eslintConfig": {

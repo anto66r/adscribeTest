@@ -1,21 +1,21 @@
 import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents, Class, Classes, IOption } from '../components';
+import { prefixComponents, Class, Classes, Option } from '../components';
 import './styles.scss';
 
 export const buttonComponentName = 'button';
 
 type Options = {
-  primary?: IOption;
-  big?: IOption;
-  small?: IOption;
-  button?: IOption;
-  reset?: IOption;
-  submit?: IOption;
-  name?: IOption;
-  formId?: IOption;
-  disabled?: IOption;
+  primary?: Option;
+  big?: Option;
+  small?: Option;
+  button?: Option;
+  reset?: Option;
+  submit?: Option;
+  name?: Option;
+  formId?: Option;
+  disabled?: Option;
 }
 
 export const kind: Options = {
@@ -48,7 +48,7 @@ export const size: Options = {
   },
 }
 
-export const disabled: IOption = {
+export const disabled: Option = {
   propValue: 'primary',
   class: 'primary'
 }

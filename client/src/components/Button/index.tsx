@@ -49,8 +49,7 @@ export const size: Options = {
 }
 
 export const disabled: Option = {
-  propValue: 'primary',
-  class: 'primary'
+  propValue: true,
 }
 
 export interface IButtonProps {
@@ -101,7 +100,6 @@ const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
 
   const buttonClass = getClass();
   const testId = getTestId();
-  console.log(props.disabled);
 
   return (
     <button

@@ -4,10 +4,10 @@ import { cleanup, render } from '@testing-library/react';
 import { prefixComponents } from '../../components';
 import Flex, {
   flexComponentName,
-  direction,
-  horizontal,
-  vertical,
-  line,
+  Direction,
+  Horizontal,
+  Vertical,
+  Line,
 } from '../index';
 
 const flexTestId = `${prefixComponents}-${flexComponentName}`;
@@ -33,8 +33,8 @@ describe('<Flex /> ', () => {
 
   describe('Custom behavior', () => {
     it('should has column direction with center align in one line', () => {
-      const directionColumnPropValue = direction.column?.propValue + '';
-      const directionColumnClass = direction.column?.class;
+      const directionColumnPropValue = Direction.column;
+      const directionColumnClass = Direction.column;
       const { getByTestId, unmount } = render(<Flex direction={directionColumnPropValue}></Flex>);
       const flexNode = getByTestId(flexTestId);
       const flexNodeClasses = flexNode?.className;
@@ -46,10 +46,10 @@ describe('<Flex /> ', () => {
     });
 
     it('should has row direction with top left align in one line', () => {
-      const horizontalLeftPropValue = horizontal.left?.propValue + '';
-      const horizontalLeftClass = horizontal.left?.class;
-      const verticalTopPropValue = vertical.top?.propValue + '';
-      const verticalTopClass = vertical.top?.class;
+      const horizontalLeftPropValue = Horizontal.left;
+      const horizontalLeftClass = Horizontal.left;
+      const verticalTopPropValue = Vertical.top;
+      const verticalTopClass = Vertical.top;
       const { getByTestId, unmount } = render(
         <Flex
           horizontal={horizontalLeftPropValue}
@@ -68,10 +68,10 @@ describe('<Flex /> ', () => {
     });
 
     it('should has row direction with bottom right align in one line', () => {
-      const horizontalRightPropValue = horizontal.right?.propValue + '';
-      const horizontalRightClass = horizontal.right?.class;
-      const verticalBottomPropValue = vertical.bottom?.propValue + '';
-      const verticalBottomClass = vertical.bottom?.class;
+      const horizontalRightPropValue = Horizontal.right;
+      const horizontalRightClass = Horizontal.right;
+      const verticalBottomPropValue = Vertical.bottom;
+      const verticalBottomClass = Vertical.bottom;
       const { getByTestId, unmount } = render(
         <Flex
           horizontal={horizontalRightPropValue}
@@ -90,8 +90,8 @@ describe('<Flex /> ', () => {
     });
 
     it('should has row direction with center align in multiple lines', () => {
-      const multiLinePropValue = !!line.multi?.propValue;
-      const multiLineClass = line.multi?.class;
+      const multiLinePropValue = true;
+      const multiLineClass = Line.multi;
       const { getByTestId, unmount } = render(<Flex multiLine={multiLinePropValue}></Flex>);
       const flexNode = getByTestId(flexTestId);
       const flexNodeClasses = flexNode?.className;

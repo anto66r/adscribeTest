@@ -6,62 +6,30 @@ import './styles.scss';
 
 export const flexComponentName = 'flex';
 
-type option = {
-  propValue: string | boolean;
-  class: string;
+export enum Vertical {
+  top = "top",
+  bottom = "bottom"
 }
 
-type options = {
-  column?: option;
-  top?: option;
-  bottom?: option;
-  left?: option;
-  right?: option;
-  multi?: option;
+export enum Horizontal {
+  left = "left",
+  right = "right"
 }
 
-export const direction: options = {
-  column: {
-    propValue: 'column',
-    class: 'column',
-  }
+export enum Direction {
+  column = "column"
 }
 
-export const vertical: options = {
-  top: {
-    propValue: 'top',
-    class: 'top',
-  },
-  bottom: {
-    propValue: 'bottom',
-    class: 'bottom',
-  }
-}
-
-export const horizontal: options = {
-  left: {
-    propValue: 'left',
-    class: 'left',
-  },
-  right: {
-    propValue: 'right',
-    class: 'right',
-  }
-}
-
-export const line: options = {
-  multi: {
-    propValue: true,
-    class: 'multi',
-  },
+export enum Line {
+  multi = "multi"
 }
 
 type classes = string;
 
 export interface IFlexProps {
-  direction?: string;
-  vertical?: string;
-  horizontal?: string;
+  direction?: Direction.column;
+  vertical?: Vertical.bottom | Vertical.top;
+  horizontal?: Horizontal.left | Horizontal.right;
   multiLine?: boolean;
   testId?: string;
   children?: ReactNode;
@@ -79,44 +47,33 @@ const Flex: FunctionComponent<IFlexProps> = (props) => {
   }
 
   const getDirection = (): classes => {
-    let column = '';
-    if (props.direction === direction?.column?.propValue) {
-      return column + direction?.column?.class;
+    if (props?.direction) {
+      return Direction[props?.direction];
     }
 
-    return column;
+    return '';
   }
 
   const getAlign = (): classes => {
     let align = '';
 
-    if (props.vertical === vertical?.bottom?.propValue) {
-      align += vertical?.bottom?.class;
-    }
-    else if (props.vertical === vertical?.top?.propValue) {
-      align += vertical?.top?.class;
+    if (props?.vertical) {
+      align += Vertical[props?.vertical] + ' ';
     }
 
-    if (props.vertical === vertical?.bottom?.propValue || props.vertical === vertical?.top?.propValue) {
-      align += " ";
-    }
-
-    if (props.horizontal === horizontal?.left?.propValue) {
-      align += horizontal?.left?.class;
-    }
-    else if (props.horizontal === horizontal?.right?.class) {
-      align +=  horizontal?.right?.class;
+    if (props?.horizontal) {
+      align += Horizontal[props?.horizontal];
     }
 
     return align;
   }
 
   const getMultiLine = (): classes => {
-    if (props.multiLine && line?.multi?.class) {
-      return line.multi.class;
+    if (props?.multiLine) {
+      return Line.multi;
     }
 
-    return "";
+    return '';
    }
 
   const getClassesName = (): classes => {

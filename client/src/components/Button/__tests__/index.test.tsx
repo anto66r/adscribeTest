@@ -1,10 +1,10 @@
 import React from 'react';
-import { cleanup, render, fireEvent } from '@testing-library/react';
+import { screen, cleanup, render, fireEvent } from '@testing-library/react';
 
 import { prefixComponents } from '../../components';
 import Button, {
   buttonComponentName,
-  kind,
+  Kind,
 } from '../index';
 
 const buttonTestId = `${prefixComponents}-${buttonComponentName}`;
@@ -16,54 +16,42 @@ describe('<Button /> ', () => {
 
   describe('Primary', () => {
     describe('Default behavior ', () => {
-      const kindPrimaryPropValue = kind.primary?.propValue + '';
-      const kindPrimaryClass = kind.primary?.class;
-      const { getByTestId, unmount } = render(<Button kind={kindPrimaryPropValue}>{buttonText}</Button>);
-      const buttonNode = getByTestId(buttonTestId);
-      const buttonNodeClasses = buttonNode?.className;
-      const buttonDisabledState = buttonNode?.getAttribute(buttonDisableAttribute);
-      const enabled = null;
+      const kindPrimaryPropValue = Kind.primary;
+      const kindPrimaryClass = Kind.primary;
+      render(<Button kind={kindPrimaryPropValue}>{buttonText}</Button>);
+      const buttonNode = screen.getByTestId(buttonTestId);
 
       it('should exists as ReactNode', () => {
-        expect(buttonNode).toBeDefined();
+        expect(buttonNode).toBeInTheDocument();
       });
 
       it(`should has the default classes apply`, () => {
-        expect(buttonNodeClasses).toBe(`${prefixComponents}-${buttonComponentName} ${kindPrimaryClass}`);
+        expect(buttonNode).toHaveClass(`${prefixComponents}-${buttonComponentName} ${kindPrimaryClass}`);
       });
 
       it('should be enabled', () => {
-        expect(buttonDisabledState).toBe(enabled);
+        expect(buttonNode).toBeEnabled();
       });
-
-      unmount();
     });
 
     describe('Custom behavior', () => {
       it('should be disabled if disabled prop is true', () => {
-        const { getByTestId, unmount } = render(<Button disabled={true}>{buttonText}</Button>);
-        const buttonNode = getByTestId(buttonTestId);
-        const buttonDisabledState = buttonNode?.getAttribute(buttonDisableAttribute);
-        const disabled = ""
+        render(<Button disabled={true}>{buttonText}</Button>);
+        const buttonNode = screen.getByTestId(buttonTestId);
 
-        expect(buttonDisabledState).toBe(disabled);
-
-        unmount();
+        expect(buttonNode).toBeInTheDocument();
+        expect(buttonNode).toBeDisabled();
       });
 
       it('should execute handler onClick if we pass a callback', () => {
         const mockHandleOnClick = jest.fn(():void => {});
-        const { getByTestId, unmount } = render(<Button onClick={mockHandleOnClick}>{buttonText}</Button>);
-        const buttonNode = getByTestId(buttonTestId);
-        const mouseClickEvent = new MouseEvent('click', {
-          bubbles: true,
-          cancelable: true,
-        })
+        render(<Button onClick={mockHandleOnClick}>{buttonText}</Button>);
+        const buttonNode = screen.getByTestId(buttonTestId);
+        const leftClick = { button: 1 }
 
-        fireEvent( buttonNode, mouseClickEvent);
+        fireEvent.click(buttonNode, leftClick);
+        expect(buttonNode).toBeInTheDocument();
         expect(mockHandleOnClick.mock.calls.length).toBe(1);
-
-        unmount();
       });
     });
 
@@ -73,13 +61,10 @@ describe('<Button /> ', () => {
         const { getByTestId, unmount } = render(<Button><span data-testid={wrappedTestId}>{buttonText}</span></Button>);
         const buttonNode = getByTestId(buttonTestId);
         const wrappedNode = getByTestId(wrappedTestId);
-        const wrappedParentNode = wrappedNode.parentNode;
 
-        expect(buttonNode).toBeDefined();
-        expect(wrappedNode).toBeDefined();
-        expect(wrappedParentNode).toBe(buttonNode);
-
-        unmount();
+        expect(buttonNode).toBeInTheDocument();
+        expect(wrappedNode).toBeInTheDocument();
+        expect(buttonNode).toContainElement(wrappedNode);
       });
     })
   });

@@ -1,61 +1,30 @@
 import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents, Class, Classes, Option } from '../components';
+import { prefixComponents, Class, Classes } from '../components';
 import './styles.scss';
 
 export const buttonComponentName = 'button';
 
-type Options = {
-  primary?: Option;
-  big?: Option;
-  small?: Option;
-  button?: Option;
-  reset?: Option;
-  submit?: Option;
-  name?: Option;
-  formId?: Option;
-  disabled?: Option;
+export enum Kind {
+  primary = 'primary',
 }
 
-export const kind: Options = {
-  primary: {
-    propValue: 'primary',
-    class: 'primary',
-  }
+export enum Type {
+  button = 'button',
+  submit = 'submit',
+  reset = 'reset',
 }
 
-export const type: Options = {
-  button: {
-    propValue: 'button',
-  },
-  submit: {
-    propValue: 'submit',
-  },
-  reset: {
-    propValue: 'reset',
-  }
-}
-
-export const size: Options = {
-  big: {
-    propValue: 'big',
-    class: 'big',
-  },
-  small: {
-    propValue: 'small',
-    class: 'small',
-  },
-}
-
-export const disabled: Option = {
-  propValue: true,
+export enum Size {
+  big = 'big',
+  small = 'small',
 }
 
 export interface IButtonProps {
-  kind?: string;
-  type?: string;
-  size?: string;
+  kind?: Kind.primary;
+  type?: Type.button | Type.reset | Type.submit;
+  size?: Size.big | Size.small;
   testId?: string;
   disabled?: boolean;
   onClick?: () => void;
@@ -76,8 +45,8 @@ const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
   const getKinds = (): Classes => {
     const kinds = [];
 
-    if (props.kind === kind?.primary?.propValue) {
-      kinds.push(kind?.primary?.class);
+    if (props?.kind) {
+      kinds.push(Kind[props?.kind]);
     }
 
     return kinds;

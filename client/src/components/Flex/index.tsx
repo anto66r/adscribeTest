@@ -1,60 +1,33 @@
 import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents, Class, Classes, Option } from '../components';
+import { prefixComponents, Class, Classes } from '../components';
 import './styles.scss';
 
 export const flexComponentName = 'flex';
 
-type Options = {
-  column?: Option;
-  top?: Option;
-  bottom?: Option;
-  left?: Option;
-  right?: Option;
-  multi?: Option;
+export enum Vertical {
+  top = "top",
+  bottom = "bottom"
 }
 
-export const direction: Options = {
-  column: {
-    propValue: 'column',
-    class: 'column',
-  }
+export enum Horizontal {
+  left = "left",
+  right = "right"
 }
 
-export const vertical: Options = {
-  top: {
-    propValue: 'top',
-    class: 'top',
-  },
-  bottom: {
-    propValue: 'bottom',
-    class: 'bottom',
-  }
+export enum Direction {
+  column = "column"
 }
 
-export const horizontal: Options = {
-  left: {
-    propValue: 'left',
-    class: 'left',
-  },
-  right: {
-    propValue: 'right',
-    class: 'right',
-  }
-}
-
-export const line: Options = {
-  multi: {
-    propValue: true,
-    class: 'multi',
-  },
+export enum Line {
+  multi = "multi"
 }
 
 export interface IFlexProps {
-  direction?: string;
-  vertical?: string;
-  horizontal?: string;
+  direction?: Direction.column;
+  vertical?: Vertical.bottom | Vertical.top;
+  horizontal?: Horizontal.left | Horizontal.right;
   multiLine?: boolean;
   testId?: string;
   children?: ReactNode;
@@ -73,8 +46,8 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
 
   const getDirections = (): Classes => {
     const directions = [];
-    if (props.direction === direction?.column?.propValue) {
-      directions.push(direction?.column?.class);
+    if (props?.direction) {
+      directions.push(Direction?.column);
     }
 
     return directions;
@@ -83,18 +56,12 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
   const getAligns = (): Classes => {
     const aligns = [];
 
-    if (props.vertical === vertical?.bottom?.propValue) {
-      aligns.push(vertical?.bottom?.class);
-    }
-    else if (props.vertical === vertical?.top?.propValue) {
-      aligns.push(vertical?.top?.class);
+    if (props?.vertical) {
+      aligns.push(Vertical[props?.vertical]);
     }
 
-    if (props.horizontal === horizontal?.left?.propValue) {
-      aligns.push(horizontal?.left?.class);
-    }
-    else if (props.horizontal === horizontal?.right?.class) {
-      aligns.push(horizontal?.right?.class);
+    if (props?.horizontal) {
+      aligns.push(Horizontal[props?.horizontal]);
     }
 
     return aligns;
@@ -103,8 +70,8 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
   const getMultiLines = (): Classes => {
     const multiLines = [];
 
-    if (props.multiLine && line?.multi?.class) {
-      multiLines.push(line.multi.class);
+    if (props?.multiLine) {
+      multiLines.push(Line.multi);
     }
 
     return multiLines;

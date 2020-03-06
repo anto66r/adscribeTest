@@ -1,0 +1,36 @@
+@import "../../components/components.scss";
+
+$flex-component-name: 'flex';
+
+.#{$prefix-components}-#{$flex-component-name} {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+
+  &.column {
+    flex-direction: column;
+  }
+
+  &.top  {
+     align-items: flex-start;
+  }
+  &.bottom {
+    align-items: flex-end;
+  }
+
+  &.left{
+    justify-content: flex-start;
+  }
+
+  &.right {
+    justify-content: flex-end;
+  }
+
+  &.multi {
+    flex-wrap: wrap;
+  }
+}
+
+

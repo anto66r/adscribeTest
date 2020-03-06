@@ -31,6 +31,8 @@ const options: cors.CorsOptions = {
 // use cors middleware
 router.use(cors(options));
 
+router.use((req, res): any => { res.send('API'); });
+
 router.use((req, res, next): any => {
   // I'm passing in the access token in header under key accessToken
   const accessTokenFromClient = req.headers.accesstoken;

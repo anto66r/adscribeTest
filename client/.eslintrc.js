@@ -18,7 +18,8 @@ module.exports = {
     "airbnb",
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:testing-library/recommended"
   ],
   globals: {
     Atomics: "readonly",
@@ -32,7 +33,11 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module"
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: [
+    "react",
+    "@typescript-eslint",
+    "testing-library"
+  ],
   rules: {
     semi: [2, "always"],
     "react/jsx-filename-extension": [
@@ -60,6 +65,9 @@ module.exports = {
       ignoreUrls: true
     }],
     "no-param-reassign": "off",
+    "testing-library/await-async-query": "error",
+    "testing-library/no-await-sync-query": "error",
+    "testing-library/no-debug": "error"
   },
   settings: {
     "import/resolver": {

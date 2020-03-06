@@ -51,7 +51,7 @@ describe('<Button /> ', () => {
 
         fireEvent.click(buttonNode, leftClick);
         expect(buttonNode).toBeInTheDocument();
-        expect(mockHandleOnClick.mock.calls.length).toBe(1);
+        expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
       });
     });
 

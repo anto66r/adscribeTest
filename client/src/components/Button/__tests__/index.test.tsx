@@ -18,7 +18,7 @@ describe('<Button /> ', () => {
     describe('Default behavior ', () => {
       const kindPrimaryPropValue = Kind.primary;
       const kindPrimaryClass = Kind.primary;
-      render(<Button kind={kindPrimaryPropValue}>{buttonText}</Button>);
+      render(<Button kind={kindPrimaryPropValue}>buttonText</Button>);
       const buttonNode = screen.getByTestId(buttonTestId);
 
       it('should exists as ReactNode', () => {
@@ -36,7 +36,7 @@ describe('<Button /> ', () => {
 
     describe('Custom behavior', () => {
       it('should be disabled if disabled prop is true', () => {
-        render(<Button disabled={true}>{buttonText}</Button>);
+        render(<Button disabled={true}>buttonText</Button>);
         const buttonNode = screen.getByTestId(buttonTestId);
 
         expect(buttonNode).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('<Button /> ', () => {
 
       it('should execute handler onClick if we pass a callback', () => {
         const mockHandleOnClick = jest.fn(():void => {});
-        render(<Button onClick={mockHandleOnClick}>{buttonText}</Button>);
+        render(<Button onClick={mockHandleOnClick}>buttonText</Button>);
         const buttonNode = screen.getByTestId(buttonTestId);
         const leftClick = { button: 1 }
 
@@ -58,7 +58,7 @@ describe('<Button /> ', () => {
     describe('Working like a wrapper', () => {
       it('should wrap their child with a button container', () => {
         const wrappedTestId = "child-node";
-        const { getByTestId, unmount } = render(<Button><span data-testid={wrappedTestId}>{buttonText}</span></Button>);
+        const { getByTestId, unmount } = render(<Button><span data-testid={wrappedTestId}>buttonText</span></Button>);
         const buttonNode = getByTestId(buttonTestId);
         const wrappedNode = getByTestId(wrappedTestId);
 

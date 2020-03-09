@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import usePermissions from 'hooks/usePermissions';
 import './styles.scss';
+import Permission from 'types/permission';
 
 const Sidebar: FunctionComponent = () => {
   const [expanded, setExpanded] = React.useState(false);
@@ -22,7 +23,7 @@ const Sidebar: FunctionComponent = () => {
       onMouseLeave={handleMouseLeave}
     >
       {
-        checkPermissions('users::view') && (
+        checkPermissions(Permission.USERS__VIEW) && (
           <li>
             <NavLink to="/users">
               <i className="fa fa-user" />
@@ -38,7 +39,7 @@ const Sidebar: FunctionComponent = () => {
         </NavLink>
       </li>
       {
-        checkPermissions('roles::view') && (
+        checkPermissions(Permission.ROLES__VIEW) && (
           <li>
             <NavLink to="/roles">
               <i className="fa fa-lock" />

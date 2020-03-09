@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { IRole } from 'types';
+import Permission from 'types/permission';
 import useCurrentUser from './useCurrentUser';
 import useRoles from './useRoles';
 
 const usePermissions = (): {
-  checkPermissions: (route: string) => boolean;
+  checkPermissions: (permission: Permission) => boolean;
 } => {
   const { roles: allRoles } = useRoles();
   const currentUser = useCurrentUser();
@@ -17,7 +18,7 @@ const usePermissions = (): {
     }, [] as string[],
   ), [userRoles]);
 
-  const checkPermissions = (route: string): boolean => permissions.includes(route);
+  const checkPermissions = (permission: Permission): boolean => permissions.includes(permission);
   return { checkPermissions };
 };
 

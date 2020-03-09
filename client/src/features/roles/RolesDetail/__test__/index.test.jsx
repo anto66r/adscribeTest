@@ -5,8 +5,6 @@ import { RouteProvider } from 'testing';
 import { StoreProvider } from 'store';
 import RolesDetail from '..';
 
-jest.mock('config/permissions');
-
 const renderWrapper = () => render(
   (
     <RouteProvider route="/roles/1234" path="/roles/:id">
@@ -15,11 +13,11 @@ const renderWrapper = () => render(
           roles: [{
             name: 'Role name',
             _id: '1234',
-            permissions: ['permission A', 'permission D'],
+            permissions: ['users::create', 'permission D'],
           }, {
             name: 'another role',
             _id: '1235',
-            permissions: ['permission A', 'permission D'],
+            permissions: ['users::create', 'permission D'],
           }],
         },
       }}
@@ -35,7 +33,7 @@ describe('<RolesDetail />', () => {
     renderWrapper();
     expect(screen.getByText('Role name')).toBeInTheDocument();
     expect(screen.getByText('Edit role')).toBeInTheDocument();
-    expect(screen.getByText('permission A')).toBeInTheDocument();
+    expect(screen.getByText('users::create')).toBeInTheDocument();
     expect(screen.queryByText('permission D')).toBeFalsy();
   });
   test('Show show link to edit role.', () => {

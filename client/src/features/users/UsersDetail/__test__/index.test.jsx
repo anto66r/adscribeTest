@@ -5,8 +5,6 @@ import { RouteProvider } from 'testing';
 import { StoreProvider } from 'store';
 import UsersDetail from '..';
 
-jest.mock('config/permissions');
-
 const renderWrapper = () => render(
   (
     <RouteProvider route="/users/2" path="/users/:id">

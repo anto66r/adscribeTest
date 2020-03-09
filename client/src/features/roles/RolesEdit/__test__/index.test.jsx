@@ -7,8 +7,6 @@ import reducers from 'store/reducers';
 import useItemAdmin from 'hooks/useItemAdmin';
 import RolesEdit from '../index';
 
-jest.mock('config/permissions');
-
 const mockDoSuccessToast = jest.fn();
 const mockDoErrorToast = jest.fn();
 jest.mock('hooks/useToast', () => () => ({

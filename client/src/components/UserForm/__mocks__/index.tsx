@@ -9,11 +9,13 @@ const UserForm: FunctionComponent<UserFormProps> = ({ onSubmit, onCancel }) => (
   <form
     data-testid="form"
     onSubmit={
-    (): void => onSubmit({ email: 'username@domain.com', roles: ['A', 'B'] })
-  }
+      (e: React.FormEvent<HTMLFormElement>): void => {
+        e.preventDefault(); onSubmit({ email: 'username@domain.com', roles: ['A', 'B'] });
+      }
+    }
   >
-    <button type="submit" data-testid="Save">Save</button>
-    <button onClick={onCancel} data-testid="Cancel">Cancel</button>
+    <button type="submit" data-testid="user-form-save">Save</button>
+    <button onClick={onCancel} data-testid="user-form-save">Cancel</button>
   </form>
 );
 

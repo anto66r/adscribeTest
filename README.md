@@ -62,6 +62,102 @@ git config core.hooksPath hooks
 user: javier.olmo@zartis.com
 password: javier
 
+
+# .env Variables
+
+
+## Client
+
+All these variables are exposed to the client so we have to take care about what we could expose or not. This is needed for authenticating with cognito directly without creating a full proxy server for Cognito calls. No passwords/secrets should come here
+
+There are two configuration files 
+
+**.env.local**: Used in development
+
+    REACT_APP_API_URL=http://localhost:5000/api
+    REACT_APP_COGNITO_COOKIE_LIFE_TIME=3600000
+    REACT_APP_COGNITO_REGION=eu-west-1
+    REACT_APP_USER_POOL_BASE_URL=https://platf0rm-2.auth.eu-west-1.amazoncognito.com
+    REACT_APP_COGNITO_USER_POOL=eu-west-1_DHnOy5Z5o
+    REACT_APP_COGNITO_CLIENT_ID=51tm9phb9mj7vk3127orovh9td
+
+The prefix REACT_APP_ is needed to expose variables in the client when using a non-ejected Create React App. Otherwise the variables will not be exposed
+
+**.env**: Used in production
+
+    REACT_APP_API_URL=http://platf0rm-2-LB-667582202.eu-west-1.elb.amazonaws.com:5000/api
+    REACT_APP_COGNITO_COOKIE_LIFE_TIME=3600000
+    REACT_APP_COGNITO_REGION=eu-west-1
+    REACT_APP_USER_POOL_BASE_URL=https://platf0rm-2.auth.eu-west-1.amazoncognito.com
+    REACT_APP_COGNITO_USER_POOL=eu-west-1_DHnOy5Z5o
+    REACT_APP_COGNITO_CLIENT_ID=51tm9phb9mj7vk3127orovh9td
+
+**REACT_APP_API_URL**: 
+
+Server address that handles the API endpoint
+
+**REACT_APP_COGNITO_COOKIE_LIFE_TIME**: 
+
+Time (millis) of expiration of a session token. The server will manage automatically the refresh of this token once expired without the need of the user interaction
+
+**REACT_APP_COGNITO_REGION**: 
+
+Server region of Amazon Cognito endpoint (west-1 meaning IRELAND)
+
+**REACT_APP_USER_POOL_BASE_URL**: 
+
+Amazon Cognito endpoint for authenticating/interacting with user accounts
+
+**REACT_APP_COGNITO_USER_POOL**: 
+
+Pool ID for accessing the Adsense private pool in Cognito.
+
+**REACT_APP_COGNITO_CLIENT_ID**: 
+
+Cognito Client ID for accessing the Adsense private pool.
+
+## Server
+
+Here we have stored the admin cognito user password (or routed to github secrets) which can manage all the possible interactions with the server. This file should be secured 
+
+We have four configuration files that are located in the /env/ folder
+
+**development.env**: Should point to a local server. Used only in development
+
+**production.env:** Should point to servers mongoDB and productiion Cognito pool.
+
+**test.env**: Only for jasmine test suite
+
+    NODE_ENV=development
+    PORT=5000
+    
+    MONGO_URI=mongodb+srv://??????????????????????????????????
+    COGNITO_REGION=eu-west-1
+    COGNITO_USER_POOL=eu-west-1_DHnOy5Z5o
+    COGNITO_COOKIE_LIFE_TIME=3600000
+    BYPASS_API_SECURITY=false
+    
+    COGNITO_SERVER_APP_CLIENT_ID=AKIAXVFM5N6KP42GRQCD
+    COGNITO_SERVER_APP_CLIENT_SECRET= <????????????????????????>
+
+**NODE_ENV**: Required for selecting the specific server .env file
+
+**PORT**: Local port where the server is going to be exposed
+
+**MONGO_URI**: URI For connecting with the mongo database
+
+**COGNITO_REGION**: Server region of Amazon Cognito endpoint (west-1 meaning IRELAND)
+
+**COGNITO_USER_POOL**: Pool ID for accessing the Adsense private pool in Cognito.
+
+**COGNITO_COOKIE_LIFE_TIME**: Expiration time of a session token (in millis)
+
+**BYPASS_API_SECURITY**: Set it true to be able to call the AP bypassing the authentication middleware
+
+**COGNITO_SERVER_APP_CLIENT_ID**: Cognito Client ID for accessing the Adsense private pool.
+
+**COGNITO_SERVER_APP_CLIENT_SECRET**: The Cognito super user secret for managing specific tasks like creating/editing or removing a user in Cognito
+
 # Developing
 
 ## Branch nomenclature

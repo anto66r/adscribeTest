@@ -1,7 +1,7 @@
 import { wrapCollection } from '@daos';
 import { IGroupDao } from 'src/daos/Group/types';
 // eslint-disable-next-line no-unused-vars
-import { Group, IGroupCollection } from '../../services';
+import { Group, IGroupCollection } from '@services';
 
 export class GroupDao implements IGroupDao {
   /**

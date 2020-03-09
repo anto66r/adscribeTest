@@ -5,7 +5,7 @@ echo " ---- Hooked pre-commit: Fasten your seat belt ---- "
 echo -ne '🔵 Executing Clientside ESLint          - 1/4\r'
 cd $PROJECT_PATH/client
 
-for file in $(git diff --name-only --cached src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
+for file in $(git diff --name-status | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
 do
 
   if test -f "$file"; then
@@ -24,7 +24,7 @@ echo -ne '\n'
 cd $PROJECT_PATH/server
 echo -ne '🔵 Executing Serverside ESLint          - 2/4 \r'
 
-for file in $(git diff --name-only --cached src | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
+for file in $(git diff --name-status | grep -E '\.(js|jsx|ts|tsx)$' | cut -d '/' -f2-)
 do
 
   if test -f "$file"; then

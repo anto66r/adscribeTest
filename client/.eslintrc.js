@@ -67,7 +67,10 @@ module.exports = {
     "no-param-reassign": "off",
     "testing-library/await-async-query": "error",
     "testing-library/no-await-sync-query": "error",
-    "testing-library/no-debug": "error"
+    "testing-library/no-debug": "error",
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["**/*.test.*", "**/*.spec.*"]
+    }]
   },
   settings: {
     "import/resolver": {

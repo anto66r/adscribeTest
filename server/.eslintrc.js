@@ -23,7 +23,8 @@ module.exports = {
         'no-underscore-dangle': 'off',
         'no-shadow': 'off',
         'no-param-reassign': 'off',
-        "no-console": "error",
+        'no-console': 'error',
+        'no-debug': 'error'
     }
 };
 

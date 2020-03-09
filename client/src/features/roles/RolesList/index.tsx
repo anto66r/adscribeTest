@@ -2,14 +2,12 @@ import React, { FunctionComponent } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import IRole from 'types/role';
+import { useRoles } from 'hooks';
 import Item from './Item';
 
-type ContentProps = {
-  roles: IRole[];
-};
-
-const RolesList: FunctionComponent<ContentProps> = ({ roles }) => {
+const RolesList: FunctionComponent = () => {
   const { url } = useRouteMatch<{ url: string }>();
+  const { roles } = useRoles();
 
   return (
     <>

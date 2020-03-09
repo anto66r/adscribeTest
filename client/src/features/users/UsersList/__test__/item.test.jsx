@@ -11,7 +11,6 @@ describe('<Item />', () => {
       (
         <MemoryRouter>
           <StoreProvider>
-
             <Item user={{
               name: 'User name',
               email: 'email@test.com',

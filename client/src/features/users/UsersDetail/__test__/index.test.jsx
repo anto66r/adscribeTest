@@ -3,34 +3,16 @@ import { render, screen } from '@testing-library/react';
 
 import { RouteProvider } from 'testing';
 import { StoreProvider } from 'store';
+import initialState from 'store/initialState';
 import UsersDetail from '..';
 
+jest.mock('store/initialState');
 jest.mock('config/permissions');
 
 const renderWrapper = () => render(
   (
     <RouteProvider route="/users/2" path="/users/:id">
-      <StoreProvider initialState={{
-        domains: {
-
-          users: [{
-            email: 'test@email.com',
-            name: 'Test user',
-            _id: '2',
-            roles: ['1234'],
-          }],
-          roles: [{
-            name: 'Role name',
-            _id: '1234',
-            permissions: ['permission A'],
-          }, {
-            name: 'another role',
-            _id: '1235',
-            permissions: ['permission A', 'permission D'],
-          }],
-        },
-      }}
-      >
+      <StoreProvider initialState={initialState}>
         <UsersDetail />
       </StoreProvider>
     </RouteProvider>
@@ -40,7 +22,7 @@ const renderWrapper = () => render(
 describe('<UsersDetail />', () => {
   test('should display a user correctly. Should only show "Role name".', () => {
     renderWrapper();
-    expect(screen.getByText('Test user')).toBeInTheDocument();
+    expect(screen.getByText('User 1')).toBeInTheDocument();
     expect(screen.getByText('Edit user')).toBeInTheDocument();
     expect(screen.queryByText('another role')).toBeFalsy();
   });

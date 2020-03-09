@@ -105,6 +105,7 @@ function useFetch<T>(): UseFetchReturn<T> {
           auth,
           method,
         });
+
         if (results.error && results.error.message) throw Error(results.error.message);
         dispatch({
           type: 'success',

@@ -14,10 +14,10 @@ const Item: FunctionComponent<PropsType> = props => {
   const { setRoles } = useRoles();
   const { url } = useRouteMatch<{ url: string }>();
   const { doSuccessToast, doErrorToast } = useToast();
+
   const { doDelete, loading } = useItemAdmin<IRole>({
     endpoint: '/roles',
   });
-
   const handleDelete = (): void => {
     doDelete({
       item: role,
@@ -34,7 +34,7 @@ const Item: FunctionComponent<PropsType> = props => {
       <Link data-testid="pl2-role-itemlink" to={`${url}/${role._id}`}>{role.name}</Link>
       {
         !role.noDelete && (
-          <button disabled={loading} onClick={handleDelete}>
+          <button disabled={loading} onClick={handleDelete} data-testid={`pl2-delete-role-${role._id}`}>
             {loading ? 'Deleting...' : 'Delete'}
           </button>
         )

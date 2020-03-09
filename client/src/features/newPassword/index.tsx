@@ -36,7 +36,7 @@ const NewPassword = ({ location }: NewPassswordType) => {
     return true;
   };
 
-  const doCreateNewPassword = async () => {
+  const doCreateNewPassword = async (): Promise<boolean> => {
     if (!validateForm()) return false;
     try {
       await completeNewPassword(email, currentPassword, password);
@@ -46,9 +46,10 @@ const NewPassword = ({ location }: NewPassswordType) => {
     } catch (err) {
       setMessage(`Error changing the new password: ${err.message}`);
     }
+    return true;
   };
 
-  const doChangePassword = async () => {
+  const doChangePassword = async (): Promise<boolean> => {
     if (!validateForm()) return false;
     try {
       await changePassword(email, currentPassword, password);
@@ -58,6 +59,7 @@ const NewPassword = ({ location }: NewPassswordType) => {
     } catch (err) {
       setMessage(`Error changing the new password: ${err.message}`);
     }
+    return true;
   };
 
   return (

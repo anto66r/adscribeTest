@@ -31,7 +31,7 @@ const NewAccount = ({ location }: NewAccountType) => {
   const emptyFieldsConfirm = () => [confirmationCode, password].some(x => !x.length);
   const emptyFieldsResend = () => [email].some(x => !x.length);
 
-  const handleResendCode = async () => {
+  const handleResendCode = async (): Promise<boolean> => {
     setDisableFields(true);
     setMessage('');
 
@@ -49,9 +49,10 @@ const NewAccount = ({ location }: NewAccountType) => {
       setMessage(`Error resending the confirmation code: ${err.message}`);
       setDisableFields(false);
     }
+    return true;
   };
 
-  const handleCreatePassword = async () => {
+  const handleCreatePassword = async (): Promise<boolean> => {
     setDisableFields(true);
     setMessage('');
     if (emptyFieldsConfirm()) {
@@ -68,9 +69,10 @@ const NewAccount = ({ location }: NewAccountType) => {
       setMessage(`Error creating a new password: ${err.message}`);
       setDisableFields(false);
     }
+    return true;
   };
 
-  const handleConfirmAccount = async () => {
+  const handleConfirmAccount = async (): Promise<boolean> => {
     setDisableFields(true);
     setMessage('');
 
@@ -90,6 +92,7 @@ const NewAccount = ({ location }: NewAccountType) => {
       setMessage(`Error confirming the user: ${err.message}`);
       setDisableFields(false);
     }
+    return true;
   };
 
   return (

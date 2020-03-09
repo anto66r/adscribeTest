@@ -13,7 +13,8 @@ useStore.mockImplementation(() => [{
     userId: 'user 1',
   },
   domains: {
-    roles: [{
+    roles: [
+      {
         _id: 'role A',
         permissions: ['users::view'],
       },

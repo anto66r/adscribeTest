@@ -1,0 +1,14 @@
+@import "./color.scss";
+@import "./font.scss";
+
+$button---border-radius: 4px;
+$button---font-family: $font-primary-600;
+$button---font-size: $font-size-M;
+$button--vertical---padding: 15px;
+$button--horizontal---padding: $button--vertical---padding * 2;
+$button--primary---color: $color-black;
+$button--primary---background-color: $color-primary;
+$button--primary---border: solid 1px $color-gray-100;
+$button--primary--hover---background-color: $color-primary-hover;
+$button--primary--disabled---background-color: $color-primary-disabled;
+$button--primary--disabled---color: darken($color-primary-disabled, 5%);

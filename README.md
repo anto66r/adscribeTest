@@ -18,13 +18,37 @@ Run `yarn` in the client, server and root directories.
 
 `cd server && yarn start:dev`
 
-## Client
+### Client
 
-`cd client && yarn start`
+client could be run with every style theme that we provide, by default run up with `adscrbe` theme.
 
-## Concurrently
+```shell
+cd client && yarn start
+```
+
+#### with 605 theme
+
+```shell
+cd client && yarn start:theme:605
+```
+
+### Concurrently
 
 `yarn start`
+
+### Components
+
+To run the storybook application with all components stock
+
+```shell
+cd client && yarn run components
+```
+
+#### with 605 theme
+
+```shell
+cd client && yarn run components:theme:605
+```
 
 ## Development
 
@@ -51,16 +75,16 @@ TASK/JIRA-DESCRIPTION
 Where
 
 * `TASK`: when a PR is opened on this branch, a label is automatically attached to it. TASKS can be:
-  
-  1. Features: `feat`  
+
+  1. Features: `feat`
    New features added.
-  2. Bug fixes: `fix`  
+  2. Bug fixes: `fix`
    Bug fixes.
-  3. Maintenance: `chore`  
+  3. Maintenance: `chore`
    Updating grunt tasks etc; no production code change.
-  4. Documentation: `docs`  
+  4. Documentation: `docs`
    Changes to documentation
-  5. Refactor: `refactor`  
+  5. Refactor: `refactor`
    Refactoring production code.
 
 See [Semantic commit messages](https://seesparkbox.com/foundry/semantic_commit_messages).
@@ -138,7 +162,7 @@ And so on.
 The master list of permissions lives in the `src/config` folder of the client.
 
 ### Cognito testing login:
-user: javier.olmo@zartis.com  
+user: javier.olmo@zartis.com
 password: javier
 
 (You can make your own through the user panel!)

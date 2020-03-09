@@ -21,6 +21,7 @@ const Sidebar: FunctionComponent = () => {
       className={classnames('sidebar', { expanded })}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      data-testid="sidebar"
     >
       {
         checkPermissions(Permission.USERS__VIEW) && (

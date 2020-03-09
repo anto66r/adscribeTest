@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import { IRole } from 'types';
@@ -9,7 +9,7 @@ type PropsType = {
   role: IRole;
 };
 
-const Item: FC<PropsType> = props => {
+const Item: FunctionComponent<PropsType> = props => {
   const { role } = props;
   const { setRoles } = useRoles();
   const { url } = useRouteMatch<{ url: string }>();

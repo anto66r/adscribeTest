@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Route, useRouteMatch, Switch } from 'react-router-dom';
 
 import { useUsers } from 'hooks';
@@ -6,7 +6,7 @@ import UsersList from './UsersList';
 import UsersDetail from './UsersDetail';
 import UsersEdit from './UsersEdit';
 
-const Roles: FC = () => {
+const Roles: FunctionComponent = () => {
   const { users } = useUsers();
   // console.log(users)
   const { path } = useRouteMatch();

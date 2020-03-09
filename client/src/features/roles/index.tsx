@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Route, useRouteMatch, Switch } from 'react-router-dom';
 
 import RolesList from './RolesList';
 import RolesDetail from './RolesDetail';
 import RolesEdit from './RolesEdit';
 
-const Roles: FC = () => {
+const Roles: FunctionComponent = () => {
   const { path } = useRouteMatch();
 
   return (

@@ -1,7 +1,7 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents } from '../components';
+import { prefixComponents, Class, Classes } from '../components';
 import './styles.scss';
 
 export const flexComponentName = 'flex';
@@ -24,8 +24,6 @@ export enum Line {
   multi = "multi"
 }
 
-type classes = string;
-
 export interface IFlexProps {
   direction?: Direction.column;
   vertical?: Vertical.bottom | Vertical.top;
@@ -35,7 +33,7 @@ export interface IFlexProps {
   children?: ReactNode;
 }
 
-const Flex: FunctionComponent<IFlexProps> = (props) => {
+const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
   const getTestId = () => {
     let testId = `${prefixComponents}-${flexComponentName}`;
 
@@ -46,50 +44,59 @@ const Flex: FunctionComponent<IFlexProps> = (props) => {
     return testId;
   }
 
-  const getDirection = (): classes => {
+  const getDirections = (): Classes => {
+    const directions = [];
     if (props?.direction) {
-      return Direction[props?.direction];
+      directions.push(Direction?.column);
     }
 
-    return '';
+    return directions;
   }
 
-  const getAlign = (): classes => {
-    let align = '';
+  const getAligns = (): Classes => {
+    const aligns = [];
 
     if (props?.vertical) {
-      align += Vertical[props?.vertical] + ' ';
+      aligns.push(Vertical[props?.vertical]);
     }
 
     if (props?.horizontal) {
-      align += Horizontal[props?.horizontal];
+      aligns.push(Horizontal[props?.horizontal]);
     }
 
-    return align;
+    return aligns;
   }
 
-  const getMultiLine = (): classes => {
+  const getMultiLines = (): Classes => {
+    const multiLines = [];
+
     if (props?.multiLine) {
-      return Line.multi;
+      multiLines.push(Line.multi);
     }
 
-    return '';
+    return multiLines;
    }
 
-  const getClassesName = (): classes => {
-    const direction = getDirection();
-    const align = getAlign();
-    const multiline = getMultiLine();
+  const getClass = (): Class => {
+    const directions = getDirections();
+    const aligns = getAligns();
+    const multiLines = getMultiLines();
+    let flexClass: Class;
+    flexClass = `${prefixComponents}-${flexComponentName}`;
 
-    return `${prefixComponents}-${flexComponentName}${direction ? ' ' + direction : ''}${align ? ' ' + align : ''}${multiline ? ' ' + multiline : ''}`
+    if (directions.length > 0) flexClass = flexClass.concat(' ', directions.join(' '));
+    if (aligns.length > 0)  flexClass = flexClass.concat(' ', aligns.join(' '));
+    if (multiLines.length > 0)  flexClass = flexClass.concat(' ', multiLines.join(' '));
+
+    return flexClass;
   }
 
-  const classesName = getClassesName();
+  const flexClass = getClass();
   const testId = getTestId();
 
   return (
     <div
-      className={classnames(`${classesName}`)}
+      className={classnames(`${flexClass}`)}
       data-testid={testId}
     >
       {props.children}

@@ -1,5 +1,5 @@
 import { wrapCollection } from '@daos';
-import { Dashboard, IDashboardCollection } from '../../services';
+import { Dashboard, IDashboardCollection } from '@services';
 import { IDashboardDao } from './types';
 
 export class DashboardDao implements IDashboardDao {

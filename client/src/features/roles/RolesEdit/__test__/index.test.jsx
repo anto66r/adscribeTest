@@ -49,6 +49,12 @@ const renderWrapper = () => render(
 );
 
 describe('<RolesEdit />', () => {
+  test('should handle cancel correctly', () => {
+    renderWrapper();
+    fireEvent.click(screen.getByTestId('role-form-cancel'));
+    expect(mockPush).toHaveBeenCalled();
+  });
+
   test('should call success toast and go back on save', () => {
     useItemAdmin.mockImplementation(() => ({
       doUpdate: ({ onSuccess }) => onSuccess(),

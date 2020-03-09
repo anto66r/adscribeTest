@@ -1,9 +1,9 @@
-export const set = (state: any, { payload }: {payload: any}) => ({
+export const set = (state: any, { payload }: { payload: any }) => ({
   ...state,
   user: payload.user,
 });
 
-export const setAuth = (state: any, { payload }: {payload: any}) => ({
+export const setAuth = (state: any, { payload }: { payload: any }) => ({
   ...state,
   user: {
     ...payload.user,

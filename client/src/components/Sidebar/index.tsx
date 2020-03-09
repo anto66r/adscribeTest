@@ -1,10 +1,13 @@
 import classnames from 'classnames';
 import React, { FunctionComponent } from 'react';
 import { NavLink } from 'react-router-dom';
+
+import usePermissions from 'hooks/usePermissions';
 import './styles.scss';
 
 const Sidebar: FunctionComponent = () => {
   const [expanded, setExpanded] = React.useState(false);
+  const { checkPermissions } = usePermissions();
 
   function handleMouseEnter(): void {
     setExpanded(true);
@@ -18,24 +21,32 @@ const Sidebar: FunctionComponent = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <li>
-        <NavLink to="/users">
-          <i className="fa fa-user" />
-          {expanded && 'Users'}
-        </NavLink>
-      </li>
+      {
+        checkPermissions('users::view') && (
+          <li>
+            <NavLink to="/users">
+              <i className="fa fa-user" />
+              {expanded && 'Users'}
+            </NavLink>
+          </li>
+        )
+      }
       <li>
         <NavLink to="/dashboards">
           <i className="fa fa-tachometer-alt" />
           {expanded && 'Dashboards'}
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/roles">
-          <i className="fa fa-lock" />
-          {expanded && 'Roles'}
-        </NavLink>
-      </li>
+      {
+        checkPermissions('roles::view') && (
+          <li>
+            <NavLink to="/roles">
+              <i className="fa fa-lock" />
+              {expanded && 'Roles'}
+            </NavLink>
+          </li>
+        )
+      }
       <li>
         <NavLink to="/testapi">
           <i className="fa fa-cog" />

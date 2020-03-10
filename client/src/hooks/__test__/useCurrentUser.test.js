@@ -4,7 +4,6 @@ import {
 import {
   useStore,
 } from 'store';
-import Permission from 'types/permission';
 import useCurrentUser from '../useCurrentUser';
 
 jest.mock('store');

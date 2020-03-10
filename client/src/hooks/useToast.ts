@@ -2,7 +2,7 @@ import {
   toast, Slide,
 } from 'react-toastify';
 
-type hookReturn = {
+export type hookReturn = {
   doSuccessToast: (message: string) => void;
   doErrorToast: (message: string) => void;
 }

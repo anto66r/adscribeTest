@@ -56,12 +56,16 @@ describe('<RolesEdit />', () => {
   });
 
   test('should call success toast and go back on save', () => {
+    const mockDoUpdate = jest.fn(({ onSuccess }) => onSuccess());
     useItemAdmin.mockImplementation(() => ({
-      doUpdate: ({ onSuccess }) => onSuccess(),
+      doUpdate: mockDoUpdate,
       loading: false,
     }));
     renderWrapper();
     fireEvent.submit(screen.getByTestId('form'));
+    expect(mockDoUpdate).toHaveBeenCalledWith(
+      { item: { _id: 1234, name: 'Name', permissions: ['A', 'B'] }, onError: expect.any(Function), onSuccess: expect.any(Function) },
+    );
     expect(mockDoSuccessToast).toHaveBeenCalledWith('Role updated');
     expect(mockPush).toHaveBeenCalled();
   });

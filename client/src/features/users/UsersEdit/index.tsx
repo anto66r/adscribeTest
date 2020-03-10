@@ -34,7 +34,7 @@ const UserEdit: FunctionComponent = () => {
 
     if (id) {
       doUpdate({
-        item: updateUser,
+        item: { ...updateUser, _id: id },
         onSuccess: handleSuccess,
         onError: handleError,
       });

@@ -3,7 +3,6 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { StoreProvider } from 'store';
-import reducers from 'store/reducers';
 import useItemAdmin from 'hooks/useItemAdmin';
 import initialState from 'store/initialState';
 import UsersEdit from '..';
@@ -39,7 +38,6 @@ const renderWrapper = () => render(
   (
     <StoreProvider
       initialState={initialState}
-      reducer={reducers}
     >
       <UsersEdit />
     </StoreProvider>
@@ -48,12 +46,16 @@ const renderWrapper = () => render(
 
 describe('<UserEdit />', () => {
   test('should call success toast and go back on save', () => {
+    const mockDoUpdate = jest.fn(({ onSuccess }) => onSuccess());
     useItemAdmin.mockImplementation(() => ({
-      doUpdate: ({ onSuccess }) => onSuccess(),
+      doUpdate: mockDoUpdate,
       loading: false,
     }));
     renderWrapper();
     fireEvent.submit(screen.getByTestId('form'));
+    expect(mockDoUpdate).toHaveBeenCalledWith(
+      { item: { _id: 1234, email: 'username@domain.com', roles: ['A', 'B'] }, onError: expect.any(Function), onSuccess: expect.any(Function) },
+    );
     expect(mockDoSuccessToast).toHaveBeenCalledWith('User updated');
     expect(mockPush).toHaveBeenCalled();
   });

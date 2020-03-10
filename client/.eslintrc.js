@@ -69,7 +69,7 @@ module.exports = {
     "testing-library/no-await-sync-query": "error",
     "testing-library/no-debug": "error",
     "no-console": "error",
-    "no-debug": "error"
+    "no-debugger": "error"
   },
   settings: {
     "import/resolver": {

@@ -11,9 +11,9 @@ import RolesDetail from './RolesDetail';
 import RolesEdit from './RolesEdit';
 
 const Roles: FunctionComponent = () => {
-  const { roles } = useRoles();
   const { path } = useRouteMatch();
   const { checkPermissions } = usePermissions();
+  const { roles } = useRoles();
 
   return (
     <>

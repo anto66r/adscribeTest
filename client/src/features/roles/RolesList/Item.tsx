@@ -17,10 +17,10 @@ const Item: FunctionComponent<PropsType> = props => {
   const { url } = useRouteMatch<{ url: string }>();
   const { checkPermissions } = usePermissions();
   const { doSuccessToast, doErrorToast } = useToast();
+
   const { doDelete, loading } = useItemAdmin<IRole>({
     endpoint: '/roles',
   });
-
   const handleDelete = (): void => {
     doDelete({
       item: role,

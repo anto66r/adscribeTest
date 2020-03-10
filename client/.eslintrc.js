@@ -70,7 +70,9 @@ module.exports = {
     "testing-library/no-debug": "error",
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": ["**/*.test.*", "**/*.spec.*"]
-    }]
+    }],
+    "no-console": "error",
+    "no-debugger": "error"
   },
   settings: {
     "import/resolver": {

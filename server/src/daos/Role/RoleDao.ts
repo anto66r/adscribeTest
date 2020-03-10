@@ -2,7 +2,7 @@ import { wrapCollection } from '@daos';
 import { IRoleDao } from 'src/daos/Role/types';
 import {
   Role, IRole, IRoleCollection,
-} from 'src/services';
+} from '@services';
 
 export class RoleDao implements IRoleDao {
   public async getAll(): Promise<IRoleCollection> {

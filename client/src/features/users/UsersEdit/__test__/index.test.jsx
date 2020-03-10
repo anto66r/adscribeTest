@@ -5,8 +5,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { StoreProvider } from 'store';
 import reducers from 'store/reducers';
 import useItemAdmin from 'hooks/useItemAdmin';
+import initialState from 'store/initialState';
 import UsersEdit from '..';
 
+jest.mock('store/initialState');
 const mockDoSuccessToast = jest.fn();
 const mockDoErrorToast = jest.fn();
 jest.mock('hooks/useToast', () => () => ({
@@ -36,14 +38,7 @@ beforeEach(() => {
 const renderWrapper = () => render(
   (
     <StoreProvider
-      initialState={{
-        domains: {
-          users: [{
-            _id: '1234',
-          }],
-          roles: [],
-        },
-      }}
+      initialState={initialState}
       reducer={reducers}
     >
       <UsersEdit />
@@ -52,13 +47,6 @@ const renderWrapper = () => render(
 );
 
 describe('<UserEdit />', () => {
-  test('should handle cancel correctly', () => {
-    renderWrapper();
-    const cancelButton = screen.getByText('Cancel');
-    fireEvent.click(cancelButton);
-    expect(mockPush).toHaveBeenCalled();
-  });
-
   test('should call success toast and go back on save', () => {
     useItemAdmin.mockImplementation(() => ({
       doUpdate: ({ onSuccess }) => onSuccess(),

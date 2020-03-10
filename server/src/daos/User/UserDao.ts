@@ -3,7 +3,7 @@ import { wrapCollection } from '@daos';
 import { IDomains, IUserDao } from 'src/daos/User/types';
 import {
   Dashboard, IDashboard, IRole, IUser, IUserCollection, IUserGeneral, IUserGeneralCollection, Role, User,
-} from 'src/services';
+} from '@services';
 
 AWS.config.update({
   accessKeyId: process.env.COGNITO_SERVER_APP_CLIENT_ID,

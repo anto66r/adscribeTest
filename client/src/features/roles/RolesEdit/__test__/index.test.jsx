@@ -5,7 +5,10 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { StoreProvider } from 'store';
 import reducers from 'store/reducers';
 import useItemAdmin from 'hooks/useItemAdmin';
+import initialState from 'store/initialState';
 import RolesEdit from '../index';
+
+jest.mock('store/initialState');
 
 const mockDoSuccessToast = jest.fn();
 const mockDoErrorToast = jest.fn();
@@ -30,18 +33,13 @@ beforeEach(() => {
     doUpdate: () => jest.fn(),
     loading: false,
   }));
+  jest.clearAllMocks();
 });
 
 const renderWrapper = () => render(
   (
     <StoreProvider
-      initialState={{
-        domains: {
-          roles: [{
-            _id: '1234',
-          }],
-        },
-      }}
+      initialState={initialState}
       reducer={reducers}
     >
       <RolesEdit />
@@ -52,7 +50,7 @@ const renderWrapper = () => render(
 describe('<RolesEdit />', () => {
   test('should handle cancel correctly', () => {
     renderWrapper();
-    fireEvent.click(screen.getByTestId('Cancel'));
+    fireEvent.click(screen.getByTestId('role-form-cancel'));
     expect(mockPush).toHaveBeenCalled();
   });
 

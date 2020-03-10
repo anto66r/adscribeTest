@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { RouteProvider } from 'testing';
 import { StoreProvider } from 'store';
 import usePermissions from 'hooks/usePermissions';
+import initialState from 'store/initialState';
 import RolesDetail from '..';
 
 jest.mock('hooks/usePermissions');
@@ -12,23 +13,12 @@ mockedUsePermissions.mockImplementation(() => ({
   checkPermissions: () => true,
 }));
 
+jest.mock('store/initialState');
+
 const renderWrapper = () => render(
   (
     <RouteProvider route="/roles/1234" path="/roles/:id">
-      <StoreProvider initialState={{
-        domains: {
-          roles: [{
-            name: 'Role name',
-            _id: '1234',
-            permissions: ['users::create', 'permission D'],
-          }, {
-            name: 'another role',
-            _id: '1235',
-            permissions: ['users::create', 'permission D'],
-          }],
-        },
-      }}
-      >
+      <StoreProvider initialState={initialState}>
         <RolesDetail />
       </StoreProvider>
     </RouteProvider>
@@ -40,7 +30,7 @@ describe('<RolesDetail />', () => {
     renderWrapper();
     expect(screen.getByText('Role name')).toBeInTheDocument();
     expect(screen.getByText('Edit role')).toBeInTheDocument();
-    expect(screen.getByText('users::create')).toBeInTheDocument();
+    expect(screen.getByText('users::view')).toBeInTheDocument();
     expect(screen.queryByText('permission D')).toBeFalsy();
   });
   test('Should show link to edit item.', () => {

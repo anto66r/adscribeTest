@@ -29,21 +29,15 @@ const Users: FunctionComponent = () => {
         }
         {
           checkPermissions(Permission.USERS__CREATE)
-          && (
-            <Route exact path={`${path}/create`} component={UsersEdit} />
-          )
+          && <Route exact path={`${path}/create`} component={UsersEdit} />
         }
         {
           checkPermissions(Permission.USERS__UPDATE)
-          && (
-            <Route exact path={`${path}/edit/:id`} component={UsersEdit} />
-          )
+          && <Route exact path={`${path}/edit/:id`} component={UsersEdit} />
         }
         {
           checkPermissions(Permission.USERS__DETAIL)
-          && (
-            <Route path={`${path}/:id`} component={UsersDetail} />
-          )
+          && <Route path={`${path}/:id`} component={UsersDetail} />
         }
         <Route>
           <Redirect to="/" />

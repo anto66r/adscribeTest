@@ -51,9 +51,7 @@ const renderWrapper = () => render(
 
 describe('<RolesEdit />', () => {
   test('should handle cancel correctly', () => {
-    const test = renderWrapper();
-    const { queryAllByText, container } = test;
-    console.log(container.innerHTML);
+    renderWrapper();
     fireEvent.click(screen.getByTestId('Cancel'));
     expect(mockPush).toHaveBeenCalled();
   });

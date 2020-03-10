@@ -24,6 +24,7 @@
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
     "eslint-plugin-react": "^7.18.3",
+    "fs-extra": "^8.1.0",
     "history": "^4.10.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
@@ -50,12 +51,8 @@
     "components:theme:605": "yarn config:theme:605 && yarn run pre:transpile && yarn run pre:transpile:sass:watch && start-storybook -p 9009 -s public",
     "components:build": "yarn config:theme:adscribe && yarn run pre:transpile && build-storybook -s public",
     "components:build:theme:605": "yarn config:theme:605 && yarn run pre:transpile && build-storybook -s public",
-    "pre:transpile:sass:clean": "rm -rf ./src/theme/default",
-    "pre:transpile:sass:create": "mkdir ./src/theme/default",
-    "pre:transpile:sass:move": "cp -R \"./src/theme/$npm_package_config_theme/.\" \"./src/theme/default\"",
     "pre:transpile:sass:watch": "node scripts/themeSassWatcher.js &",
-    "pre:transpile:sass": "yarn run pre:transpile:sass:clean && yarn run pre:transpile:sass:create && yarn run pre:transpile:sass:move",
-    "pre:transpile": "yarn run pre:transpile:sass"
+    "pre:transpile": "node scripts/themeSassCopy.js $npm_package_config_theme"
   },
   "eslintConfig": {
     "extends": "react-app"

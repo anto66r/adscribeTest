@@ -28,8 +28,8 @@ const Item: FunctionComponent<PropsType> = props => {
     });
   };
   return (
-    <li key={user._id}>
-      <Link data-testid="pl2-role-itemlink" to={`${url}/${user._id}`}>{user.name}</Link>
+    <li key={user.id}>
+      <Link data-testid="pl2-role-itemlink" to={`${url}/${user.id}`}>{user.name}</Link>
 
       <button disabled={loading} onClick={handleDelete}>
         {loading ? 'Deleting...' : 'Delete'}

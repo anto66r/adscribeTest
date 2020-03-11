@@ -14,7 +14,7 @@ describe('<Item />', () => {
             <Item user={{
               name: 'User name',
               email: 'email@test.com',
-              _id: '1234',
+              id: '1234',
             }}
             />
           </StoreProvider>

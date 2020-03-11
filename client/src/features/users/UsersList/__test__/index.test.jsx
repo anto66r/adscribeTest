@@ -13,11 +13,11 @@ describe('<RolesList />', () => {
           <StoreProvider>
             <RolesList users={[{
               name: 'User name',
-              _id: '1234',
+              id: '1234',
             },
             {
               name: 'User name b',
-              _id: '5678',
+              id: '5678',
             }]}
             />
           </StoreProvider>

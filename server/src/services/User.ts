@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { v4 as uuid } from 'uuid';
 import { IError } from '@daos';
 import { IDashboard } from 'src/services/Dashboard';
 import { IRole } from 'src/services/Role';
@@ -7,10 +8,10 @@ const { Schema } = mongoose;
 
 
 interface IUser {
-  _id?: string;
+  id?: string;
   authId?: string;
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   roles?: string[];
   phoneNumber?: string;
 }
@@ -23,7 +24,7 @@ interface IUserCollection {
 interface IUserGeneral {
   user: IUser;
   domains: {
-    dashboard?: IDashboard;
+    dashboards?: IDashboard[];
     users?: IUser[];
     roles?: IRole[];
   };
@@ -37,6 +38,12 @@ interface IUserGeneralCollection {
 
 const userSchema = new Schema(
   {
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+      default: uuid,
+    },
     name: {
       type: String,
       trim: true,

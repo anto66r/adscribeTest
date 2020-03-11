@@ -3,8 +3,8 @@ import { Dashboard, IDashboardCollection } from '@services';
 import { IDashboardDao } from './types';
 
 export class DashboardDao implements IDashboardDao {
-  public async getByUserId(_id: string): Promise<IDashboardCollection> {
-    return Dashboard.find({ userId: _id }).lean()
+  public async getByUserId(id: string): Promise<IDashboardCollection> {
+    return Dashboard.find({ userId: id }).lean()
       .then((dashboards) => wrapCollection(dashboards) as IDashboardCollection)
       .catch((err: Error) => wrapCollection([], { data: err }) as IDashboardCollection);
   }
@@ -21,7 +21,7 @@ export class DashboardDao implements IDashboardDao {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars,class-methods-use-this
-  public delete(_id: string): Promise<void> {
+  public delete(id: string): Promise<void> {
     // TODO
     return {} as any;
   }

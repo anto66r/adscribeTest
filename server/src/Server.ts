@@ -31,7 +31,7 @@ mongoose.connect(uri, {
 });
 
 mongoose.connection.once('open', (): void => {
-  console.log('MongoDB database connection established successfully');
+  // console.log('MongoDB database connection established successfully');
 });
 mongoose.set('useFindAndModify', false);
 

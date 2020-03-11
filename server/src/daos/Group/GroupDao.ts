@@ -37,7 +37,7 @@ export class GroupDao implements IGroupDao {
    * @param groupId
    */
   // eslint-disable-next-line class-methods-use-this,@typescript-eslint/no-unused-vars
-  public delete(_id: string): Promise<void> {
+  public delete(id: string): Promise<void> {
     // TODO
     return {} as any;
   }

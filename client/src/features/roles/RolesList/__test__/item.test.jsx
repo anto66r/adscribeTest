@@ -12,7 +12,7 @@ const renderWrapper = () => render(
       <StoreProvider>
         <Item role={{
           name: 'Role name',
-          _id: '1234',
+          id: '1234',
         }}
         />
       </StoreProvider>

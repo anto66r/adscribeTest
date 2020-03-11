@@ -20,7 +20,7 @@ export class RoleDao implements IRoleDao {
 
   public update(role: IRole): Promise<IRoleCollection> {
     // eslint-disable-next-line no-underscore-dangle
-    return Role.findOneAndUpdate({ _id: role._id }, role, { runValidators: true })
+    return Role.findOneAndUpdate({ id: role.id }, role, { runValidators: true })
       .then(() => this.getAll())
       .catch((err) => wrapCollection([], err) as IRoleCollection);
   }

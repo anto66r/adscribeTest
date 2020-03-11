@@ -29,7 +29,6 @@ GroupsRouter.get('/', async (req: Request, res: Response) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 GroupsRouter.post('/add', (req: Request, res: Response) => {
-  console.log('add');
 });
 
 /** ****************************************************************************
@@ -38,16 +37,14 @@ GroupsRouter.post('/add', (req: Request, res: Response) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 GroupsRouter.put('/update', (req: Request, res: Response) => {
-  console.log('update');
 });
 
 /** ****************************************************************************
- *                    Delete - "DELETE /api/groups/delete/:_id"
+ *                    Delete - "DELETE /api/groups/delete/:id"
  ***************************************************************************** */
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-GroupsRouter.delete('/delete/:_id', (req: Request, res: Response) => {
-  console.log('delete');
+GroupsRouter.delete('/delete/:id', (req: Request, res: Response) => {
 });
 
 /** ****************************************************************************

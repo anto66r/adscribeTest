@@ -30,11 +30,11 @@ const Item: FunctionComponent<PropsType> = props => {
   };
 
   return (
-    <li key={role._id}>
-      <Link data-testid="pl2-role-itemlink" to={`${url}/${role._id}`}>{role.name}</Link>
+    <li key={role.id}>
+      <Link data-testid="pl2-role-itemlink" to={`${url}/${role.id}`}>{role.name}</Link>
       {
         !role.noDelete && (
-          <button disabled={loading} onClick={handleDelete} data-testid={`pl2-delete-role-${role._id}`}>
+          <button disabled={loading} onClick={handleDelete} data-testid={`pl2-delete-role-${role.id}`}>
             {loading ? 'Deleting...' : 'Delete'}
           </button>
         )

@@ -6,7 +6,7 @@ const EditUser = () => {
   const [state] = useStore();
   const { users } = state;
   const { userId } = useParams();
-  const user = users.find(item => item._id === userId);
+  const user = users.find(item => item.id === userId);
   return <input type="text" value={user.name} readOnly />;
 };
 

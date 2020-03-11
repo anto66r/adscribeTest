@@ -1,11 +1,12 @@
 import * as mongoose from 'mongoose';
+import { v4 as uuid } from 'uuid';
 import { IError } from '@daos';
 
 const { Schema } = mongoose;
 
 
 interface IGroup {
-  _id?: string;
+  id?: string;
   groupId?: number;
   name: string;
 }
@@ -17,6 +18,12 @@ interface IGroupCollection {
 
 const groupSchema = new Schema(
   {
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+      default: uuid,
+    },
     name: {
       type: String,
       trim: true,

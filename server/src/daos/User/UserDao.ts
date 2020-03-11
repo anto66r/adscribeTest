@@ -20,8 +20,8 @@ export class UserDao implements IUserDao {
       .catch((error) => wrapCollection([], error) as IUserCollection);
   }
 
-  public async getById(_id: string): Promise<IUserCollection> {
-    return User.find({ _id }).lean()
+  public async getById(id: string): Promise<IUserCollection> {
+    return User.find({ id }).lean()
       .then((user) => wrapCollection(user, {}) as IUserCollection)
       .catch((error) => wrapCollection([], error) as IUserCollection);
   }
@@ -38,9 +38,9 @@ export class UserDao implements IUserDao {
       .catch((error) => wrapCollection([], error) as IUserCollection);
   }
 
-  public async getDomains(_id: string): Promise<IDomains> {
+  public async getDomains(id: string): Promise<IDomains> {
     const users = await User.find({}).lean<IUser>();
-    const dashboards = await Dashboard.find({ userId: _id }).lean<IDashboard>() || {};
+    const dashboards = await Dashboard.find({ userId: id }).lean<IDashboard>() || {};
     const roles = await Role.find({}).lean<IRole>();
     return {
       users,
@@ -49,12 +49,12 @@ export class UserDao implements IUserDao {
     };
   }
 
-  public async getUserContext(_id: string): Promise<IUserGeneralCollection> {
-    const user = await User.findById({ _id }).lean<IUser>();
-    if (!user) throw Error(`No user found with id ${_id}`);
-    const domains = await this.getDomains(_id);
+  public async getUserContext(id: string): Promise<IUserGeneralCollection> {
+    const user = await User.find({ id }).lean<IUser>();
+    if (!user) throw Error(`No user found with id ${id}`);
+    const domains = await this.getDomains(id);
     const userData: IUserGeneral = {
-      user,
+      user: user[0],
       domains,
     };
     return wrapCollection(userData, {}) as IUserGeneralCollection;
@@ -91,11 +91,12 @@ export class UserDao implements IUserDao {
           Username: email,
           UserPoolId: userPoolId,
         };
+        // @ts-ignore
         const result = await cognito.adminCreateUser(createUserConfig).promise();
 
         if (!result?.User?.Username) {
           return wrapCollection([], {
-            message: 'User Loginº does not exist',
+            message: 'User Login does not exist',
           }) as IUserCollection;
         }
         user.authId = result.User.Username;
@@ -118,20 +119,20 @@ export class UserDao implements IUserDao {
 
   public update(user: IUser): Promise<IUserCollection> {
     // eslint-disable-next-line no-underscore-dangle
-    return User.findOneAndUpdate({ _id: user._id }, user, { runValidators: true })
+    return User.findOneAndUpdate({ id: user.id }, user, { runValidators: true })
       .then(() => this.getAll())
       .catch((error) => wrapCollection([], error) as IUserCollection);
   }
 
-  public async delete(_id: string): Promise<IUserCollection> {
+  public async delete(id: string): Promise<IUserCollection> {
     // First we try to remove AWS credentials
     try {
-      const userCollection = await this.getById(_id);
+      const userCollection = await this.getById(id);
       const user = userCollection.data[0];
       const { email } = user;
 
-      // @ts-ignore
       await cognito.adminDeleteUser({
+        // @ts-ignore
         UserPoolId: process.env.COGNITO_USER_POOL,
         Username: email,
       }).promise();
@@ -142,7 +143,7 @@ export class UserDao implements IUserDao {
     }
     // Next we delete the user
     try {
-      await User.deleteOne({ _id });
+      await User.deleteOne({ id });
       const users = await this.getAll();
       return wrapCollection(users.data) as IUserCollection;
     } catch (error) {

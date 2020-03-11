@@ -33,7 +33,7 @@ const PrivateRoute = ({ component: Component }: PrivateRouteProps) => {
       doFetch({
         endpoint: '/users/context',
         payload: {
-          _id: state.user.userId,
+          id: state.user.userId,
         },
         onError: (error: IFetchError) => {
           history.push({

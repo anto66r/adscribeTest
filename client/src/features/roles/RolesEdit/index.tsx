@@ -24,9 +24,9 @@ const RoleEdit: FunctionComponent = () => {
     endpoint: '/roles',
   });
 
-  const role = roles.find((item: IRole) => item._id === id);
+  const role = roles.find((item: IRole) => item.id === id);
   const handleSubmit = ({ name, permissions }: { name: string; permissions: string[] }): void => {
-    const item = { name, permissions, _id: id };
+    const item = { name, permissions, id };
     if (id) {
       doUpdate({
         item,

@@ -9,14 +9,14 @@ const UsersDetail: FunctionComponent = () => {
   const { id } = useParams();
   const { users } = useUsers();
   const { roles: allRoles } = useRoles();
-  const { name, roles = [] } = users.find((item: IUser) => item._id === id) || {};
+  const { name, roles = [] } = users.find((item: IUser) => item.id === id) || {};
 
   return (
     <>
       <h2>{name}</h2>
       <ul>
         {getRoles(roles, allRoles).map((item: IRole) => (
-          <li key={item._id}>{item.name}</li>
+          <li key={item.id}>{item.name}</li>
         ))}
       </ul>
       <Link to={`edit/${id}`} data-testid="pl2-role-edit">Edit user</Link>

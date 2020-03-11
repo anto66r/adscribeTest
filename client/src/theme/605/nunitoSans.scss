@@ -1,16 +1,21 @@
 @import "../../App.scss";
 
 @font-face {
-  font-family: 'NunitoSansRegular';
-  src: local('NunitoSansRegular'), url(./fonts/nunitoSansRegular.ttf) format('truetype');
+  font-family: "NunitoSansLight";
+  src: local("NunitoSansRegular"), url(./fonts/nunitoSansLight.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'NunitoSansBold';
-  src: local('NunitoSansBold'), url(./fonts/nunitoSansBold.ttf) format('truetype');
+  font-family: "NunitoSansRegular";
+  src: local("NunitoSansRegular"), url(./fonts/nunitoSansRegular.ttf) format("truetype");
 }
 
 @font-face {
-  font-family: 'NunitoSansExtraBold';
-  src: local('NunitoSansExtraBold'), url(./fonts/nunitoSansExtraBold.ttf) format('truetype');
+  font-family: "NunitoSansBold";
+  src: local("NunitoSansBold"), url(./fonts/nunitoSansBold.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "NunitoSansExtraBold";
+  src: local("NunitoSansExtraBold"), url(./fonts/nunitoSansExtraBold.ttf) format("truetype");
 }

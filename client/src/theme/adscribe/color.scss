@@ -1,8 +1,20 @@
 $color-primary: #2AB6A0;
 $color-primary-200: lighten($color-primary, 50%);
 $color-primary-600: darken($color-primary, 2%);
+$color-primary-900: darken($color-primary, 35%);
 $color-primary-hover: $color-primary-600;
-$color-primary-disabled: $color-primary-200;
+$color-primary-disabled: $color-primary-900;
+$color-secondary: #2D3438;
+$color-secondary-600: darken($color-secondary, 6%);
+$color-secondary-disabled: $color-secondary-600;
 $color-white: #ffffff;
 $color-black: #000000;
 $color-gray-100: #f0f0f0;
+$color-gray-300: #dadada;
+$color-background: #111618;
+$color-border-dark: $color-black;
+$color-border-light: $color-secondary;
+$color-text: $color-gray-100;
+$color-text-900: $color-white;
+$color-error: #770000;
+

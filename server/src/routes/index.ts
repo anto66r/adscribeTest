@@ -3,7 +3,6 @@
 import CognitoExpress from 'cognito-express';
 import cors from 'cors';
 import { Router } from 'express';
-import GroupsRouter from './Groups';
 import UsersRouter from './Users';
 import RolesRouter from './Roles';
 import DashboardsRouter from './Dashboards';
@@ -72,7 +71,6 @@ router.use((req, res, next): any => {
 
 // Add sub-routes
 router.use('/users', UsersRouter);
-router.use('/groups', GroupsRouter);
 router.use('/dashboards', DashboardsRouter);
 router.use('/roles', RolesRouter);
 router.use('/logs', LogsRouter);

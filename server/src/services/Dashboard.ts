@@ -10,7 +10,7 @@ interface IDashboardCollection {
   error: IError;
 }
 
-const groupSchema = new Schema(
+const dashboardSchema = new Schema(
   {
     id: {
       type: String,
@@ -32,7 +32,7 @@ const groupSchema = new Schema(
   },
 );
 
-const Dashboard = mongoose.model('Dashboard', groupSchema);
+const Dashboard = mongoose.model('Dashboard', dashboardSchema);
 
 interface IDashboard {
   id?: string;

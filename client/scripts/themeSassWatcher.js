@@ -5,7 +5,7 @@ const watch = require('node-watch');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs');
 
-const watchDir = `${process.env.PWD}/src/theme/`;
+const watchDir = `${__dirname}/../src/theme/`;
 
 watch(watchDir, {
   filter: f => !f.includes('client/src/theme/default'),

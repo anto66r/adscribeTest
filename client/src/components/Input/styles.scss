@@ -1,0 +1,33 @@
+@import "../../components/components.scss";
+@import "../../theme/default/input.scss";
+
+$name-component-name: "input";
+
+.#{$prefix-components}-#{$name-component-name} {
+  padding: $input---padding;
+  border: $input---border;
+  border-radius: $input---border-radius;
+  box-shadow: $input---box-shadow;
+  background-color: $input---background-color;
+  height: $input---height;
+  font-size: $input---font-size;
+  font-family: $input---font-family;
+  color: $input---color;
+  width: $input---width;
+  text-align: $input---text-align;
+  transition: border 0.5s ease-in-out;
+
+  &:focus {
+    outline-color: $input--focus---outline-color;
+  }
+
+  &.error {
+    transition: border 0.5s ease-in-out;
+    border: $input--error---border;
+  }
+
+  &[disabled] {
+    border: $input--disabled---border;
+    cursor: not-allowed;
+  }
+}

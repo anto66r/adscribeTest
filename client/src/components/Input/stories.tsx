@@ -9,8 +9,8 @@ export default {
 
 export const Text = (): ReactElement => (
   <Flex direction={Direction.column} horizontal={Horizontal.left}>
-    <Input id={'enabled01'} type={Type.text} onChange={action('input-change-value')} />
-    <Input id={'enabled01'} type={Type.text} hasError={true} onChange={action('input-change-value')} />
-    <Input id={'disabled02'} type={Type.text} disabled={true} onChange={action('input-change-value')}/>
+    <Input id={'enabled-01'} type={Type.text} onChange={action('input-change-value')} />
+    <Input id={'with-errors-02'} type={Type.text} hasError={true} onChange={action('input-change-value')} />
+    <Input id={'disabled-03'} type={Type.text} disabled={true} onChange={action('input-change-value')}/>
   </Flex>
 );

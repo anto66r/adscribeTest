@@ -14,7 +14,7 @@ export enum States {
   error = 'error',
 }
 export interface IButtonProps {
-  type?: Type.text;
+  type: Type.text;
   value?: string;
   testId?: string;
   id?: string;
@@ -45,13 +45,11 @@ const Input: FunctionComponent<IButtonProps> = (props): ReactElement => {
   }
 
   const getId = () => {
-    let id = `${prefixComponents}-${inputComponentName}`;
-
     if (props?.id) {
-      id += `-${props.id}`;
+      return `${prefixComponents}-${inputComponentName}-${props.id}`;
     }
 
-    return id;
+    return '';
   }
 
   const getClass = (): Class => {

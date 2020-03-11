@@ -8,8 +8,8 @@ if (!themeName) {
   process.exit(1);
 }
 
-const defaultDir = `${process.env.PWD}/src/theme/default`;
-const selectedThemeFolder = `${process.env.PWD}/src/theme/${themeName}/`;
+const defaultDir = `${__dirname}/../src/theme/default`;
+const selectedThemeFolder = `${__dirname}/../src/theme/${themeName}/`;
 
 if (!fs.existsSync(selectedThemeFolder)) {
   process.stdout.write(`Error: The selected theme ${themeName} does not exist\n`);

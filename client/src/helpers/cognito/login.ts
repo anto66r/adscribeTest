@@ -48,7 +48,7 @@ export const login = async (
     // @ts-ignore
     user = await secureFetch({
       endpoint: '/users/login',
-      accessToken,
+      accessToken: accessToken.jwtToken,
       payload: {
         email,
         authId: sub,

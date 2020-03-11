@@ -39,7 +39,7 @@ router.use((req, res, next): any => {
   // console.log(`Access token obtained: ${accessTokenFromClient}`);
 
   // Fail if token not present in header.
-  if (process.env.NODE_ENV === 'development' && (process.env.BYPASS_API_SECURITY || freeUrls.includes(req.url))) {
+  if (process.env.NODE_ENV === 'development' && (process.env.BYPASS_API_SECURITY === 'true' || freeUrls.includes(req.url))) {
     next();
     return undefined;
   }

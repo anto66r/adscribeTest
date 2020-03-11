@@ -77,6 +77,7 @@ const Input: FunctionComponent<IButtonProps> = (props): ReactElement => {
       data-testid={testId}
       id={id}
       name={props.name ? props.name : ''}
+      placeholder={props.placeholder ? props.placeholder : ''}
       disabled={ props.disabled ? props.disabled : false }
       value={value}
       onChange={handleOnChange}

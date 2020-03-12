@@ -32,7 +32,7 @@ export interface IButtonProps {
 }
 
 const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
-   const getTestId = () => {
+  const getTestId = (): string => {
     let testId = `${prefixComponents}-${buttonComponentName}`;
 
     if (props?.testId) {
@@ -40,7 +40,7 @@ const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
     }
 
     return testId;
-  }
+  };
 
   const getKinds = (): Classes => {
     const kinds = [];
@@ -50,7 +50,7 @@ const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
     }
 
     return kinds;
-  }
+  };
 
   const getClass = (): Class => {
     const types = getKinds();
@@ -60,26 +60,27 @@ const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
     if (types.length > 0) buttonClass = buttonClass.concat(' ', types.join(' '));
 
     return buttonClass;
-  }
+  };
 
   const handleClick = (event: React.SyntheticEvent<EventTarget>): void => {
     event.preventDefault();
-    if(props.onClick) props.onClick()
-  }
+    if (props.onClick) props.onClick();
+  };
 
   const buttonClass = getClass();
   const testId = getTestId();
+  const { disabled, children } = props;
 
   return (
     <button
       className={classnames(`${buttonClass}`)}
       data-testid={testId}
-      disabled={props.disabled ? props.disabled : false}
+      disabled={disabled || false}
       onClick={handleClick}
     >
-      {props.children}
+      {children}
     </button>
   );
-}
+};
 
 export default Button;

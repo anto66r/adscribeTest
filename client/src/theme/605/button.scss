@@ -1,12 +1,13 @@
 @import "./color.scss";
 @import "./font.scss";
+@import "./box.scss";
 
-$button---border-radius: 4px;
+$button---border-radius: $box---border-radius;
 $button---font-family: $font-primary-600;
 $button---font-size: $font-size-M;
 $button--vertical---padding: 15px;
 $button--horizontal---padding: $button--vertical---padding * 2;
-$button--primary---color: $color-white;
+$button--primary---color: $color-text-900;
 $button--primary---background-color: $color-primary;
 $button--primary---border: solid 1px $color-gray-100;
 $button--primary--hover---background-color: $color-primary-hover;

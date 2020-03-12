@@ -12,6 +12,7 @@ type UserFormProps = {
 
 const UserForm: FunctionComponent<UserFormProps> = ({
   user = {
+    _id: '',
     email: '',
     roles: [],
     name: '',
@@ -23,8 +24,8 @@ const UserForm: FunctionComponent<UserFormProps> = ({
   const { roles: allRoles } = useRoles();
   const { roles = [] } = user;
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
   const [message, setMessage] = useState('');
 
   const emptyFields = () => [name, email].some(x => !x.length);
@@ -75,7 +76,7 @@ const UserForm: FunctionComponent<UserFormProps> = ({
 
         <div className="form-group">
           <label>Email</label>
-          <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} />
+          <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} disabled={!!user.id} />
         </div>
 
         <ul>
@@ -85,8 +86,8 @@ const UserForm: FunctionComponent<UserFormProps> = ({
                 data-testid={item}
                 type="checkbox"
                 name={item.name}
-                value={item._id}
-                checked={checkedItems[item._id] || false}
+                value={item?.id}
+                checked={checkedItems[item?.id] || false}
                 onChange={handleCheckChange}
               />
               {item.name}

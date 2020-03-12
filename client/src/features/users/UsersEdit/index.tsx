@@ -27,14 +27,14 @@ const UserEdit: FunctionComponent = () => {
     endpoint: '/users',
   });
 
-  const user = users.find((item: IUser) => item._id === id);
+  const user = users.find((item: IUser) => item.id === id);
 
   const handleSubmit = async (updateUser: IUser): Promise<void> => {
     setError('');
 
     if (id) {
       doUpdate({
-        item: updateUser,
+        item: { ...updateUser, id },
         onSuccess: handleSuccess,
         onError: handleError,
       });

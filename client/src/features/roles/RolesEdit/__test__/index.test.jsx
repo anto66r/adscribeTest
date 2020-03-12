@@ -9,7 +9,6 @@ import initialState from 'store/initialState';
 import RolesEdit from '../index';
 
 jest.mock('store/initialState');
-jest.mock('config/permissions');
 
 const mockDoSuccessToast = jest.fn();
 const mockDoErrorToast = jest.fn();
@@ -56,12 +55,14 @@ describe('<RolesEdit />', () => {
   });
 
   test('should call success toast and go back on save', () => {
+    const mockDoUpdate = jest.fn(({ onSuccess }) => onSuccess());
     useItemAdmin.mockImplementation(() => ({
-      doUpdate: ({ onSuccess }) => onSuccess(),
+      doUpdate: mockDoUpdate,
       loading: false,
     }));
     renderWrapper();
     fireEvent.submit(screen.getByTestId('form'));
+    expect(mockDoUpdate).toHaveBeenCalled();
     expect(mockDoSuccessToast).toHaveBeenCalledWith('Role updated');
     expect(mockPush).toHaveBeenCalled();
   });

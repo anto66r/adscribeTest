@@ -83,8 +83,8 @@ UsersRouter.patch('/', async (req: Request, res: Response) => {
 
 UsersRouter.delete('/', async (req: Request, res: Response) => {
   try {
-    const { _id }: {_id: string} = req.body as TRequestParams;
-    const users = await userDao.delete(_id);
+    const { id }: {id: string} = req.body as TRequestParams;
+    const users = await userDao.delete(id);
     return res.status(OK).json(users);
   } catch (err) {
     logger.error(err.message, err);
@@ -96,8 +96,8 @@ UsersRouter.delete('/', async (req: Request, res: Response) => {
 
 UsersRouter.post('/context', async (req: Request<TRequestParams>, res: Response): Promise<Response> => {
   try {
-    const { _id }: {_id: string} = req.body;
-    const userContext: IUserGeneralCollection = await userDao.getUserContext(_id);
+    const { id }: {id: string} = req.body;
+    const userContext: IUserGeneralCollection = await userDao.getUserContext(id);
 
     return res.status(OK).json(userContext);
   } catch (err) {

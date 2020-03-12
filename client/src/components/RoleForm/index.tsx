@@ -1,5 +1,5 @@
 import React, { useState, FunctionComponent } from 'react';
-import globalPermissions from 'config/permissions';
+import globalPermissions from 'types/permission';
 
 import IRole from 'types/role';
 
@@ -45,7 +45,7 @@ const RoleForm: FunctionComponent<ContentProps> = ({
         value={formName}
       />
       <ul>
-        {globalPermissions.sort().map(item => (
+        {Object.values(globalPermissions).sort().map(item => (
           <li key={item}>
             <input
               data-testid={item}

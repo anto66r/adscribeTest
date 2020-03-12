@@ -2,12 +2,17 @@ import React, { FunctionComponent } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import IRole from 'types/role';
-import { useRoles } from 'hooks';
+import Permission from 'types/permission';
+import usePermissions from 'hooks/usePermissions';
 import Item from './Item';
 
-const RolesList: FunctionComponent = () => {
+type ContentProps = {
+  roles: IRole[];
+};
+
+const RolesList: FunctionComponent<ContentProps> = ({ roles }) => {
   const { url } = useRouteMatch<{ url: string }>();
-  const { roles } = useRoles();
+  const { checkPermissions } = usePermissions();
 
   return (
     <>
@@ -15,7 +20,7 @@ const RolesList: FunctionComponent = () => {
         {roles
           && roles.map((role: IRole) => <Item key={role.name} role={role} />)}
       </ul>
-      <Link to={`${url}/create`}>Create new</Link>
+      {checkPermissions(Permission.ROLES__CREATE) && <Link to={`${url}/create`}>Create new</Link>}
     </>
   );
 };

@@ -15,7 +15,7 @@ const useFetchAll = (): void => {
       doFetchUsers({
         endpoint: '/users/context',
         payload: {
-          _id: state.user.userId,
+          id: state?.user?.userId,
         },
       });
     }

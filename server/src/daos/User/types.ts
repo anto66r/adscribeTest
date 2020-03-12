@@ -5,15 +5,15 @@ import {
 export interface IUserDao {
   add: (user: IUser) => Promise<IUserCollection>;
   update: (user: IUser) => Promise<IUserCollection>;
-  delete: (_id: string) => Promise<IUserCollection>;
+  delete: (id: string) => Promise<IUserCollection>;
   getAll: () => Promise<IUserCollection>;
-  getById: (_id: string) => Promise<IUserCollection> ;
+  getById: (id: string) => Promise<IUserCollection> ;
   getByAuthId: (authId: string) => Promise<IUserCollection> ;
   getByEmail: (email: string) => Promise<IUserCollection>;
 }
 
 export type TRequestParams = {
-  _id: string;
+  id: string;
 };
 
 export interface IDomains {

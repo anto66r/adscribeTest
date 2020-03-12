@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { v4 as uuid } from 'uuid';
 import { IError } from '@daos';
 
 const { Schema } = mongoose;
@@ -9,8 +10,14 @@ interface IDashboardCollection {
   error: IError;
 }
 
-const groupSchema = new Schema(
+const dashboardSchema = new Schema(
   {
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+      default: uuid,
+    },
     name: {
       type: String,
       trim: true,
@@ -25,10 +32,10 @@ const groupSchema = new Schema(
   },
 );
 
-const Dashboard = mongoose.model('Dashboard', groupSchema);
+const Dashboard = mongoose.model('Dashboard', dashboardSchema);
 
 interface IDashboard {
-  _id?: string;
+  id?: string;
   name?: string;
   userId?: string;
 }

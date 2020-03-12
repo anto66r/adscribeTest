@@ -10,8 +10,8 @@ const { Schema } = mongoose;
 interface IUser {
   id?: string;
   authId?: string;
-  name?: string;
-  email?: string;
+  name: string;
+  email: string;
   roles?: string[];
   phoneNumber?: string;
 }

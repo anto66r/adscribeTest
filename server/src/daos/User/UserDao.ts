@@ -91,7 +91,6 @@ export class UserDao implements IUserDao {
           Username: email,
           UserPoolId: userPoolId,
         };
-        // @ts-ignore
         const result = await cognito.adminCreateUser(createUserConfig).promise();
 
         if (!result?.User?.Username) {
@@ -132,8 +131,7 @@ export class UserDao implements IUserDao {
       const { email } = user;
 
       await cognito.adminDeleteUser({
-        // @ts-ignore
-        UserPoolId: process.env.COGNITO_USER_POOL,
+        UserPoolId: process.env.COGNITO_USER_POOL || '',
         Username: email,
       }).promise();
     } catch (error) {

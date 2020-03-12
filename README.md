@@ -207,6 +207,49 @@ The structure of a PR is as follows:
 - **Summary**: Longer, more detailed summary of work
 - **Behavior**: any relevant animated GIFs, images or descriptions
 
+# GIT Alias for PR Semantics
+in `/scripts/git_save.sh` we have a git alias script you can use for committing and pushing the code easily keeping a naming structure. Per example. If you are in a git branch with this example name `fix/PR-142-bug-with-user-creation`: 
+
+The user will type: 
+
+`git send Fixed a bug with user validation`
+
+This script will:
+ - Add all the code into git change list
+ - Create a commit with this naming: `PR-142: Fixed a bug with user validation` 
+ - Push all the changes to the remote git server
+
+It is required to follow a naming structure of branches for this script to work:
+
+```
+[Correct] PR-120-test-branch
+[Correct] PR-120-test-branch
+[Wrong] PR_120-test-branch
+[Wrong] test-branch
+```
+
+How to **install the script**:
+
+Localize a folder that is on your $PATH. You can type `$PATH` in the console in Linux/Mac or `echo %path%` in Windows to see all the possible paths.
+
+I'm using MAC env as example. The users bin path is: `/usr/local/bin`:
+```bash
+$ sudo ln -s <project_folder>/scripts/git_save.sh /usr/local/bin/git_save.sh
+$ sudo chmod +x /usr/local/bin/git_save.sh
+```
+Edit your `.gitconfig` file to add this script as git alias. In Mac, the file is located in the root of the users home
+
+```
+...
+[alias]
+    send = "!sh git_save.sh"
+```
+
+you are done :tada: Your code will be added, commited and pushed.
+
+
+
+
 # Deployment
 
 ## Creating production build

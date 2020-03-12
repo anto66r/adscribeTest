@@ -2,7 +2,7 @@ import * as AWS from 'aws-sdk';
 import { wrapCollection } from '@daos';
 import { IDomains, IUserDao } from 'src/daos/User/types';
 import {
-  Dashboard, IDashboard, IRole, IUser, IUserCollection, IUserGeneral, IUserGeneralCollection, Role, User,
+  Report, Dashboard, IDashboard, IRole, IUser, IUserCollection, IUserGeneral, IUserGeneralCollection, Role, User, IReport,
 } from '@services';
 
 AWS.config.update({
@@ -40,12 +40,14 @@ export class UserDao implements IUserDao {
 
   public async getDomains(id: string): Promise<IDomains> {
     const users = await User.find({}).lean<IUser>();
-    const dashboards = await Dashboard.find({ userId: id }).lean<IDashboard>() || {};
+    const dashboards = await Dashboard.find({ userId: id }).lean<IDashboard>();
     const roles = await Role.find({}).lean<IRole>();
+    const reports = await Report.find({ userId: id }).lean<IReport>();
     return {
       users,
       dashboards,
       roles,
+      reports,
     };
   }
 

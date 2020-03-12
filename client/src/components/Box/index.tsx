@@ -1,12 +1,21 @@
 import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents, Class } from '../components';
+import { prefixComponents, Class, Classes } from '../components';
 import './styles.scss';
+
+// TODO: P2-129 Create box secondary theme to adscribe
+// TODO: P2-130 Create box component tests
 
 export const boxComponentName = 'box';
 
+export enum Type {
+  primary = 'primary',
+  secondary = 'secondary',
+}
+
 export interface IBoxProps {
+  type?: Type.primary | Type.secondary;
   testId?: string;
   children?: ReactNode;
 }
@@ -22,7 +31,25 @@ const Button: FunctionComponent<IBoxProps> = (props): ReactElement => {
     return testId;
   };
 
-  const getClass = (): Class => `${prefixComponents}-${boxComponentName}`;
+  const getTypes = (): Classes => {
+    const types = [];
+
+    if (props?.type) {
+      types.push(Type[props?.type]);
+    }
+
+    return types;
+  };
+
+  const getClass = (): Class => {
+    const types = getTypes();
+    let boxClass: Class;
+    boxClass = `${prefixComponents}-${boxComponentName}`;
+
+    if (types.length > 0) boxClass = boxClass.concat(' ', types.join(' '));
+
+    return boxClass;
+  };
 
   const boxClass = getClass();
   const testId = getTestId();

@@ -1,7 +1,12 @@
 @import "../../components/components.scss";
+@import "../../theme/default/box.scss";
 
-$name-component-name: "name";
+$box-component-name: "box";
 
-.#{$prefix-components}-#{$name-component-name} {
+.#{$prefix-components}-#{$box-component-name} {
+  background-color: #ffffff;
 
+  &.secondary {
+    border-radius: 50%;
+  }
 }

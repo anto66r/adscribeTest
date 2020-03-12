@@ -1,4 +1,3 @@
-@import "../../App.scss";
 @import "../../components/components.scss";
 @import "../../theme/default/button.scss";
 
@@ -20,7 +19,7 @@ $button-component-name: "button";
       background-color: $button--primary--hover---background-color;
     }
 
-    &[disabled]{
+    &[disabled] {
       color: $button--primary--disabled---color;
       background-color: $button--primary--disabled---background-color;
       cursor: not-allowed;

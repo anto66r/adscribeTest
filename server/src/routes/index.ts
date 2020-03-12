@@ -30,7 +30,7 @@ const options: cors.CorsOptions = {
 // use cors middleware
 router.use(cors(options));
 
-router.use('/health-check', (req, res): any => { res.send('OK'); });
+router.use('/health-check', (req, res): any => { res.send(`OK (${process.env.VERSION || '-'})`); });
 
 router.use((req, res, next): any => {
   // I'm passing in the access token in header under key accessToken

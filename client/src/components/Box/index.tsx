@@ -1,7 +1,7 @@
 import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents, Class, Classes } from '../components';
+import { prefixComponents, Class } from '../components';
 import './styles.scss';
 
 export const boxComponentName = 'box';
@@ -12,7 +12,7 @@ export interface IBoxProps {
 }
 
 const Button: FunctionComponent<IBoxProps> = (props): ReactElement => {
-  const getTestId = () => {
+  const getTestId = (): string => {
     let testId = `${prefixComponents}-${boxComponentName}`;
 
     if (props?.testId) {

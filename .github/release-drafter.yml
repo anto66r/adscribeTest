@@ -2,7 +2,7 @@ name-template: 'v$NEXT_PATCH_VERSION'
 tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
   - title: 'Features'
-    label: 'feat'
+    label: 'feature'
   - title: 'Bug Fixes'
     label: 'fix'
   - title: 'Maintenance'

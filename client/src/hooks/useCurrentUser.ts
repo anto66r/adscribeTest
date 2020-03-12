@@ -7,7 +7,7 @@ const useCurrentUser = (): IUser | undefined => {
   const [state] = useStore();
 
   const { user } = state;
-  const currentUser = users.find((item: IUser) => item._id === user.userId);
+  const currentUser = users.find((item: IUser) => item.id === user.userId);
   return currentUser;
 };
 

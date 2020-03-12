@@ -13,7 +13,7 @@ const usePermissions = (): {
 
   const permissions = useMemo(() => allRoles.reduce(
     (acc: string[], cur: IRole) => {
-      if (userRoles?.includes(cur._id)) acc.push(...cur.permissions || []);
+      if (userRoles?.includes(cur.id)) acc.push(...cur.permissions || []);
       return acc;
     }, [] as string[],
   ), [userRoles]);

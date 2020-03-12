@@ -207,7 +207,54 @@ The structure of a PR is as follows:
 - **Summary**: Longer, more detailed summary of work
 - **Behavior**: any relevant animated GIFs, images or descriptions
 
+## Building and running Docker images
+
+### Client
+
+From project root, run
+
+```bash
+docker build -f client/Dockerfile -t FILENAME:TAG . --build-arg ARG1=VALUE1 --build-arg ARG2=VALUE2
+```
+
+The only available arguments for the moment are
+
+- `version`
+
+TO-DO: document themes in docker 
+
+To run the Docker image:
+
+```bash
+docker run -p 80:80 -t FILENAME:TAG
+```
+
+This will expose image port `80` to localhost `80`.
+
+To view health-check, browse to [localhost:80/health-check](localhost:80/health-check).
+
+### Server
+
+From project root, run
+
+```bash
+docker build -f server/Dockerfile -t FILENAME:TAG . --build-arg ARG1=VALUE1 --build-arg ARG2=VALUE2
+```
+
+The only available argument for the moment is `version`.
+
+To run the Docker image:
+
+```bash
+docker run -p 5000:5000 -t FILENAME:TAG
+```
+
+This will expose image port `5000` to localhost `5000`.
+
+To view health-check, browse to [localhost:5000/api/health-check](localhost:5000/api/health-check).
+
 # GIT Alias for PR Semantics
+
 in `/scripts/git_save.sh` we have a git alias script you can use for committing and pushing the code easily keeping a naming structure. Per example. If you are in a git branch with this example name `fix/PR-142-bug-with-user-creation`: 
 
 The user will type: 
@@ -246,8 +293,6 @@ Edit your `.gitconfig` file to add this script as git alias. In Mac, the file is
 ```
 
 you are done :tada: Your code will be added, commited and pushed.
-
-
 
 
 # Deployment

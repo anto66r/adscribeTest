@@ -15,7 +15,7 @@ export default {
     roles: [{
       name: 'Role name',
       id: '1234',
-      permissions: ['permission A'],
+      permissions: ['permission A', 'users::view'],
     }, {
       name: 'another role',
       id: '1235',

@@ -1,5 +1,6 @@
 export default {
   user: {
+    userId: '',
     auth: {},
   },
   domains: {

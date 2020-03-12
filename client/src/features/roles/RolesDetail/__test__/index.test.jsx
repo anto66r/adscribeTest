@@ -3,11 +3,17 @@ import { render, screen } from '@testing-library/react';
 
 import { RouteProvider } from 'testing';
 import { StoreProvider } from 'store';
+import usePermissions from 'hooks/usePermissions';
 import initialState from 'store/initialState';
 import RolesDetail from '..';
 
+jest.mock('hooks/usePermissions');
+const mockedUsePermissions = usePermissions;
+mockedUsePermissions.mockImplementation(() => ({
+  checkPermissions: () => true,
+}));
+
 jest.mock('store/initialState');
-jest.mock('config/permissions');
 
 const renderWrapper = () => render(
   (
@@ -24,11 +30,19 @@ describe('<RolesDetail />', () => {
     renderWrapper();
     expect(screen.getByText('Role name')).toBeInTheDocument();
     expect(screen.getByText('Edit role')).toBeInTheDocument();
-    expect(screen.getByText('permission A')).toBeInTheDocument();
+    expect(screen.getByText('users::view')).toBeInTheDocument();
     expect(screen.queryByText('permission D')).toBeFalsy();
   });
-  test('Show show link to edit role.', () => {
+  test('Should show link to edit item.', () => {
     renderWrapper();
     expect(screen.getByTestId('pl2-role-edit')).toHaveAttribute('href', '/roles/edit/1234');
+  });
+
+  test('Should not show link to edit item if user has no rights.', () => {
+    mockedUsePermissions.mockImplementation(() => ({
+      checkPermissions: () => false,
+    }));
+    renderWrapper();
+    expect(screen.queryByTestId('pl2-role-edit')).toBeFalsy();
   });
 });

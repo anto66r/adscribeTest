@@ -4,6 +4,8 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { IRole } from 'types';
 import useToast from 'hooks/useToast';
 import { useItemAdmin, useRoles } from 'hooks';
+import usePermissions from 'hooks/usePermissions';
+import Permission from 'types/permission';
 
 type PropsType = {
   role: IRole;
@@ -13,6 +15,7 @@ const Item: FunctionComponent<PropsType> = props => {
   const { role } = props;
   const { setRoles } = useRoles();
   const { url } = useRouteMatch<{ url: string }>();
+  const { checkPermissions } = usePermissions();
   const { doSuccessToast, doErrorToast } = useToast();
 
   const { doDelete, loading } = useItemAdmin<IRole>({
@@ -31,10 +34,14 @@ const Item: FunctionComponent<PropsType> = props => {
 
   return (
     <li key={role.id}>
-      <Link data-testid="pl2-role-itemlink" to={`${url}/${role.id}`}>{role.name}</Link>
       {
-        !role.noDelete && (
-          <button disabled={loading} onClick={handleDelete} data-testid={`pl2-delete-role-${role.id}`}>
+        checkPermissions(Permission.ROLES__DETAIL)
+          ? <Link data-testid="pl2-role-itemlink" to={`${url}/${role.id}`}>{role.name}</Link>
+          : role.name
+      }
+      {
+        checkPermissions(Permission.ROLES__DELETE) && !role.noDelete && (
+          <button disabled={loading} onClick={handleDelete} data-testid="role-itemDelete">
             {loading ? 'Deleting...' : 'Delete'}
           </button>
         )

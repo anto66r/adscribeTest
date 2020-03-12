@@ -20,6 +20,7 @@ const reportSchema = new Schema(
     },
     name: {
       type: String,
+      required: true,
       trim: true,
     },
     userId: {
@@ -36,8 +37,8 @@ const Report = mongoose.model('Report', reportSchema);
 
 interface IReport {
   id?: string;
-  name?: string;
-  userId?: string;
+  name: string;
+  userId: string;
 }
 
 export {

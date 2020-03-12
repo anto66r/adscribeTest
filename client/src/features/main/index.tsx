@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import Roles from 'features/roles';
+import Reports from 'features/reports';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
@@ -22,6 +23,7 @@ const Main: FunctionComponent = () => (
           <Route path="/testapi" component={TestApi} />
           <Route path="/dashboards" component={Dashboards} />
           <Route path="/roles" component={Roles} />
+          <Route path="/reports" component={Reports} />
           <Route path="/logout" component={Logout} />
         </Switch>
       </div>

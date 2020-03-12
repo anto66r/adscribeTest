@@ -7,13 +7,9 @@ import { BAD_REQUEST, OK } from 'http-status-codes';
 const ReportsRouter = Router();
 const reportDao = new ReportDao();
 
-/** ****************************************************************************
- *                      Get All Reports - "GET /api/reports"
- ***************************************************************************** */
-
 ReportsRouter.get('/', async (req: Request, res: Response) => {
   try {
-    const roles = await reportDao.getAll();
+    const roles = await reportDao.getByUserId(req.body.userId);
     return res.status(OK).json(roles);
   } catch (err) {
     logger.error(err.message, err);
@@ -22,10 +18,6 @@ ReportsRouter.get('/', async (req: Request, res: Response) => {
     });
   }
 });
-
-/** ****************************************************************************
- *                       Add One - "POST /api/reports/add"
- ***************************************************************************** */
 
 ReportsRouter.post('/', async (req: Request, res: Response) => {
   try {
@@ -39,10 +31,6 @@ ReportsRouter.post('/', async (req: Request, res: Response) => {
   }
 });
 
-/** ****************************************************************************
- *                       Update - "PATCH /api/reports/update"
- ***************************************************************************** */
-
 ReportsRouter.patch('/', async (req: Request, res: Response) => {
   try {
     const role = await reportDao.update(req.body);
@@ -55,10 +43,6 @@ ReportsRouter.patch('/', async (req: Request, res: Response) => {
   }
 });
 
-/** ****************************************************************************
- *                    Delete - "DELETE /api/reports/delete/:id"
- ***************************************************************************** */
-
 ReportsRouter.delete('/', async (req: Request, res: Response) => {
   try {
     const role = await reportDao.delete(req.body);
@@ -70,9 +54,5 @@ ReportsRouter.delete('/', async (req: Request, res: Response) => {
     });
   }
 });
-
-/** ****************************************************************************
- *                                     Export
- ***************************************************************************** */
 
 export default ReportsRouter;

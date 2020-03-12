@@ -42,7 +42,7 @@ describe('Sidebar', () => {
       const sidebar = await screen.findByTestId('sidebar');
       fireEvent.mouseOver(sidebar);
       expect(screen.getByText('Users')).toBeInTheDocument();
-      expect(screen.getByText('Dashboards')).toBeInTheDocument();
+      expect(screen.getByText('Reports')).toBeInTheDocument();
       expect(screen.getByText('Roles')).toBeInTheDocument();
       expect(screen.getByText('Test API')).toBeInTheDocument();
     });
@@ -57,7 +57,6 @@ describe('Sidebar', () => {
       const sidebar = await screen.findByTestId('sidebar');
       fireEvent.mouseOver(sidebar);
       expect(screen.queryByText('Users')).toBeFalsy();
-      expect(screen.getByText('Dashboards')).toBeInTheDocument();
       expect(screen.getByText('Test API')).toBeInTheDocument();
     });
   });

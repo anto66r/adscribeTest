@@ -85,8 +85,8 @@ const UserForm: FunctionComponent<UserFormProps> = ({
                 data-testid={item}
                 type="checkbox"
                 name={item.name}
-                value={item.id}
-                checked={checkedItems[item.id] || false}
+                value={item?.id}
+                checked={checkedItems[item?.id] || false}
                 onChange={handleCheckChange}
               />
               {item.name}

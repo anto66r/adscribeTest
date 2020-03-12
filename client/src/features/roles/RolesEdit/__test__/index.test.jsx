@@ -9,7 +9,6 @@ import initialState from 'store/initialState';
 import RolesEdit from '../index';
 
 jest.mock('store/initialState');
-jest.mock('config/permissions');
 
 const mockDoSuccessToast = jest.fn();
 const mockDoErrorToast = jest.fn();

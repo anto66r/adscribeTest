@@ -1,5 +1,5 @@
 import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
-import classnames from 'classnames'
+import classnames from 'classnames';
 
 import { prefixComponents, Class, Classes } from '../components';
 import './styles.scss';
@@ -12,7 +12,7 @@ export interface IBoxProps {
 }
 
 const Button: FunctionComponent<IBoxProps> = (props): ReactElement => {
-   const getTestId = () => {
+  const getTestId = () => {
     let testId = `${prefixComponents}-${boxComponentName}`;
 
     if (props?.testId) {
@@ -20,23 +20,22 @@ const Button: FunctionComponent<IBoxProps> = (props): ReactElement => {
     }
 
     return testId;
-   }
+  };
 
-  const getClass = (): Class => {
-    return `${prefixComponents}-${boxComponentName}`;
-  }
+  const getClass = (): Class => `${prefixComponents}-${boxComponentName}`;
 
   const boxClass = getClass();
   const testId = getTestId();
+  const { children } = props;
 
   return (
     <div
       className={classnames(`${boxClass}`)}
       data-testid={testId}
     >
-      {props.children}
+      {children}
     </div>
   );
-}
+};
 
 export default Button;

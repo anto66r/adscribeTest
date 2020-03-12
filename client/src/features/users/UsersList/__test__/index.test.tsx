@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { StoreProvider } from 'store';
 import usePermissions from 'hooks/usePermissions';
-import RolesList from '../index';
+import UsersList from '../index';
 
 jest.mock('hooks/usePermissions');
 const mockedUsePermissions = usePermissions as jest.Mock;
@@ -17,15 +17,15 @@ const renderWrapper = (): void => {
     <MemoryRouter>
       <StoreProvider>
 
-        <RolesList users={[{
+        <UsersList users={[{
           name: 'User name',
           email: 'email',
-          _id: '1234',
+          id: '1234',
         },
         {
           name: 'User name b',
           email: 'email',
-          _id: '5678',
+          id: '5678',
         }]}
         />
       </StoreProvider>

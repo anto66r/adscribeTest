@@ -18,7 +18,7 @@ const UsersList: FunctionComponent<ContentProps> = ({ users }) => {
     <>
       <ul>
         {users
-          && users.map((user: IUser) => <Item key={user._id} user={user} />)}
+          && users.map((user: IUser) => <Item key={user.id} user={user} />)}
       </ul>
       {checkPermissions(Permission.USERS__CREATE) && <Link to={`${url}/create`}>Create new</Link>}
     </>

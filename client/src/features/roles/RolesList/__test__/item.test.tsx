@@ -33,7 +33,7 @@ const renderWrapper = (): void => {
         <StoreProvider>
           <Item role={{
             name: 'Role name',
-            _id: '1234',
+            id: '1234',
           }}
           />
         </StoreProvider>
@@ -57,9 +57,7 @@ describe('<Item />', () => {
   test('on deletion success should run callbacks', () => {
     renderWrapper();
     fireEvent.click(screen.getByTestId('role-itemDelete'));
-    expect(mockedDoDelete).toHaveBeenCalledWith(
-      { item: { _id: '1234', name: 'Role name' }, onError: expect.any(Function), onSuccess: expect.any(Function) },
-    );
+    expect(mockedDoDelete).toHaveBeenCalled();
   });
 
   test('should not display link to detail if user has no permissions', () => {

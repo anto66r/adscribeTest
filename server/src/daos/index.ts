@@ -1,5 +1,4 @@
 import { UserDao } from './User/UserDao';
-import { GroupDao } from './Group/GroupDao';
 import { RoleDao } from './Role/RoleDao';
 import { DashboardDao } from './Dashboard/DashboardDao';
 import {
@@ -25,7 +24,6 @@ const wrapCollection = (
 
 export {
   UserDao,
-  GroupDao,
   RoleDao,
   DashboardDao,
   IError,

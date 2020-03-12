@@ -31,10 +31,10 @@ const Item: FunctionComponent<PropsType> = props => {
     });
   };
   return (
-    <li key={user._id}>
+    <li key={user.id}>
       {
         checkPermissions(Permission.USERS__DETAIL) ? (
-          <Link data-testid="pl2-user-itemlink" to={`${url}/${user._id}`}>{user.name}</Link>
+          <Link data-testid="pl2-user-itemlink" to={`${url}/${user.id}`}>{user.name}</Link>
         ) : user.name
       }
       {

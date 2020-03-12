@@ -18,11 +18,11 @@ const renderWrapper = (): void => {
       <StoreProvider>
         <RolesList roles={[{
           name: 'Role name',
-          _id: '1234',
+          id: '1234',
         },
         {
           name: 'Role name b',
-          _id: '5678',
+          id: '5678',
         }]}
         />
       </StoreProvider>

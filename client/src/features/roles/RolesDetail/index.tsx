@@ -12,7 +12,7 @@ const RoleDetail: FunctionComponent = () => {
   const { roles } = useRoles();
   const { checkPermissions } = usePermissions();
 
-  const { name, permissions } = roles.find((item: IRole) => item._id === id) || {};
+  const { name, permissions } = roles.find((item: IRole) => item?.id === id) || {};
 
   return (
     <>

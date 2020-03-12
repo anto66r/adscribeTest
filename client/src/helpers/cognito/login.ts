@@ -67,7 +67,7 @@ export const login = async (
     cognitoAccessToken: accessToken.jwtToken,
     authIdToken: idToken.jwtToken,
     cognitoRefreshToken: refreshToken.token,
-    userId: user.data[0]._id || '',
+    userId: user?.data[0]?.id || '',
   };
   // accessToken empty
   setAuthSession(auth);

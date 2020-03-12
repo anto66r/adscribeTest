@@ -8,6 +8,6 @@ describe('getPermissions', () => {
 
 describe('getRoles', () => {
   test('should return common roles', () => {
-    expect(getRoles(['no show role', 'role A'], [{ _id: 'role A', name: 'name A' }, { _id: 'role B', name: 'name B' }])).toEqual([{ _id: 'role A', name: 'name A' }]);
+    expect(getRoles(['no show role', 'role A'], [{ id: 'role A', name: 'name A' }, { id: 'role B', name: 'name B' }])).toEqual([{ id: 'role A', name: 'name A' }]);
   });
 });

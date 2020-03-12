@@ -1,5 +1,5 @@
 export interface IDashboard {
-  _id?: string;
+  id?: string;
   name?: string;
   userId?: string;
 }

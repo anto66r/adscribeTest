@@ -56,7 +56,7 @@ RolesRouter.patch('/', async (req: Request, res: Response) => {
 });
 
 /** ****************************************************************************
- *                    Delete - "DELETE /api/roles/delete/:_id"
+ *                    Delete - "DELETE /api/roles/delete/:id"
  ***************************************************************************** */
 
 RolesRouter.delete('/', async (req: Request, res: Response) => {

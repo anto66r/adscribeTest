@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
+import { v4 as uuid } from 'uuid';
 import { IError } from '@daos';
 
 const { Schema } = mongoose;
 
 interface IRole {
-  _id?: string;
+  id?: string;
   permissions?: string[];
   name: string;
   noDelete: boolean;
@@ -18,6 +19,12 @@ interface IRoleCollection {
 
 const roleSchema = new Schema(
   {
+    id: {
+      type: String,
+      required: true,
+      unique: true,
+      default: uuid,
+    },
     name: {
       type: String,
       trim: true,

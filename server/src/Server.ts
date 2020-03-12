@@ -30,9 +30,6 @@ mongoose.connect(uri, {
   dbName: 'platf0rm-2',
 });
 
-mongoose.connection.once('open', (): void => {
-  // console.log('MongoDB database connection established successfully');
-});
 mongoose.set('useFindAndModify', false);
 
 // Export express instance

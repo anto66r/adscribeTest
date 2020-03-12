@@ -1,0 +1,20 @@
+@import "./color.scss";
+@import "./font.scss";
+@import "./box.scss";
+
+$input---border: 1px solid $color-gray-300;
+$input---border-radius: $box---border-radius;
+$input---box-shadow: unset;
+$input---background-color: $color-background;
+$input---height: 25px;
+$input---font-size: 14px;
+$input---font-family: $font-primary-200;
+$input---color: $color-text;
+$input---width: 100%;
+$input---text-align: left;
+$input---padding: 15px 45px;
+$input--placeholder---color: $color-text-300;
+$input--placeholder---font-style: italic;
+$input--focus---outline-color: $color-primary;
+$input--error---border: 1px solid $color-error;
+$input--disabled---border: 1px solid $color-gray-100;

@@ -51,7 +51,7 @@ export class UserDao implements IUserDao {
 
   public async getUserContext(id: string): Promise<IUserGeneralCollection> {
     const user = await User.find({ id }).lean<IUser>();
-    if (!user) throw Error(`No user found with id ${id}`);
+    if (!user || user.length === 0) throw Error(`No user found with id ${id}`);
     const domains = await this.getDomains(id);
     const userData: IUserGeneral = {
       user: user[0],

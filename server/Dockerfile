@@ -1,26 +1,12 @@
-# build stage
-FROM node:12.13.0 AS builder
-
-WORKDIR /app
-
-COPY . .
-
-RUN yarn
-RUN yarn clean
-RUN yarn build
-
-# run stage
 FROM node:12.13.0-slim
 
+ARG version 
+ENV VERSION $version
 WORKDIR /app
-
-COPY package.json ./
+COPY . .
+WORKDIR /app/server
 RUN yarn
-RUN npm install pm2 -g
-
-COPY --from=builder /app/dist ./dist
-COPY env ./env
-
+RUN yarn build
+COPY server/env ./env
 EXPOSE 5000
-
-CMD [ "pm2-runtime", "dist/index.js" ]
+CMD [ "yarn", "start" ]

@@ -4,8 +4,35 @@ on:
     types: [published]
 
 jobs:
-  job_1:
-    name: Build and push package
+  pr_lint_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+#       - name: Client Linting
+#         working-directory: client
+#         run: |
+#           yarn eslint
+      # - name: Server Linting
+      #   working-directory: server
+      #   run: |
+      #     yarn eslint
+      - name: Client Yarn Install
+        working-directory: client
+        run: |
+          yarn install
+      - name: Client Unit Tests
+        working-directory: client
+        run: |
+          CI=true yarn test
+      - name: Server Yarn Install
+        working-directory: server
+        run: |
+          yarn install
+      - name: Server Unit Tests
+        working-directory: server
+        run: |
+          ./node_modules/ts-node/dist/bin.js -r tsconfig-paths/register ./test
+  release_publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -20,24 +47,22 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Client - Build, tag, and push image
         id: build-server-image
-        working-directory: client
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.event.release.tag_name }}
           ECR_REPOSITORY: platf0rm-2-client
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -f client/Dockerfile --build-arg version=${IMAGE_TAG} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
       - name: Server - Build, tag, and push image
         id: build-client-image
-        working-directory: server
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.event.release.tag_name }}
           ECR_REPOSITORY: platf0rm-2-server 
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -f server/Dockerfile --build-arg version=${IMAGE_TAG} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
       - name: Parse ECS task definition JSON
@@ -52,25 +77,30 @@ jobs:
         run: |
           TASKREVISION=$(aws ecs register-task-definition --cli-input-json file://./ecs-task-definition.json --query "taskDefinition.revision" --output text)
           echo "::set-output name=taskrevision::$TASKREVISION"
-      - name: Parse ECS service definition JSON
-        env: 
-          TARGETGROUP80: ${{ secrets.AWS_TARGETGROUP80 }}
-          TARGETGROUP5000: ${{ secrets.AWS_TARGETGROUP5000 }}
-          AWS_SUBNET1: ${{ secrets.AWS_SUBNET1 }}
-          AWS_SUBNET2: ${{ secrets.AWS_SUBNET2 }}
-          AWS_SECURITY_GROUP: ${{ secrets.AWS_SECURITY_GROUP }}
-          TASKREVISION: ${{ steps.get-task-revision.outputs.taskrevision }}
-        run: |
-          node .github/actions/parseJson.js .aws/ecs-service-definition.json \
-          TARGETGROUP80=$TARGETGROUP80 \
-          TARGETGROUP5000=$TARGETGROUP5000 \
-          TASKREVISION=$TASKREVISION \
-          AWS_SUBNET1=$AWS_SUBNET1 \
-          AWS_SUBNET2=$AWS_SUBNET2 \
-          AWS_SECURITY_GROUP=$AWS_SECURITY_GROUP \
-          > ./ecs-service-definition.json
       - name: Create service
         env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
+          TASKREVISION: ${{ steps.get-task-revision.outputs.taskrevision }}
         run: |
-          aws ecs create-service --cli-input-json file://./ecs-service-definition.json --region $AWS_REGION
+          aws ecs update-service --service platf0rm-2 --cluster platf0rm-2 --task-definition platf0rm-2:${TASKREVISION}
+#       - name: Parse ECS service definition JSON
+#         env: 
+#           TARGETGROUP80: ${{ secrets.AWS_TARGETGROUP80 }}
+#           TARGETGROUP5000: ${{ secrets.AWS_TARGETGROUP5000 }}
+#           AWS_SUBNET1: ${{ secrets.AWS_SUBNET1 }}
+#           AWS_SUBNET2: ${{ secrets.AWS_SUBNET2 }}
+#           AWS_SECURITY_GROUP: ${{ secrets.AWS_SECURITY_GROUP }}
+#           TASKREVISION: ${{ steps.get-task-revision.outputs.taskrevision }}
+#         run: |
+#           node .github/actions/parseJson.js .aws/ecs-service-definition.json \
+#           TARGETGROUP80=$TARGETGROUP80 \
+#           TARGETGROUP5000=$TARGETGROUP5000 \
+#           TASKREVISION=$TASKREVISION \
+#           AWS_SUBNET1=$AWS_SUBNET1 \
+#           AWS_SUBNET2=$AWS_SUBNET2 \
+#           AWS_SECURITY_GROUP=$AWS_SECURITY_GROUP \
+#           > ./ecs-service-definition.json
+#       - name: Create service
+#         env:
+#           AWS_REGION: ${{ secrets.AWS_REGION }}
+#         run: |
+#           aws ecs create-service --cli-input-json file://./ecs-service-definition.json --region $AWS_REGION --force-new-deployment

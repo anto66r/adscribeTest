@@ -15,7 +15,7 @@
     "@daos": "dist/daos",
     "@entities": "dist/entities",
     "@shared": "dist/shared",
-    "@server": "dist/server",
+    "@server": "dist/Server",
     "@services": "dist/services"
   },
   "dependencies": {

@@ -1,21 +1,19 @@
 # build environment
 FROM node:12.13.0 as build
 WORKDIR /app
-# ENV PATH /app/node_modules/.bin:$PATH
-COPY package.json ./
-COPY tsconfig.json ./
-COPY public ./public
-COPY src ./src
-COPY .env ./
+COPY . .
+WORKDIR /app/client
+ARG version 
+ENV REACT_APP_VERSION $version
 RUN yarn add react-scripts@3.3.0 -g
 RUN yarn
-RUN yarn build
+RUN yarn  build
 
-# production environment
+# production  environment
 FROM nginx:1.16.0-alpine
-COPY --from=build /app/build /usr/share/nginx/html
+WORKDIR /app
+COPY --from=build /app/client/build /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx/nginx.conf /etc/nginx/conf.d
-
+COPY nginx.conf /etc/nginx/conf.d
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

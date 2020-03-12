@@ -1,14 +1,21 @@
-name: Pull Request Build and Test
+name: PR Lint and Test
 on:
   pull_request:
     types: [opened, synchronize]
 
 jobs:
-  job_1:
-    name: Install and test client
+  pr_lint_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      # - name: Client Linting
+      #   working-directory: client
+      #   run: |
+      #     yarn eslint
+      # - name: Server Linting
+      #   working-directory: server
+      #   run: |
+      #     yarn eslint
       - name: Client Yarn Install
         working-directory: client
         run: |

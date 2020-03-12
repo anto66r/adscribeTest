@@ -22,11 +22,11 @@ describe('<Input /> ', () => {
       render(<Input type={typePropValue} />);
       const inputNode = screen.getByTestId(inputTestId);
 
-      it('should exists as ReactNode', () => {
+      it('should exist as ReactNode', () => {
         expect(inputNode).toBeInTheDocument();
       });
 
-      it(`should has the default classes apply`, () => {
+      it(`should have the default classes applied`, () => {
         expect(inputNode).toHaveClass(inputDefaultCLass);
       });
 
@@ -46,7 +46,7 @@ describe('<Input /> ', () => {
         expect(inputNode).toBeDisabled();
       });
 
-      it('should has correct id if pass anyone in props', () => {
+      it('should have correct id if pass anyone in props', () => {
         render(<Input id={inputId} type={typePropValue} />);
         const inputNode = screen.getByTestId(inputTestId);
 
@@ -54,7 +54,7 @@ describe('<Input /> ', () => {
         expect(inputNode).toHaveAttribute('id', `${inputIdPrefix}-${inputId}`);
       });
 
-      it('should has an initial value if pass anyone in props', () => {
+      it('should have an initial value if pass anyone in props', () => {
         const inputIdInitialValue = 'Test';
         render(<Input type={typePropValue} value={inputIdInitialValue}/>);
         const inputNode = screen.getByTestId(inputTestId);
@@ -63,7 +63,7 @@ describe('<Input /> ', () => {
         expect(inputNode).toHaveValue(inputIdInitialValue);
       });
 
-      it('should has an error class if hasError prop is true', () => {
+      it('should have an error class if hasError prop is true', () => {
         render(<Input type={typePropValue} hasError={true}/>);
         const inputNode = screen.getByTestId(inputTestId);
 

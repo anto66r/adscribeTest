@@ -41,7 +41,7 @@ describe('<RolesList /> delete', () => {
   test('should delete an item correctly', async () => {
     axiosMock.request.mockImplementation(() => Promise.resolve({
       data: {
-        data: initialState.domains.roles.filter(item => item.id !== '1234'),
+        data: initialState.domains.roles.filter(item => item?.id !== '1234'),
       },
     }));
     renderWrapper();

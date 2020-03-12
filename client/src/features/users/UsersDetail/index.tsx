@@ -9,7 +9,7 @@ const UsersDetail: FunctionComponent = () => {
   const { id } = useParams();
   const { users } = useUsers();
   const { roles: allRoles } = useRoles();
-  const { name, roles = [] } = users.find((item: IUser) => item.id === id) || {};
+  const { name, roles = [] } = users.find((item: IUser) => item?.id === id) || {};
 
   return (
     <>

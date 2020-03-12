@@ -37,7 +37,7 @@ const Login = () => {
       const foundUser = await login(email, password);
       const { user, auth } = foundUser;
       dispatch(setUser({
-        userId: user.data[0].id,
+        userId: user?.data[0]?.id,
         isLogged: true,
         email: foundUser.auth.cognitoEmail,
         auth,

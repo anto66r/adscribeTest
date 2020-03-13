@@ -42,7 +42,7 @@ const Input: FunctionComponent<IButtonProps> = (props): ReactElement => {
     }
 
     return testId;
-  }
+  };
 
   const getId = () => {
     if (props?.id) {
@@ -50,7 +50,7 @@ const Input: FunctionComponent<IButtonProps> = (props): ReactElement => {
     }
 
     return '';
-  }
+  };
 
   const getClass = (): Class => {
     let inputClass: Class;
@@ -58,31 +58,32 @@ const Input: FunctionComponent<IButtonProps> = (props): ReactElement => {
 
     if (props?.hasError) inputClass = inputClass.concat(' ', States.error);
     return inputClass;
-  }
+  };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
     const newValue = event?.target?.value;
     setValue(newValue);
     if (props.onChange) props.onChange(newValue);
-  }
+  };
 
   const inputClass = getClass();
   const id = getId();
   const testId = getTestId();
+  const { name, placeholder, disabled } = props;
 
   return (
     <input
       className={classnames(`${inputClass}`)}
       data-testid={testId}
       id={id}
-      name={props.name ? props.name : ''}
-      placeholder={props.placeholder ? props.placeholder : ''}
-      disabled={ props.disabled ? props.disabled : false }
+      name={name}
+      placeholder={placeholder}
+      disabled={disabled}
       value={value}
       onChange={handleOnChange}
     />
   );
-}
+};
 
 export default Input;

@@ -2,7 +2,16 @@ import * as types from './types';
 
 export const setUsers = users => ({
   type: types.SET_USERS,
-  payload: { users },
+  payload: {
+    users,
+  },
+});
+
+export const setReports = reports => ({
+  type: types.SET_REPORTS,
+  payload: {
+    reports,
+  },
 });
 
 export const setUser = user => ({

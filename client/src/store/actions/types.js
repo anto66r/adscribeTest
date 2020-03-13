@@ -1,3 +1,4 @@
+export const SET_REPORTS = 'SET_REPORTS';
 export const SET_USERS = 'SET_USERS';
 export const SET_ROLES = 'SET_ROLES';
 export const SET_USER = 'SET_USER';

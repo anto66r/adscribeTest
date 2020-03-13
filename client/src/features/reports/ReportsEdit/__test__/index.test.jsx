@@ -2,11 +2,13 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { StoreProvider } from 'store';
+import reducers from 'store/reducers';
 import useItemAdmin from 'hooks/useItemAdmin';
 import initialState from 'store/initialState';
-import UsersEdit from '..';
+import ReportsEdit from '../index';
 
 jest.mock('store/initialState');
+
 const mockDoSuccessToast = jest.fn();
 const mockDoErrorToast = jest.fn();
 jest.mock('hooks/useToast', () => () => ({
@@ -22,28 +24,35 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-jest.mock('components/UserForm');
+jest.mock('components/ReportForm');
 jest.mock('hooks/useItemAdmin');
 
 beforeEach(() => {
   useItemAdmin.mockImplementation(() => ({
-    doUpdate: jest.fn(),
+    doUpdate: () => jest.fn(),
     loading: false,
   }));
+  jest.clearAllMocks();
 });
-
 
 const renderWrapper = () => render(
   (
     <StoreProvider
       initialState={initialState}
+      reducer={reducers}
     >
-      <UsersEdit />
+      <ReportsEdit />
     </StoreProvider>
   ),
 );
 
-describe('<UserEdit />', () => {
+describe('<ReportsEdit />', () => {
+  test('should handle cancel correctly', () => {
+    renderWrapper();
+    fireEvent.click(screen.getByTestId('pl2-report-form--cancel'));
+    expect(mockPush).toHaveBeenCalled();
+  });
+
   test('should call success toast and go back on save', () => {
     const mockDoUpdate = jest.fn(({ onSuccess }) => onSuccess());
     useItemAdmin.mockImplementation(() => ({
@@ -51,9 +60,9 @@ describe('<UserEdit />', () => {
       loading: false,
     }));
     renderWrapper();
-    fireEvent.submit(screen.getByTestId('form'));
+    fireEvent.submit(screen.getByTestId('pl2-report-form'));
     expect(mockDoUpdate).toHaveBeenCalled();
-    expect(mockDoSuccessToast).toHaveBeenCalledWith('User updated');
+    expect(mockDoSuccessToast).toHaveBeenCalledWith('Report updated');
     expect(mockPush).toHaveBeenCalled();
   });
 
@@ -63,7 +72,7 @@ describe('<UserEdit />', () => {
       loading: false,
     }));
     renderWrapper();
-    fireEvent.submit(screen.getByTestId('form'));
+    fireEvent.submit(screen.getByTestId('pl2-report-form'));
     expect(mockDoErrorToast).toHaveBeenCalledWith('Error message');
   });
 });

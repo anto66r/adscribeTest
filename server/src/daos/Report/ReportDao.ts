@@ -12,7 +12,6 @@ export class ReportDao implements IReportDao {
   }
 
   public async update(report: IReport): Promise<IReportCollection> {
-    // eslint-disable-next-line no-underscore-dangle
     return Report.findOneAndUpdate({ id: report.id }, report, { runValidators: true })
       .then(() => this.getByUserId(report.userId))
       .catch((err) => wrapCollection([], err) as IReportCollection);

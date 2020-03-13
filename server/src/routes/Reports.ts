@@ -3,7 +3,6 @@ import { logger } from '@shared';
 import { Request, Response, Router } from 'express';
 import { BAD_REQUEST, OK } from 'http-status-codes';
 
-// Init shared
 const ReportsRouter = Router();
 const reportDao = new ReportDao();
 

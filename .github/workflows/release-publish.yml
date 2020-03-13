@@ -8,18 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Client Linting
-        working-directory: client
-        run: |
-          yarn lint
-      - name: Server Linting
-        working-directory: server
-        run: |
-          yarn lint
       - name: Client Yarn Install
         working-directory: client
         run: |
           yarn install
+      - name: Client Linting
+        working-directory: client
+        run: |
+          yarn lint
       - name: Client Unit Tests
         working-directory: client
         run: |
@@ -28,6 +24,10 @@ jobs:
         working-directory: server
         run: |
           yarn install
+      - name: Server Linting
+        working-directory: server
+        run: |
+          yarn lint
       - name: Server Unit Tests
         working-directory: server
         run: |

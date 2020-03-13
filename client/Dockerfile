@@ -8,7 +8,6 @@ ARG theme
 ENV REACT_APP_VERSION $version
 RUN yarn add react-scripts@3.3.0 -g
 RUN yarn
-RUN yarn build
 RUN if [ "x$theme" = "x" ] ; then yarn build ; else yarn build:theme:$theme ; fi
 
 # production  environment

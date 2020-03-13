@@ -38,10 +38,10 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "yarn start:theme:adscribe",
+    "start": "yarn start:theme:605",
     "start:theme:adscribe": "yarn config:theme:adscribe && yarn run pre:transpile && react-scripts start",
     "start:theme:605": "yarn config:theme:605 && yarn run pre:transpile && yarn run pre:transpile:sass:watch && react-scripts start",
-    "build": "yarn build:theme:adscribe",
+    "build": "yarn build:theme:605",
     "build:theme:adscribe": "yarn config:theme:adscribe && yarn run pre:transpile && react-scripts build",
     "build:theme:605": "yarn config:theme:605 && yarn run pre:transpile && react-scripts build",
     "test": "react-scripts test",

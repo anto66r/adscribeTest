@@ -75,7 +75,7 @@ const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
     <button
       className={classnames(`${buttonClass}`)}
       data-testid={testId}
-      disabled={disabled || false}
+      disabled={disabled}
       onClick={handleClick}
     >
       {children}

@@ -38,9 +38,11 @@
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "yarn config:theme:adscribe && yarn run pre:transpile && react-scripts start",
+    "start": "yarn start:theme:adscribe",
+    "start:theme:adscribe": "yarn config:theme:adscribe && yarn run pre:transpile && react-scripts start",
     "start:theme:605": "yarn config:theme:605 && yarn run pre:transpile && yarn run pre:transpile:sass:watch && react-scripts start",
-    "build": "yarn config:theme:adscribe && yarn run pre:transpile && react-scripts build",
+    "build": "yarn build:theme:adscribe",
+    "build:theme:adscribe": "yarn config:theme:adscribe && yarn run pre:transpile && react-scripts build",
     "build:theme:605": "yarn config:theme:605 && yarn run pre:transpile && react-scripts build",
     "test": "react-scripts test",
     "test:once": "./node_modules/react-scripts/bin/react-scripts.js test --watchAll=false --bail --reporters=jest-silent-reporter --silent --colors",

@@ -220,6 +220,8 @@ docker build -f client/Dockerfile -t FILENAME:TAG . --build-arg ARG1=VALUE1 --bu
 The only available arguments for the moment are
 
 - `version`
+- `theme`: [ `605` | `adscribe` ].  
+  If `theme` is not selected, build will default to the `yarn build` script in `package.json`.
 
 TO-DO: document themes in docker 
 

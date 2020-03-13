@@ -42,6 +42,7 @@ const Box: FunctionComponent<IBoxProps> = (props): ReactElement => {
     return types;
   };
 
+  // TODO: P2-135 Extract getClass function and share as components helper
   const getClass = (): Class => {
     const types = getTypes();
     let boxClass: Class;

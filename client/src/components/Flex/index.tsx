@@ -78,6 +78,7 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
     return multiLines;
   };
 
+  // TODO: P2-135 Extract getClass function and share as components helper
   const getClass = (): Class => {
     const directions = getDirections();
     const aligns = getAligns();

@@ -53,6 +53,7 @@ const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
     return kinds;
   };
 
+  // TODO: P2-135 Extract getClass function and share as components helper
   const getClass = (): Class => {
     const types = getKinds();
     let buttonClass: Class;

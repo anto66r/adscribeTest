@@ -32,10 +32,11 @@ export interface IButtonProps {
 }
 
 const Input: FunctionComponent<IButtonProps> = (props): ReactElement => {
-  const [value, setValue] = useState(props.value ? props.value : '');
+  const { value: initValue } = props;
+  const [value, setValue] = useState(initValue || '');
 
   // TODO: P2-134 Extract getTestId function and share as components helper
-  const getTestId = () => {
+  const getTestId = (): string => {
     let testId = `${prefixComponents}-${inputComponentName}`;
 
     if (props?.testId) {
@@ -45,7 +46,7 @@ const Input: FunctionComponent<IButtonProps> = (props): ReactElement => {
     return testId;
   };
 
-  const getId = () => {
+  const getId = (): string => {
     if (props?.id) {
       return `${prefixComponents}-${inputComponentName}-${props.id}`;
     }
@@ -53,6 +54,7 @@ const Input: FunctionComponent<IButtonProps> = (props): ReactElement => {
     return '';
   };
 
+  // TODO: P2-135 Extract getClass function and share as components helper
   const getClass = (): Class => {
     let inputClass: Class;
     inputClass = `${prefixComponents}-${inputComponentName}`;

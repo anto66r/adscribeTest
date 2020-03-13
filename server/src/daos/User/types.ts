@@ -1,5 +1,5 @@
 import {
-  IDashboard, IRole, IUser, IUserCollection,
+  IDashboard, IRole, IUser, IUserCollection, IReport,
 } from 'src/services';
 
 export interface IUserDao {
@@ -20,4 +20,5 @@ export interface IDomains {
   users?: IUser[];
   dashboards?: IDashboard[];
   roles?: IRole[];
+  reports?: IReport[];
 }

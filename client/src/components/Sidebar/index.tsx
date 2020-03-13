@@ -33,12 +33,16 @@ const Sidebar: FunctionComponent = () => {
           </li>
         )
       }
-      <li>
-        <NavLink to="/dashboards">
-          <i className="fa fa-tachometer-alt" />
-          {expanded && 'Dashboards'}
-        </NavLink>
-      </li>
+      {
+        checkPermissions(Permission.REPORTS__VIEW) && (
+          <li>
+            <NavLink to="/reports">
+              <i className="fa fa-tachometer-alt" />
+              {expanded && 'Reports'}
+            </NavLink>
+          </li>
+        )
+      }
       {
         checkPermissions(Permission.ROLES__VIEW) && (
           <li>

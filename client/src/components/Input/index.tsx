@@ -34,6 +34,7 @@ export interface IButtonProps {
 const Input: FunctionComponent<IButtonProps> = (props): ReactElement => {
   const [value, setValue] = useState(props.value ? props.value : '');
 
+  // TODO: P2-134 Extract getTestId function and share as components helper
   const getTestId = () => {
     let testId = `${prefixComponents}-${inputComponentName}`;
 

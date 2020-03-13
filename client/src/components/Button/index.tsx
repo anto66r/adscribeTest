@@ -32,6 +32,7 @@ export interface IButtonProps {
 }
 
 const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
+  // TODO: P2-134 Extract getTestId function and share as components helper
   const getTestId = (): string => {
     let testId = `${prefixComponents}-${buttonComponentName}`;
 

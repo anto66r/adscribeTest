@@ -21,6 +21,7 @@ export interface IBoxProps {
 }
 
 const Box: FunctionComponent<IBoxProps> = (props): ReactElement => {
+  // TODO: P2-134 Extract getTestId function and share as components helper
   const getTestId = (): string => {
     let testId = `${prefixComponents}-${boxComponentName}`;
 

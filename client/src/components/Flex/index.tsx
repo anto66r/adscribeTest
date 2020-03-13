@@ -34,7 +34,8 @@ export interface IFlexProps {
 }
 
 const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
-  const getTestId = () => {
+  // TODO: P2-134 Extract getTestId function and share as components helper
+  const getTestId = (): string => {
     let testId = `${prefixComponents}-${flexComponentName}`;
 
     if (props?.testId) {
@@ -77,6 +78,7 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
     return multiLines;
   };
 
+  // TODO: P2-135 Extract getClass function and share as components helper
   const getClass = (): Class => {
     const directions = getDirections();
     const aligns = getAligns();
@@ -93,8 +95,8 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
 
   const flexClass = getClass();
   const testId = getTestId();
-
   const { children } = props;
+
   return (
     <div
       className={classnames(`${flexClass}`)}

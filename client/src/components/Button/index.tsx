@@ -32,7 +32,8 @@ export interface IButtonProps {
 }
 
 const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
-  const getTestId = () => {
+  // TODO: P2-134 Extract getTestId function and share as components helper
+  const getTestId = (): string => {
     let testId = `${prefixComponents}-${buttonComponentName}`;
 
     if (props?.testId) {
@@ -52,6 +53,7 @@ const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
     return kinds;
   };
 
+  // TODO: P2-135 Extract getClass function and share as components helper
   const getClass = (): Class => {
     const types = getKinds();
     let buttonClass: Class;
@@ -69,13 +71,13 @@ const Button: FunctionComponent<IButtonProps> = (props): ReactElement => {
 
   const buttonClass = getClass();
   const testId = getTestId();
+  const { disabled, children } = props;
 
-  const { children, disabled } = props;
   return (
     <button
       className={classnames(`${buttonClass}`)}
       data-testid={testId}
-      disabled={disabled || false}
+      disabled={disabled}
       onClick={handleClick}
     >
       {children}

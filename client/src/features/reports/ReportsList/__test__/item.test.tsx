@@ -44,40 +44,41 @@ const renderWrapper = (): void => {
 };
 
 describe('<Item />', () => {
-  test('should display an item with correct link', () => {
-    renderWrapper();
-    expect(screen.getByText('Report name')).toBeInTheDocument();
-    expect(screen.getByTestId('pl2-report-item--updateLink')).toHaveAttribute('href', '//edit/1234');
-  });
+  describe('basic render', () => {
+    beforeEach(() => { renderWrapper(); });
+    test('should display an item with correct link', () => {
+      expect(screen.getByText('Report name')).toBeInTheDocument();
+      expect(screen.getByTestId('pl2-report-item--updateLink')).toHaveAttribute('href', '//edit/1234');
+    });
 
-  test('should display a delete button', () => {
-    renderWrapper();
-    expect(screen.getByTestId('pl2-report-item--delete')).toBeInTheDocument();
-  });
+    test('should display a delete button', () => {
+      expect(screen.getByTestId('pl2-report-item--delete')).toBeInTheDocument();
+    });
 
-  test('on deletion success should run callbacks', () => {
-    renderWrapper();
-    fireEvent.click(screen.getByTestId('pl2-report-item--delete'));
-    expect(mockedDoDelete).toHaveBeenCalled();
+    test('on deletion success should run callbacks', () => {
+      fireEvent.click(screen.getByTestId('pl2-report-item--delete'));
+      expect(mockedDoDelete).toHaveBeenCalled();
+    });
   });
+  describe('permissions check', () => {
+    test('should not display link to detail if user has no permissions', () => {
+      mockedUsePermissions.mockImplementation(() => ({
+        checkPermissions: (permission: Permission): boolean => permission === Permission.REPORTS__UPDATE,
+      }));
+      renderWrapper();
+      expect(screen.getByText('Report name')).toBeInTheDocument();
+      expect(screen.queryByTestId('pl2-report-item--delete')).toBeFalsy();
+      expect(screen.getByTestId('pl2-report-item--updateLink')).toBeTruthy();
+    });
 
-  test('should not display link to detail if user has no permissions', () => {
-    mockedUsePermissions.mockImplementation(() => ({
-      checkPermissions: (permission: Permission): boolean => permission === Permission.REPORTS__UPDATE,
-    }));
-    renderWrapper();
-    expect(screen.getByText('Report name')).toBeInTheDocument();
-    expect(screen.queryByTestId('pl2-report-item--delete')).toBeFalsy();
-    expect(screen.getByTestId('pl2-report-item--updateLink')).toBeTruthy();
-  });
-
-  test('should not display delete button if user has no permissions', () => {
-    mockedUsePermissions.mockImplementation(() => ({
-      checkPermissions: (permission: Permission): boolean => permission === Permission.REPORTS__DELETE,
-    }));
-    renderWrapper();
-    expect(screen.getByText('Report name')).toBeInTheDocument();
-    expect(screen.queryByTestId('pl2-report-item--updateLink')).toBeFalsy();
-    expect(screen.getByTestId('pl2-report-item--delete')).toBeTruthy();
+    test('should not display delete button if user has no permissions', () => {
+      mockedUsePermissions.mockImplementation(() => ({
+        checkPermissions: (permission: Permission): boolean => permission === Permission.REPORTS__DELETE,
+      }));
+      renderWrapper();
+      expect(screen.getByText('Report name')).toBeInTheDocument();
+      expect(screen.queryByTestId('pl2-report-item--updateLink')).toBeFalsy();
+      expect(screen.getByTestId('pl2-report-item--delete')).toBeTruthy();
+    });
   });
 });

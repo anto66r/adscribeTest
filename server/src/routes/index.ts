@@ -3,6 +3,7 @@
 import CognitoExpress from 'cognito-express';
 import cors from 'cors';
 import { Router } from 'express';
+import ReportsRouter from './Reports';
 import UsersRouter from './Users';
 import RolesRouter from './Roles';
 import DashboardsRouter from './Dashboards';
@@ -73,6 +74,7 @@ router.use((req, res, next): any => {
 router.use('/users', UsersRouter);
 router.use('/dashboards', DashboardsRouter);
 router.use('/roles', RolesRouter);
+router.use('/reports', ReportsRouter);
 router.use('/logs', LogsRouter);
 
 router.use('*', (req, res) => {

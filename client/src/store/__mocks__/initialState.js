@@ -3,6 +3,15 @@ export default {
     auth: {},
   },
   domains: {
+    reports: [{
+      id: '1',
+      name: 'Report for user 1',
+      userId: '2',
+    }, {
+      id: '2',
+      name: 'Report for user 2',
+      userId: '3',
+    }],
     users: [{
       name: 'User 1',
       id: '2',

@@ -10,6 +10,10 @@ enum Permission {
   ROLES__UPDATE = 'roles::update',
   ROLES__VIEW = 'roles::view',
   ROLES__DETAIL = 'roles::detail',
+  REPORTS__VIEW = 'reports::view',
+  REPORTS__UPDATE = 'reports::update',
+  REPORTS__DELETE = 'reports::delete',
+  REPORTS__CREATE = 'reports::create',
 }
 
 export default Permission;

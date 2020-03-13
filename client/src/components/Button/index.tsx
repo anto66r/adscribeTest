@@ -1,7 +1,7 @@
-import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent, ReactElement, ReactNode } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents, Class, Classes } from '../components';
+import { Class, Classes, prefixComponents } from '../components';
 import './styles.scss';
 
 export const buttonComponentName = 'button';

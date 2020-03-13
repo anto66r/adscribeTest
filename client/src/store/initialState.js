@@ -4,6 +4,7 @@ export default {
     auth: {},
   },
   domains: {
+    reports: [],
     users: [],
     roles: [],
     dashboards: [],

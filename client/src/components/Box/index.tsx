@@ -7,7 +7,7 @@ import './styles.scss';
 // TODO: P2-129 Create box secondary theme to adscribe
 // TODO: P2-130 Create box component tests
 
-export const boxComponentName = 'box';
+export const boxComponentName = 'box-wrapper';
 
 export enum Type {
   primary = 'primary',
@@ -20,7 +20,7 @@ export interface IBoxProps {
   children?: ReactNode;
 }
 
-const Button: FunctionComponent<IBoxProps> = (props): ReactElement => {
+const Box: FunctionComponent<IBoxProps> = (props): ReactElement => {
   const getTestId = (): string => {
     let testId = `${prefixComponents}-${boxComponentName}`;
 
@@ -65,4 +65,4 @@ const Button: FunctionComponent<IBoxProps> = (props): ReactElement => {
   );
 };
 
-export default Button;
+export default Box;

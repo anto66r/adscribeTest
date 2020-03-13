@@ -9,7 +9,7 @@ $button--vertical---padding: 15px;
 $button--horizontal---padding: $button--vertical---padding * 2;
 $button--primary---color: $color-text-900;
 $button--primary---background-color: $color-primary;
-$button--primary---border: solid 1px $color-gray-100;
+$button--primary---border: solid 1px $color-gray-200;
 $button--primary--hover---background-color: $color-primary-hover;
 $button--primary--disabled---background-color: $color-primary-disabled;
 $button--primary--disabled---color: darken($color-primary-disabled, 5%);

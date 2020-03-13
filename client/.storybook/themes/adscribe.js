@@ -1,19 +1,22 @@
 import { create } from '@storybook/theming/create';
 
+export const background = "#111618";
+export const colorPrimary = "#2AB6A0";
+
 export default create({
   base: 'dark',
-  colorPrimary: "#2AB6A0",
-  colorSecondary: '#2AB6A0',
+  colorPrimary: colorPrimary,
+  colorSecondary: colorPrimary,
   textColor: 'white',
   barTextColor: 'white',
-  barSelectedColor: '#2AB6A0',
-  barBg: '#111618',
-  inputBg: '#2AB6A0',
-  inputBorder: '#2AB6A0',
+  barSelectedColor: colorPrimary,
+  barBg: background,
+  inputBg: colorPrimary,
+  inputBorder: colorPrimary,
   inputTextColor: 'white',
   inputBorderRadius: 0,
-  appBg: "#111618",
-  appContentBg: '#111618',
+  appBg: background,
+  appContentBg: background,
   appBorderColor: 'black',
   appBorderRadius: 0,
 });

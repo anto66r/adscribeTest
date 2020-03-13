@@ -1,12 +1,17 @@
 @import "../../components/components.scss";
 @import "../../theme/default/box.scss";
 
-$box-component-name: "box";
+$box-component-name: "box-wrapper";
 
 .#{$prefix-components}-#{$box-component-name} {
-  background-color: #ffffff;
+  background-color: $box---background-color;
+  font-family: $box---font-family;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   &.secondary {
-    border-radius: 50%;
+    border-radius: $box--secondary---border-radius;
   }
 }

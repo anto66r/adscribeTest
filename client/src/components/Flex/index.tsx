@@ -1,27 +1,27 @@
-import React, { ReactNode, FunctionComponent, ReactElement } from 'react';
+import React, { FunctionComponent, ReactElement, ReactNode } from 'react';
 import classnames from 'classnames';
 
-import { prefixComponents, Class, Classes } from '../components';
+import { Class, Classes, prefixComponents } from '../components';
 import './styles.scss';
 
 export const flexComponentName = 'flex';
 
 export enum Vertical {
-  top = "top",
-  bottom = "bottom"
+  top = 'top',
+  bottom = 'bottom'
 }
 
 export enum Horizontal {
-  left = "left",
-  right = "right"
+  left = 'left',
+  right = 'right'
 }
 
 export enum Direction {
-  column = "column"
+  column = 'column'
 }
 
 export enum Line {
-  multi = "multi"
+  multi = 'multi'
 }
 
 export interface IFlexProps {
@@ -42,7 +42,7 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
     }
 
     return testId;
-  }
+  };
 
   const getDirections = (): Classes => {
     const directions = [];
@@ -51,7 +51,7 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
     }
 
     return directions;
-  }
+  };
 
   const getAligns = (): Classes => {
     const aligns = [];
@@ -65,7 +65,7 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
     }
 
     return aligns;
-  }
+  };
 
   const getMultiLines = (): Classes => {
     const multiLines = [];
@@ -75,7 +75,7 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
     }
 
     return multiLines;
-   }
+  };
 
   const getClass = (): Class => {
     const directions = getDirections();
@@ -85,23 +85,24 @@ const Flex: FunctionComponent<IFlexProps> = (props): ReactElement => {
     flexClass = `${prefixComponents}-${flexComponentName}`;
 
     if (directions.length > 0) flexClass = flexClass.concat(' ', directions.join(' '));
-    if (aligns.length > 0)  flexClass = flexClass.concat(' ', aligns.join(' '));
-    if (multiLines.length > 0)  flexClass = flexClass.concat(' ', multiLines.join(' '));
+    if (aligns.length > 0) flexClass = flexClass.concat(' ', aligns.join(' '));
+    if (multiLines.length > 0) flexClass = flexClass.concat(' ', multiLines.join(' '));
 
     return flexClass;
-  }
+  };
 
   const flexClass = getClass();
   const testId = getTestId();
 
+  const { children } = props;
   return (
     <div
       className={classnames(`${flexClass}`)}
       data-testid={testId}
     >
-      {props.children}
+      {children}
     </div>
   );
-}
+};
 
 export default Flex;

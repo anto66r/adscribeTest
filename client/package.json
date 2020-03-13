@@ -35,7 +35,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "react-toastify": "^5.5.0",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "@testing-library/jest-dom": "^4.2.4"
   },
   "scripts": {
     "start": "yarn start:theme:605",
@@ -47,7 +48,7 @@
     "test": "react-scripts test",
     "test:once": "./node_modules/react-scripts/bin/react-scripts.js test --watchAll=false --bail --reporters=jest-silent-reporter --silent --colors",
     "eject": "react-scripts eject",
-    "eslint": "node_modules/.bin/eslint src",
+    "lint": "node_modules/.bin/eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "config:theme:605": "yarn config set client:theme \"605\"",
     "config:theme:adscribe": "yarn config set client:theme \"adscribe\"",
     "components": "yarn config:theme:adscribe && yarn run pre:transpile && yarn run pre:transpile:sass:watch && STORYBOOK_THEME=adscribe start-storybook -p 9009 -s public",
@@ -78,7 +79,6 @@
     "@storybook/addon-links": "^5.3.13",
     "@storybook/preset-create-react-app": "^1.5.2",
     "@storybook/react": "^5.3.13",
-    "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/react-hooks": "^3.2.1",
     "@testing-library/user-event": "^7.1.2",

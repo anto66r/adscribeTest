@@ -58,8 +58,18 @@ Important! Change the git hooks default folder for this project
 git config core.hooksPath hooks
 ```
 
+### Linting 
+You can run `yarn lint` locally in these folders:
+|folder    |action                                                 |
+|----------|-------------------------------------------------------|
+|/<root>   |lint will be triggered in both client and server       |
+|/client   |lint will be triggered in /client/ folder              |
+|/server   |lint will be triggered in /server/ folder              |
+
+
 ## Cognito testing login:
 user: javier.olmo@zartis.com
+
 password: javier
 
 
@@ -349,6 +359,7 @@ The master list of permissions lives in the `src/config` folder of the client.
 
 ### Cognito testing login:
 user: javier.olmo@zartis.com
+
 password: javier
 
 (You can make your own through the user panel!)

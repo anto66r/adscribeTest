@@ -1,5 +1,7 @@
 import React from 'react';
-import { screen, cleanup, render, fireEvent } from '@testing-library/react';
+import {
+  screen, cleanup, render, fireEvent,
+} from '@testing-library/react';
 
 import { prefixComponents } from '../../components';
 import Button, {
@@ -24,7 +26,7 @@ describe('<Button /> ', () => {
         expect(buttonNode).toBeInTheDocument();
       });
 
-      it(`should has the default classes apply`, () => {
+      it('should has the default classes apply', () => {
         expect(buttonNode).toHaveClass(`${prefixComponents}-${buttonComponentName} ${kindPrimaryClass}`);
       });
 
@@ -35,7 +37,7 @@ describe('<Button /> ', () => {
 
     describe('Custom behavior', () => {
       it('should be disabled if disabled prop is true', () => {
-        render(<Button disabled={true}>{buttonText}</Button>);
+        render(<Button disabled>{buttonText}</Button>);
         const buttonNode = screen.getByTestId(buttonTestId);
 
         expect(buttonNode).toBeInTheDocument();
@@ -43,10 +45,10 @@ describe('<Button /> ', () => {
       });
 
       it('should execute handler onClick if we pass a callback', () => {
-        const mockHandleOnClick = jest.fn(():void => {});
+        const mockHandleOnClick = jest.fn((): void => {});
         render(<Button onClick={mockHandleOnClick}>{buttonText}</Button>);
         const buttonNode = screen.getByTestId(buttonTestId);
-        const leftClick = { button: 1 }
+        const leftClick = { button: 1 };
 
         fireEvent.click(buttonNode, leftClick);
         expect(buttonNode).toBeInTheDocument();
@@ -56,7 +58,7 @@ describe('<Button /> ', () => {
 
     describe('Working like a wrapper', () => {
       it('should wrap their child with a button container', () => {
-        const wrappedTestId = "child-node";
+        const wrappedTestId = 'child-node';
         const { getByTestId } = render(<Button><span data-testid={wrappedTestId}>{buttonText}</span></Button>);
         const buttonNode = getByTestId(buttonTestId);
         const wrappedNode = getByTestId(wrappedTestId);
@@ -65,6 +67,6 @@ describe('<Button /> ', () => {
         expect(wrappedNode).toBeInTheDocument();
         expect(buttonNode).toContainElement(wrappedNode);
       });
-    })
+    });
   });
 });

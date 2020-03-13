@@ -1,5 +1,7 @@
 import React from 'react';
-import { screen, cleanup, render, fireEvent } from '@testing-library/react';
+import {
+  screen, cleanup, render, fireEvent,
+} from '@testing-library/react';
 
 import { prefixComponents } from '../../components';
 import Input, {
@@ -11,7 +13,7 @@ import Input, {
 const inputIdPrefix = `${prefixComponents}-${inputComponentName}`;
 const inputTestId = `${prefixComponents}-${inputComponentName}`;
 const inputDefaultCLass = `${prefixComponents}-${inputComponentName}`;
-const inputId = "1";
+const inputId = '1';
 
 describe('<Input /> ', () => {
   afterAll(cleanup);
@@ -26,7 +28,7 @@ describe('<Input /> ', () => {
         expect(inputNode).toBeInTheDocument();
       });
 
-      it(`should have the default classes applied`, () => {
+      it('should have the default classes applied', () => {
         expect(inputNode).toHaveClass(inputDefaultCLass);
       });
 
@@ -39,7 +41,7 @@ describe('<Input /> ', () => {
       const typePropValue = Type.text;
 
       it('should be disabled if disabled prop is true', () => {
-        render(<Input id={inputId} type={typePropValue} disabled={true}/>);
+        render(<Input id={inputId} type={typePropValue} disabled />);
         const inputNode = screen.getByTestId(inputTestId);
 
         expect(inputNode).toBeInTheDocument();
@@ -56,7 +58,7 @@ describe('<Input /> ', () => {
 
       it('should have an initial value if pass anyone in props', () => {
         const inputIdInitialValue = 'Test';
-        render(<Input type={typePropValue} value={inputIdInitialValue}/>);
+        render(<Input type={typePropValue} value={inputIdInitialValue} />);
         const inputNode = screen.getByTestId(inputTestId);
 
         expect(inputNode).toBeInTheDocument();
@@ -64,7 +66,7 @@ describe('<Input /> ', () => {
       });
 
       it('should have an error class if hasError prop is true', () => {
-        render(<Input type={typePropValue} hasError={true}/>);
+        render(<Input type={typePropValue} hasError />);
         const inputNode = screen.getByTestId(inputTestId);
 
         expect(inputNode).toBeInTheDocument();
@@ -72,10 +74,10 @@ describe('<Input /> ', () => {
       });
 
       it('should execute handler onChange if we pass a callback returning the new value', () => {
-        const mockHandleOnChange = jest.fn(():void => {});
+        const mockHandleOnChange = jest.fn((): void => {});
         render(<Input type={typePropValue} onChange={mockHandleOnChange} />);
         const inputNode = screen.getByTestId(inputTestId);
-        const inputNewTarget = { target: { value: 'test' } }
+        const inputNewTarget = { target: { value: 'test' } };
 
         fireEvent.change(inputNode, inputNewTarget);
         expect(inputNode).toBeInTheDocument();

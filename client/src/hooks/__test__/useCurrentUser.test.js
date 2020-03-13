@@ -13,7 +13,7 @@ useStore.mockImplementation(() => [{
   },
   domains: {
     users: [{
-      _id: 'user 1',
+      id: 'user 1',
       roles: 'role A',
     }],
   },
@@ -25,7 +25,7 @@ describe('useCurrentUser', () => {
       result,
     } = renderHook(() => useCurrentUser());
     expect(result.current).toEqual({
-      _id: 'user 1',
+      id: 'user 1',
       roles: 'role A',
     });
   });

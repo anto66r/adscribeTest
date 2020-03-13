@@ -12,7 +12,7 @@ type UserFormProps = {
 
 const UserForm: FunctionComponent<UserFormProps> = ({
   user = {
-    _id: '',
+    id: '',
     email: '',
     roles: [],
     name: '',

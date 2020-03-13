@@ -60,11 +60,11 @@ git config core.hooksPath hooks
 
 ### Linting 
 You can run `yarn lint` locally in these folders:
-|folder    |action                                                 |
-|----------|-------------------------------------------------------|
-|/<root>   |lint will be triggered in both client and server       |
-|/client   |lint will be triggered in /client/ folder              |
-|/server   |lint will be triggered in /server/ folder              |
+| folder  | action                                           |
+| ------- | ------------------------------------------------ |
+| /<root> | lint will be triggered in both client and server |
+| /client | lint will be triggered in /client/ folder        |
+| /server | lint will be triggered in /server/ folder        |
 
 
 ## Cognito testing login:
@@ -304,14 +304,18 @@ Edit your `.gitconfig` file to add this script as git alias. In Mac, the file is
     send = "!sh git_save.sh"
 ```
 
-you are done :tada: Your code will be added, commited and pushed.
+you are done :tada: Your code will be added, committed and pushed.
 
 
 # Deployment
 
-## Creating production build
-
 ## Deploying
+
+As PRs get merged into the `master` branch, their titles get added to a draft release. To publish the release and deploy the package, you should edit the latest draft release, customize the description, add a version number and name, and hit publish. You are now on your way!
+
+In the actions tab of the GitHub repo you can follow the progress of the deploy. Once live, you will find the code at [platf0rm-2.descri.be](platf0rm-2.descri.be).
+
+To check version number, you can visit [platf0rm-2.descri.be/health-check](platf0rm-2.descri.be/health-check) for the client, and [platf0rm-2.descri.be:5000/api/health-check](platf0rm-2.descri.be:5000/api/health-check) for the API.
 
 # RBAC (Role Based Access Control)
 

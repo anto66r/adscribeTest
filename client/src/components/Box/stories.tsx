@@ -10,7 +10,7 @@ const styles = {
   width: '300px',
   height: '300px',
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'column' as 'column',
   justifyContent: 'center',
   alignItems: 'center',
 };

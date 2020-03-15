@@ -81,7 +81,7 @@ jobs:
         env:
           TASKREVISION: ${{ steps.get-task-revision.outputs.taskrevision }}
         run: |
-          aws ecs create-service --service platf0rm-2 --cluster platf0rm-2 --task-definition platf0rm-2:${TASKREVISION}
+          aws ecs create-service --service-name platf0rm-2 --cluster platf0rm-2 --task-definition platf0rm-2:${TASKREVISION}
 #       - name: Parse ECS service definition JSON
 #         env: 
 #           TARGETGROUP80: ${{ secrets.AWS_TARGETGROUP80 }}
